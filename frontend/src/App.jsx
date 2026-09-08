@@ -21,6 +21,7 @@ function PublicOnly({ children }) {
 }
 export default function App() {
     return (<Routes>
+  <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>
       <Route element={<Layout />}>
         <Route path="/login" element={<PublicOnly>
               <Login />
@@ -28,9 +29,6 @@ export default function App() {
         <Route path="/register" element={<PublicOnly>
               <Register />
             </PublicOnly>}/>
-        <Route path="/" element={<ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>}/>
         <Route path="/profile" element={<ProtectedRoute>
               <Profile />
             </ProtectedRoute>}/>

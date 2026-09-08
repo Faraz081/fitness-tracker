@@ -28,6 +28,19 @@
   --color-error: #EF4444;
   --color-warning: #F59E0B;
 
+  --color-accent: #A3E635;
+  --color-accent-light: #BEF264;
+  --color-accent-dark: #84CC16;
+  --color-accent-glow: rgba(163, 230, 53, 0.25);
+
+  --color-bg: #0B0F14;
+  --color-panel: #131821;
+  --color-panel-soft: #161C26;
+  --color-line: #232A33;
+  --color-ink: #F4F6F8;
+  --color-ink-soft: #A9B0BC;
+  --color-ink-muted: #6B7280;
+
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #E5E7EB;
   --color-text-muted: #9CA3AF;
@@ -341,4 +354,29 @@
     background-color: var(--color-dark-700);
     border-color: rgba(255, 255, 255, 0.1);
   }
+}
+
+.dashboard-body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+.dash-card {
+  background: linear-gradient(180deg, var(--color-panel-soft), var(--color-panel));
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+}
+
+.dash-num {
+  font-family: var(--font-family-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.accent-text {
+  color: var(--color-accent);
+}
+
+.ring-track {
+  color: var(--color-line);
 }

@@ -2,25 +2,38 @@
   ============================================================================
   SYNC IMPACT REPORT
   ============================================================================
-  Version change      : (minor) 2.1.0  ->  2.2.0  (Day 3: nutrition)
-  Modified principles : VII Resource Ownership & Authorization - extended
-                        its scope from workouts to include nutrition entries
-                        (no rename, no removal; tested by Day 3 ownership check)
-  Added sections      : Data models: Nutrition / Meal (with food qty + macros)
-                        API Contracts: Nutrition full CRUD + Daily Summary
-                        Frontend UX: Nutrition page, Add/Edit Meal form,
-                        delete-with-confirm, daily totals, meal-type handling
-                        Definition of Done (Day 3)
-                        Frontend nav/routes for Day 3
-  Removed sections    : (none). Day 3 items removed from Deferred Scope; new
-                        later-day items (barcode scanner, food DB search, meal
-                        templates, weekly reports, water tracking) added ahead.
+  Version change      : (major) 2.2.0  ->  3.0.0  (Day 1.1: dark dashboard)
+  Modified principles : Principle V "Type-Safe & Strict Coding Standards" -
+                        for the FRONTEND DASHBOARD PHASE ONLY, the language
+                        standard is overridden from TypeScript to JavaScript
+                        (.js/.jsx only). The original TS mandate still governs
+                        any backend work. No core Day 1-3 rule is deleted.
+                        Principle I "Project Structure" - the Dashboard phase
+                        is scoped to the existing `frontend/` workspace in
+                        place; no new workspace is created by this phase.
+  Added sections      : Day 1.1 Dashboard - Project Goal & Definition
+                        Day 1.1 Dashboard - Core Principles (D1-D8)
+                        Day 1.1 - Folder & Component Structure
+                        Day 1.1 - Design System Decisions
+                        Day 1.1 - State Management Approach
+                        Day 1.1 - Empty State Behaviour
+                        Day 1.1 - Responsive Behaviour Rules
+                        Day 1.1 - Coding Standards
+                        Day 1.1 - Definition of Done (Success Criteria)
+                        Day 1.1 - Out of Scope (Deferred)
+  Removed sections    : (none). All Day 1-3 sections retained as governed
+                        history; Day 1.1 is the current active phase and
+                        does not disturb completed work.
   Templates           : ✅ plan-template.md   - Constitution Check gate stays
-                                                 generic; web-app paths unchanged
+                                                 generic; dashboard phase adds no
+                                                 new gate type
                         ✅ spec-template.md   - acceptance scenarios / success
-                                                 criteria align with nutrition CRUD
-                        ✅ tasks-template.md  - user-story grouping + [P] parallel
-                                                 labelling align with nutrition CRUD
+                                                 criteria align with the dashboard
+                                                 DoD; user-story grouping reused
+                        ✅ tasks-template.md  - [P] parallel labelling and
+                                                 user-story grouping remain valid
+                                                 for the component-by-component
+                                                 dashboard build
                         ⚠ commands/           - NO commands/*.md directory exists
                                                  in this repo (PowerShell setup);
                                                  plan-template.md line 6 references
@@ -29,6 +42,12 @@
                                                  left as-is (no edit needed)
   Deferred TODOs      : (none). Ratification date (2026-08-27) and amendment date
                         (2026-08-28) confirmed from footer + git history.
+  NOTE                : The reference screenshot named in the Day 1.1 input is
+                        NOT present in the repo. The constitution encodes the
+                        dashboard requirements as written; the implementing
+                        agent MUST treat the reference screenshot as the visual
+                        authority if it is provided, and the written spec as
+                        binding where the two diverge.
   ============================================================================
 -->
 
@@ -71,6 +90,13 @@ Fitness_Tracker/
 └── .gitignore               # node_modules, .env, dist, build
 ```
 
+> **Day 1.1 amendment:** The actual implementation landed the two workspaces as
+> `backend/` and `frontend/` in JavaScript. Day 1.1 (Dashboard) is built inside
+> the existing `frontend/` workspace in place. No new workspace is created by
+> the Dashboard phase. The tree above remains the canonical description of the
+> separation of concerns; directory naming follows whatever the committed repo
+> already uses.
+
 Rationale: Separation of client/server keeps concerns isolated, enables
 independent tooling (Vite vs. Express), and avoids cross-package coupling while
 the app is small. Root-level orchestration scripts must NOT duplicate logic
@@ -94,6 +120,12 @@ this constitution. Use recent stable LTS and lock dependency versions.
   TypeScript 7 (native `tsc`) is the default; editor/plugin tooling that needs
   the TypeScript compiler API uses the `@typescript/typescript6` compat package.
 - **CORS**: `cors` middleware with an allowlist derived from env vars.
+
+> **Day 1.1 amendment:** The Dashboard phase is FRONTEND-ONLY and JavaScript-only
+> (`.js`/`.jsx`). No backend, no TypeScript, and no new runtime dependencies are
+> added. The frontend already uses React 19 + Vite 8 + React Router 7 + Tailwind
+> CSS v4. The Dashboard reuses these; do not add a charting or state library
+> unless the plan cannot be built without it (see Day 1.1 Core Principle D6).
 
 **Day 2 requires NO new runtime or dev dependencies.** Profile editing and
 workout CRUD reuse the existing React, React Router, Express, Mongoose, Zod,
@@ -153,9 +185,20 @@ constitution and in the feature contracts before implementation.
 - Prefer explicit return types on exported functions and clean, declarative
   control flow over nested branches.
 
+> **Day 1.1 amendment — FRONTEND-ONLY OVERRIDE:** For the Day 1.1 Dashboard phase
+> the language standard above is OVERRIDDEN. The Dashboard MUST be written in
+> plain JavaScript only (`.js` for logic/util modules, `.jsx` for React
+> components). TypeScript is STRICTLY FORBIDDEN for the Dashboard phase — no
+> `.ts`/`.tsx`, no `@ts-check`, and no type annotations. The rest of this
+> principle (naming, one-unit-per-file, no hardcoded secrets, clean declarative
+> control flow) applies unchanged. This override is scoped to the frontend
+> dashboard work; any backend code remains TypeScript-governed.
+
 Rationale: Strict typing is the cheapest correctness tool in a MERN app and is
 a precondition for reliable refactoring on later days. This becomes more
-valuable on Day 2 as the domain grows (Workout, Exercise subdocuments).
+valuable on Day 2 as the domain grows (Workout, Exercise subdocuments). The
+Day 1.1 dashboard is intentionally a plain-JavaScript, presentational frontend
+phase; its override is explicit and narrow to avoid ambiguity.
 
 ### VI. Verify End-to-End Before Done
 
@@ -168,6 +211,13 @@ Day 2 end-to-end scope: a user logs in, edits their profile, creates a workout
 with exercises/sets/reps/weight/notes/category, sees it in the list, edits it,
 and deletes it — while a second user cannot see, read, edit, or delete the first
 user's workouts.
+
+> **Day 1.1 amendment:** Day 1.1 is frontend-only and needs NO live backend to
+> be verified. Its end-to-end verification is a browser run of the built
+> dashboard rendering every required section, chart, and empty state correctly.
+> If auth is still present from prior days, the dashboard may render behind the
+> existing protected route; alternatively it MUST render as a standalone shell
+> when no auth is wired. The plan/Spec MUST state which.
 
 ### VII. Resource Ownership & Authorization (NON-NEGOTIABLE)
 
@@ -218,6 +268,289 @@ Rationale: Totals drive the Nutrition page's headline numbers. Computing them
 server-side guarantees consistency with the stored data and automatically honors
 ownership isolation, avoiding drift if computed in two places.
 
+---
+
+## Day 1.1 — Dark Fitness Tracker Dashboard (CURRENT ACTIVE PHASE)
+
+### Project Goal & Definition
+
+Day 1.1 builds a modern, dark-themed Fitness Tracker **dashboard** in React,
+using **only `.js` and `.jsx` files (strictly no TypeScript)**, matching the
+reference screenshot as closely as possible. It is **frontend-only**; it does
+not add, change, or remove any backend behaviour. The phase is scoped to the
+existing `frontend/` workspace and reuses the committed React + Vite + React
+Router + Tailwind setup.
+
+The dashboard MUST contain ALL of the following fixed elements:
+
+1. **Fixed left sidebar (dark)**: logo at top; main menu items Dashboard,
+   Exercise, Nutrition; user profile section (avatar + name + email) at bottom.
+2. **Top navbar**: logo + "Fitness Tracker" text; center navigation tabs —
+   Dashboard, Workouts, Nutrition, Goals, BMI; user avatar + name on the right.
+3. **Main content area** with **QUICK LOG** buttons: Water, Steps, Calories,
+   Sleep, Weight, Workout.
+4. **Dashboard content**: personalized greeting + current date; summary cards
+   (Total Workouts, Total Exercises, Calories Burned, Calories Consumed, Current
+   Weight, Workout Streak); daily goals/progress cards (Hydration, Calories,
+   Steps, Sleep) with progress bars; activity/progress rings; weekly workout
+   chart; calories chart; macro chart; recent workouts section; quick action
+   buttons; proper empty states for all sections.
+
+### Core Principles (Day 1.1)
+
+#### D1. JavaScript-Only Frontend Phase (NON-NEGOTIABLE)
+
+The Dashboard MUST be authored exclusively in `.js` and `.jsx`. TypeScript is
+forbidden: no `.ts`, no `.tsx`, no type annotations, no `@ts-check`, no
+`tsconfig` changes affecting the dashboard. This override is scoped to Day 1.1
+frontend work only (see Principle V amendment).
+
+Rationale: The reference build is plain React; keeping it JS-only guarantees the
+dashboard stays simple, approachable, and free of type plumbing that would not
+add value to a presentational phase.
+
+#### D2. Exact, Fixed Layout (NON-NEGOTIABLE)
+
+The three-region layout (left sidebar + top navbar + main content) MUST be
+implemented exactly as specified, with the Quick Log row and every listed
+dashboard section present. No layout region may be dropped, merged, or hidden at
+the desktop breakpoint.
+
+Rationale: "Match the reference screenshot as closely as possible" is the core
+acceptance criterion; layout fidelity is the primary measure of success.
+
+#### D3. Dark Modern Visual Language
+
+Use deep black / charcoal backgrounds, subtle card elevation (borders +
+shadow), clean typography, and restrained accent color (a single primary hue).
+Cards render on a slightly raised surface against the page background.
+
+Rationale: A consistent dark theme is what gives the screenshot its identity and
+is the clearest way to "match" it.
+
+#### D4. Reusable Components
+
+Break the UI into small, reusable components (see folder structure). A component
+used in two or more places MUST be extracted once rather than duplicated. No
+copy-paste of markup across sections.
+
+Rationale: Reuse keeps the dashboard maintainable and consistent; duplicating
+markup across six summary cards or four progress cards is the anti-pattern this
+principle forbids.
+
+#### D5. Every Section Has a Proper Empty State
+
+Each data-driven section MUST render a designed empty state when it has no data
+(minimal icon + short message like "No workouts recorded yet"). Loading and
+error states MUST also be handled (spinner/skeleton for loading; friendly
+message, never a stack trace, for error).
+
+Rationale: A dashboard is worthless when blank; empty states communicate "why"
+and invite the next action instead of showing nothing.
+
+#### D6. No New Runtime Dependencies Without Justification
+
+The dashboard MUST be built with the already-committed stack (React 19, React
+Router, Tailwind v4, and any existing UI primitives). No new charting or state
+library may be added unless the plan demonstrates it is necessary and records it
+in Complexity Tracking with reasoning. Hand-rolled SVGs and CSS progress bars are
+preferred for rings, bars, and mini-charts.
+
+Rationale: Adds headroom for production-ready simple code and avoids pulling in
+libraries that duplicate a few dozen lines of CSS/SVG.
+
+#### D7. State Management: Local State + Optional Context
+
+Dashboard state MUST use local React state (`useState`) by default. Lift state
+only when two or more components share it; only then add a Context. No external
+state library (Redux, Zustand, etc.). Static/mock dashboard data lives in
+clearly-named constants/modules so it can later be swapped for real API data.
+
+Rationale: The dashboard is presentational; a global store is over-engineering.
+Context is enough where sharing is genuinely needed.
+
+#### D8. Fully Responsive, Desktop-First
+
+The dashboard MUST be fully responsive. At the desktop width the three-region
+layout renders in full. On tablet the sidebar MUST collapse to icons (or a
+toggle), and on mobile the sidebar MUST become an overlay/sheet and the top
+navbar tabs MUST collapse into a menu or scrollable strip.
+
+Rationale: Responsiveness is an explicit requirement; desktop-first keeps the
+reference fidelity while guaranteeing usable smaller-screen behaviour.
+
+### Folder & Component Structure (Day 1.1)
+
+All under the existing `frontend/src/` workspace:
+
+```text
+frontend/src/
+├── App.jsx                     # Router + shell composition
+├── main.jsx                    # Entry
+├── index.css                   # Tailwind + design-token variables (dark theme)
+├── components/
+│   ├── layout/
+│   │   ├── Sidebar.jsx         # Logo, menu (Dashboard/Exercise/Nutrition), profile block
+│   │   ├── TopNavbar.jsx       # Logo+name, center tabs, user avatar+name
+│   │   └── DashboardLayout.jsx # Composes Sidebar + TopNavbar + <Outlet/>
+│   ├── dashboard/
+│   │   ├── Greeting.jsx        # Personalized greeting + current date
+│   │   ├── SummaryCard.jsx     # Reusable stat card (label, value, icon, delta)
+│   │   ├── SummaryCards.jsx    # Grid of the six SummaryCards
+│   │   ├── ProgressCard.jsx    # Reusable daily goal card with progress bar
+│   │   ├── ProgressCards.jsx   # Grid of Hydration/Calories/Steps/Sleep
+│   │   ├── ActivityRing.jsx    # Reusable SVG progress ring
+│   │   ├── ActivityRings.jsx   # Row of ActivityRings
+│   │   ├── WeeklyChart.jsx     # Weekly workout bar chart (hand-rolled)
+│   │   ├── CaloriesChart.jsx   # Calories chart (hand-rolled)
+│   │   ├── MacroChart.jsx      # Macro donut/bars (hand-rolled)
+│   │   ├── RecentWorkouts.jsx  # Recent workouts list
+│   │   ├── QuickLog.jsx        # QUICK LOG row (Water/Steps/Calories/Sleep/Weight/Workout)
+│   │   └── QuickActions.jsx    # Quick action buttons
+│   └── ui/
+│       ├── Card.jsx            # Reusable elevated card surface
+│       ├── ProgressBar.jsx     # Reusable progress bar
+│       ├── EmptyState.jsx      # Reusable icon + message empty state
+│       ├── Spinner.jsx         # Loading indicator
+│       └── index.js            # Barrel export
+├── pages/
+│   └── Dashboard.jsx           # Composes the dashboard sections
+├── data/
+│   ├── dashboardData.js        # Mock/seed data (summary, goals, charts, recent)
+│   └── constants.js            # Quick-log options, nav items, meal labels etc.
+└── context/
+    └── (only if a shared Context is required — e.g. DashboardDataContext)
+```
+
+Rules:
+- Unit-per-file: each component above is its own file; no mixed concerns.
+- `data/` holds mock data so the plan's later API swap is a single-file change.
+- `.js` for non-JSX logic/util; `.jsx` for components that render JSX.
+
+### Design System Decisions (Day 1.1)
+
+- **Colors (dark theme)**: page background deep charcoal/near-black (e.g.
+  `#0b0f14`); card surface slightly lighter (e.g. `#161b22`); borders subtle
+  muted (`#232a33`); primary accent one hue (e.g. lime/green `#a3e635` or
+  indigo — MUST match the reference); text primary near-white, secondary muted
+  gray; danger/red and neutral states reserved for errors.
+- **Spacing**: use a consistent 4px scale driven by Tailwind utilities
+  (`space-y-*`, `gap-*`, `p-*`); cards share one padding standard (e.g. `p-4`/`p-5`).
+- **Typography**: one primary font family (system or a single Google font already
+  present in the stack); fixed type scale for h1/h2/labels/body/caption; numbers
+  in stat cards share a strong numeric style.
+- **Card style**: subtle `border`, small `border-radius` (e.g. `rounded-xl`),
+  gentle shadow; no heavy gradients except where the reference uses them.
+- **Theme source**: define palette + spacing as Tailwind theme/CSS variables in
+  `index.css` once, then reference variables everywhere (no scattered hex codes).
+
+### State Management Approach (Day 1.1)
+
+- Default: `useState` inside the component that owns the slice of data.
+- Lift to `useState` in `Dashboard.jsx` (or a small module) only when two or more
+  components read/update the same value.
+- If shared state grows, add a single `DashboardDataContext` in `context/`; do not
+  add a state library.
+- Mock data lives in `data/dashboardData.js` and is imported, never re-created in
+  components.
+- No backend calls in this phase unless the plan explicitly reuses prior-day API
+  services; otherwise all data is mock/local.
+
+### Empty State Behaviour (Day 1.1)
+
+- Every data-driven section MUST define what "no data" looks like.
+- A shared `EmptyState` component renders a centered icon + short message + an
+  optional action label ("No workouts recorded yet"). Use it consistently.
+- Progress cards/rings with zero/undefined targets show a 0% bar and a "No goal
+  set" caption rather than a broken fraction.
+- Charts with no points render the empty state instead of an ugly axe.
+- Recent workouts with no entries render "No recent workouts" empty state.
+- Loading: consistent `Spinner` (or skeleton). Error: friendly message, never a
+  stack trace.
+
+### Responsive Behaviour Rules (Day 1.1)
+
+- **Desktop (>= 1024px)**: full fixed sidebar + top navbar + main grid; all six
+  summary cards in a responsive grid; Quick Log row fully visible.
+- **Tablet (640–1024px)**: sidebar collapses to an icon rail (or hamburger
+  toggle); grid columns reduce; center navbar tabs still accessible (may scroll).
+- **Mobile (< 640px)**: sidebar becomes an overlay/drawer opened from the top
+  navbar; center tabs collapse to a menu or horizontally scrollable strip; stat
+  cards stack 1–2 per row; Quick Log becomes a wrap grid.
+- No horizontal page scroll at any breakpoint; charts and cards reflow, never
+  overflow.
+
+### Coding Standards (Day 1.1)
+
+- **Language**: JavaScript only (`.js`/`.jsx`). No TypeScript (D1).
+- **Naming**: `camelCase` functions/variables, `PascalCase` components,
+  `SCREAMING_SNAKE` for constants.
+- **File types**: `.jsx` only for files that render JSX; `.js` for everything else.
+- **One logical unit per file**; default exports for components, named exports
+  for utilities/constants.
+- **Import style**: clean, grouped imports (react → libraries → local/relative).
+- **No comments explaining the obvious**; comments only where a decision or
+  non-obvious step needs justification. No "AI-looking" boilerplate comments.
+- **No dead code**; remove unused imports/variables. Keep components small and
+  readable.
+- **No hardcoded secrets or URLs**; read from config/env modules if real API is
+  used later.
+- **Accessibility**: semantic elements where sensible (buttons as `<button>`),
+  visible focus states, `aria-label` on icon-only controls, readable contrast
+  on the dark theme.
+
+### Definition of Done (Day 1.1 Success Criteria)
+
+Day 1.1 is DONE only when ALL of the following hold:
+
+1. The dashboard "Quick Log" + greeting render in a layout with a fixed left
+   sidebar (logo, Dashboard/Exercise/Nutrition, profile block) and a top navbar
+   (logo + "Fitness Tracker", center tabs Dashboard/Workouts/Nutrition/Goals/BMI,
+   user avatar + name).
+2. All six summary cards (Total Workouts, Total Exercises, Calories Burned,
+   Calories Consumed, Current Weight, Workout Streak) render with correct values.
+3. All four daily goal/progress cards (Hydration, Calories, Steps, Sleep) render
+   with progress bars reflecting the data.
+4. Activity/progress rings render and reflect their values.
+5. Weekly workout chart, Calories chart, and Macro chart render (hand-rolled) and
+   reflect the data; charts use the empty state when empty.
+6. Recent workouts section renders the provided/mock list (or its empty state).
+7. Every data-driven section shows a designed empty state, a loading state, and a
+   friendly error state — no section can render a blank/broken region.
+8. Design matches the dark reference as closely as possible: dark background,
+   elevated cards, one accent hue, clean typography, consistent spacing.
+9. Dashboard is fully responsive at desktop, tablet, and mobile breakpoints with
+   no horizontal scroll.
+10. Files are all `.js`/`.jsx` (no `.ts`/`.tsx`); no new runtime dependency was
+    added without a recorded Complexity Tracking justification.
+11. `npm run build` (vite build) succeeds cleanly; no lint errors under the
+    project's lint script.
+12. Manual browser verification is recorded (sections render, quick log buttons
+    present, empty/loading/error states exercised).
+
+### Out of Scope (Day 1.1 — Deferred)
+
+Explicitly NOT part of Day 1.1; do not expand Day 1.1 work to include:
+
+- TypeScript adoption or conversion of existing files.
+- Any backend changes: no new/custom endpoints, no auth/service changes, no new
+  data models, no database changes.
+- Real user data / wiring the dashboard to live API data unless the plan
+  explicitly reuses prior-day services (default is mock data).
+- Full CRUD inside the Quick Log buttons (they MAY be static/disabled placeholders
+  or increment local state only).
+- Authentication flows, registration, login UI changes.
+- Data persistence, offline cache, service workers, PWA.
+- i18n/localization, dark/light theme toggle, user-selectable themes.
+- Advanced animations beyond lightweight/transition polish.
+- Automated test suite and CI (optional smoke check only).
+- Deployment or production hosting.
+- New chart/state libraries (bans noted in D6).
+
+These MUST NOT be silently added to Day 1.1; open a new spec if one is required.
+
+---
+
 ## Environment Variables & Secrets
 
 `.env` is git-ignored; `.env.example` is committed with placeholder values only.
@@ -245,6 +578,11 @@ Day 3 (nutrition) also adds **no new required environment variables**; it reuses
 the same `MONGO_URI`, `JWT_SECRET`, `CLIENT_ORIGIN`, and cookie config. If a
 nutrition feature appears to need a new variable or dependency, open a
 constitution amendment first.
+
+> **Day 1.1 amendment:** The dashboard is frontend-only. If it renders standalone
+> with mock data it needs NO environment variables. If the plan reuses prior-day
+> API services, it uses the existing `VITE_API_URL` from the frontend
+> `.env.example`; Day 1.1 adds no new variables.
 
 `.env.example` (client): no secrets on the client.
 
@@ -583,6 +921,12 @@ requests. Reuse exactly what Day 1 built — do not re-architect.
 - A shared `Layout` (Day 1 `Layout.tsx`) SHOULD carry nav links to
   Workout List, Profile, Nutrition, and Logout.
 
+> **Day 1.1 amendment:** Day 1.1 replaces/upgrades the Dashboard surface (the
+> `/` route) with the full dashboard shell (Sidebar + TopNavbar + Quick Log +
+> all sections). The Dashboard MAY render behind the existing `ProtectedRoute`;
+> if it renders standalone with mock data, the plan MUST state the route wiring
+> explicitly. No other prior-day routes are removed.
+
 ### Profile page (`client/src/pages/Profile.tsx`)
 
 - **View mode** by default: shows `name`, `email`, `bio`, `age`, `heightCm`,
@@ -746,6 +1090,11 @@ Explicitly out of scope for Day 3; do not expand Day 3 work to include these:
 
 These MUST NOT be silently added to Day 3; open a new spec if one is required.
 
+> **Day 1.1 note:** The items listed above are the Day 1–3 deferred scope. The
+> Day 1.1 dashboard has its OWN out-of-scope list (see the Day 1.1 Out of Scope
+> section), which is separate from this one. Where an item appears in neither
+> list, open a new spec rather than silently expanding either phase.
+
 ## Governance
 
 This constitution supersedes all other practices. Amendments are required to
@@ -757,7 +1106,9 @@ change any rule above:
   MINOR for added principles or materially expanded guidance; PATCH for
   clarifications and typo fixes. Day 2 added Principle VII + new domain sections
   → **2.1.0** (MINOR). Day 3 added Principle VIII + the Nutrition domain
-  (models, contracts, frontend, DoD) → **2.2.0** (MINOR).
+  (models, contracts, frontend, DoD) → **2.2.0** (MINOR). Day 1.1 added the
+  frontend-only Dashboard phase and redefined the frontend language standard
+  (TypeScript → JavaScript-only for the Dashboard) → **3.0.0** (MAJOR).
 - **Compliance review**: All plans, specs, and task lists MUST pass the
   "Constitution Check" gate before implementation. Pull requests/reviews MUST
   confirm no violation of the security, ownership, and coding standards. Any
@@ -767,7 +1118,8 @@ change any rule above:
   truth; append amendments here and propagate changes to dependent templates.
 - **Day ownership**: This document governs the whole project. Day 1 scope is
   complete; Day 2 (profile + workouts) is complete; Day 3 (nutrition tracking)
-  is the current governed day. Later days append here via amendment, never by
-  rewriting prior rules without a MAJOR bump and migration note.
+  is complete; Day 1.1 (dark dashboard) is the current governed day. Later days
+  append here via amendment, never by rewriting prior rules without a MAJOR bump
+  and migration note.
 
-**Version**: 2.2.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-08-28
+**Version**: 3.0.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-08
