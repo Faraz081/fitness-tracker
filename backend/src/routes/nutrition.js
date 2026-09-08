@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { createNutritionHandler, deleteNutritionHandler, getNutritionHandler, listNutritionHandler, summaryDailyHandler, updateNutritionHandler, } from '../controllers/nutrition.js';
+import { authenticate } from '../middleware/authenticate.js';
+import { validate, validateQuery } from '../middleware/validate.js';
+import { nutritionEntrySchema, nutritionQuerySchema, nutritionUpdateSchema, } from '../utils/validators.js';
+export const nutritionRouter = Router();
+nutritionRouter.use(authenticate);
+nutritionRouter.post('/', validate(nutritionEntrySchema), createNutritionHandler);
+nutritionRouter.get('/', validateQuery(nutritionQuerySchema), listNutritionHandler);
+nutritionRouter.get('/summary/daily', validateQuery(nutritionQuerySchema), summaryDailyHandler);
+nutritionRouter.get('/:id', getNutritionHandler);
+nutritionRouter.patch('/:id', validate(nutritionUpdateSchema), updateNutritionHandler);
+nutritionRouter.delete('/:id', deleteNutritionHandler);

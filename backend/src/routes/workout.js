@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import { createWorkoutHandler, deleteWorkoutHandler, getWorkoutHandler, listWorkoutsHandler, updateWorkoutHandler, } from '../controllers/workout.js';
+import { authenticate } from '../middleware/authenticate.js';
+import { validate } from '../middleware/validate.js';
+import { workoutCreateSchema, workoutUpdateSchema } from '../utils/validators.js';
+export const workoutRouter = Router();
+workoutRouter.use(authenticate);
+workoutRouter.post('/', validate(workoutCreateSchema), createWorkoutHandler);
+workoutRouter.get('/', listWorkoutsHandler);
+workoutRouter.get('/:id', getWorkoutHandler);
+workoutRouter.patch('/:id', validate(workoutUpdateSchema), updateWorkoutHandler);
+workoutRouter.delete('/:id', deleteWorkoutHandler);

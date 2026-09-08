@@ -1,0 +1,199 @@
+openapi: 3.1.0
+info:
+  title: Fitness_Tracker Auth API — Day 1
+  version: 0.1.0
+  description: Registration, login, session restore and logout endpoints.
+    All responses use the envelope { success, data?, error? }.
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Account created. No token issued; user proceeds to login.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Email already registered (unique index race handled)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/auth/login:
+    post:
+      summary: Log in and issue a session
+      operationId: login
+      description: Sets an httpOnly, SameSite=Lax cookie (COOKIE_NAME) with a JWT.
+        Token is NOT returned in the body except optionally for debugging.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authenticated; cookie set
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid credentials (same message for unknown email or wrong password)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/auth/me:
+    get:
+      summary: Session restore / current user
+      operationId: getMe
+      description: Protected by authenticate middleware. Client calls with
+        credentials: 'include' on mount to restore the session.
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Current authenticated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Missing, invalid, or expired token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/auth/logout:
+    post:
+      summary: Clear the session cookie
+      operationId: logout
+      responses:
+        '200':
+          description: Cookie cleared
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    type: object
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: access_token
+  schemas:
+    RegisterRequest:
+      type: object
+      required: [name, email, password]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: trimmed
+        email:
+          type: string
+          format: email
+          description: lowercased before validation
+        password:
+          type: string
+          minLength: 6
+          description: never stored or returned plaintext
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+    UserData:
+      type: object
+      required: [id, name, email]
+      properties:
+        id:
+          type: string
+          description: Mongo _id serialized
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+    RegisterResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+        data:
+          $ref: '#/components/schemas/UserData'
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+        data:
+          type: object
+          required: [user]
+          properties:
+            user:
+              $ref: '#/components/schemas/UserData'
+            token:
+              type: string
+              description: OPTIONAL debug-only JWT echo; token normally lives in cookie
+    UserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+        data:
+          $ref: '#/components/schemas/UserData'
+    Error:
+      type: object
+      required: [message, code]
+      properties:
+        message:
+          type: string
+          description: generic public message, no stack traces or DB details
+        code:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'

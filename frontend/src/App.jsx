@@ -1,0 +1,52 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import Layout from './components/Layout';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
+import WorkoutList from './pages/WorkoutList';
+import WorkoutForm from './pages/WorkoutForm';
+import Nutrition from './pages/Nutrition';
+import { useAuth } from './hooks/useAuth';
+function PublicOnly({ children }) {
+    const { user, loading } = useAuth();
+    if (loading) {
+        return null;
+    }
+    if (user) {
+        return <Navigate to="/" replace/>;
+    }
+    return <>{children}</>;
+}
+export default function App() {
+    return (<Routes>
+      <Route element={<Layout />}>
+        <Route path="/login" element={<PublicOnly>
+              <Login />
+            </PublicOnly>}/>
+        <Route path="/register" element={<PublicOnly>
+              <Register />
+            </PublicOnly>}/>
+        <Route path="/" element={<ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>}/>
+        <Route path="/profile" element={<ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>}/>
+        <Route path="/workouts" element={<ProtectedRoute>
+              <WorkoutList />
+            </ProtectedRoute>}/>
+        <Route path="/workouts/new" element={<ProtectedRoute>
+              <WorkoutForm />
+            </ProtectedRoute>}/>
+        <Route path="/workouts/:id/edit" element={<ProtectedRoute>
+              <WorkoutForm />
+            </ProtectedRoute>}/>
+        <Route path="/nutrition" element={<ProtectedRoute>
+              <Nutrition />
+            </ProtectedRoute>}/>
+        <Route path="*" element={<Navigate to="/" replace/>}/>
+      </Route>
+    </Routes>);
+}

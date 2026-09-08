@@ -1,0 +1,356 @@
+openapi: 3.1.0
+info:
+  title: Fitness_Tracker Nutrition API — Day 3
+  version: 0.1.0
+  description: Owner-scoped Nutrition CRUD and a server-computed daily summary
+    (total calories/protein/carbs/fat). All endpoints are authenticated
+    (httpOnly cookie). Every response uses the envelope { success, data?, error? }.
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/nutrition:
+    get:
+      summary: List the current user's nutrition entries
+      operationId: listNutrition
+      description: Returns only the authenticated user's entries, newest first
+        (date desc, tie-break createdAt desc). Optional ?date=YYYY-MM-DD and
+        ?mealType= filters.
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: mealType
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/MealType'
+      responses:
+        '200':
+          description: List of the user's entries (may be empty)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NutritionEntry'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Create a nutrition entry
+      operationId: createNutrition
+      description: Creates an entry owned by the authenticated user (owner from
+        req.userId, never from the body).
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NutritionCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    $ref: '#/components/schemas/NutritionEntry'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/nutrition/summary/daily:
+    get:
+      summary: Get the caller's daily totals for a date
+      operationId: getDailySummary
+      description: Aggregates total calories/protein/carbs/fat server-side across
+        ONLY the caller's own entries for ?date=YYYY-MM-DD (default today).
+        Principle VIII — totals are server-computed.
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Daily totals
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    $ref: '#/components/schemas/DailySummary'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/nutrition/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Mongo ObjectId
+    get:
+      summary: Get a single nutrition entry
+      operationId: getNutrition
+      description: Returns the entry ONLY if it belongs to the caller
+        (findOne({ _id, owner })). Missing OR not-owned returns 404.
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: The entry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    $ref: '#/components/schemas/NutritionEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Update a nutrition entry
+      operationId: updateNutrition
+      description: Partial update of foodName/quantity/unit/calories/protein/carbs/
+        fat/mealType/date. findOneAndUpdate({ _id, owner }). Missing OR not-owned
+        returns 404.
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NutritionUpdateRequest'
+      responses:
+        '200':
+          description: Updated entry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    $ref: '#/components/schemas/NutritionEntry'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete a nutrition entry
+      operationId: deleteNutrition
+      description: deleteOne({ _id, owner }). Missing OR not-owned returns 404.
+        Success returns 204 No Content.
+      security:
+        - cookieAuth: []
+      responses:
+        '204':
+          description: Deleted (no body)
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: access_token
+  responses:
+    ValidationError:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing, invalid, or expired token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found (missing OR owned by another user — identical body)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    MealType:
+      type: string
+      enum: [breakfast, lunch, dinner, snack]
+    NutritionEntry:
+      type: object
+      required: [id, foodName, calories, mealType, date]
+      properties:
+        id:
+          type: string
+          description: Mongo _id serialized
+        foodName:
+          type: string
+        quantity:
+          type: number
+          description: optional; defaults to 1
+        unit:
+          type: string
+        calories:
+          type: number
+        protein:
+          type: number
+        carbs:
+          type: number
+        fat:
+          type: number
+        mealType:
+          $ref: '#/components/schemas/MealType'
+        date:
+          type: string
+          format: date-time
+    NutritionCreateRequest:
+      type: object
+      required: [foodName, calories, mealType]
+      properties:
+        foodName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        quantity:
+          type: number
+          exclusiveMinimum: 0
+          maximum: 1000
+        unit:
+          type: string
+          minLength: 1
+          maxLength: 20
+        calories:
+          type: number
+          minimum: 0
+          maximum: 2000
+        protein:
+          type: number
+          minimum: 0
+          maximum: 500
+        carbs:
+          type: number
+          minimum: 0
+          maximum: 500
+        fat:
+          type: number
+          minimum: 0
+          maximum: 500
+        mealType:
+          $ref: '#/components/schemas/MealType'
+        date:
+          type: string
+          format: date
+          description: optional; defaults to today
+    NutritionUpdateRequest:
+      type: object
+      description: partial; provided fields validated as in create
+      properties:
+        foodName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        quantity:
+          type: number
+          exclusiveMinimum: 0
+          maximum: 1000
+        unit:
+          type: string
+          minLength: 1
+          maxLength: 20
+        calories:
+          type: number
+          minimum: 0
+          maximum: 2000
+        protein:
+          type: number
+          minimum: 0
+          maximum: 500
+        carbs:
+          type: number
+          minimum: 0
+          maximum: 500
+        fat:
+          type: number
+          minimum: 0
+          maximum: 500
+        mealType:
+          $ref: '#/components/schemas/MealType'
+        date:
+          type: string
+          format: date
+    DailySummary:
+      type: object
+      required: [date, calories, protein, carbs, fat]
+      properties:
+        date:
+          type: string
+          format: date
+        calories:
+          type: number
+        protein:
+          type: number
+        carbs:
+          type: number
+        fat:
+          type: number
+    Error:
+      type: object
+      required: [message, code]
+      properties:
+        message:
+          type: string
+          description: generic public message, no stack traces or DB details
+        code:
+          type: string
+    ErrorResponse:
+      type: object
+      description: 400 uses VALIDATION_ERROR; 401 uses UNAUTHORIZED; 404 uses NOT_FOUND
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'

@@ -1,0 +1,402 @@
+openapi: 3.1.0
+info:
+  title: Fitness_Tracker Profile & Workout API — Day 2
+  version: 0.1.0
+  description: Profile read/update and full owner-scoped Workout CRUD (with
+    embedded exercises). All endpoints are authenticated (httpOnly cookie).
+    Every response uses the envelope { success, data?, error? }.
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/users/me:
+    get:
+      summary: Get the current user's profile
+      operationId: getProfile
+      description: Protected. Returns the authenticated user's profile with the
+        new optional profile fields. Password hash is never returned.
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Current user profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      summary: Update the current user's profile
+      operationId: updateProfile
+      description: Partial update of any subset of editable fields. Omitted or
+        null fields are left unchanged. email is not editable on Day 2.
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdateRequest'
+      responses:
+        '200':
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/workouts:
+    get:
+      summary: List the current user's workouts
+      operationId: listWorkouts
+      description: Returns only the authenticated user's workouts, newest first
+        (date desc, tie-break createdAt desc). Optional ?category= filter.
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: List of the user's workouts (may be empty)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Workout'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Create a workout (with exercises)
+      operationId: createWorkout
+      description: Creates a workout owned by the authenticated user (owner from
+        req.userId, never from the body).
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    $ref: '#/components/schemas/Workout'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/workouts/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Mongo ObjectId
+    get:
+      summary: Get a single workout
+      operationId: getWorkout
+      description: Returns the workout ONLY if it belongs to the caller
+        (findOne({ _id, owner })). Missing OR not-owned returns 404.
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: The workout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    $ref: '#/components/schemas/Workout'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Update a workout (and its exercises)
+      operationId: updateWorkout
+      description: Partial update of title/category/date/notes/exercises.
+        exercises replace the full array. findOneAndUpdate({ _id, owner }).
+        Missing OR not-owned returns 404.
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutUpdateRequest'
+      responses:
+        '200':
+          description: Updated workout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  data:
+                    $ref: '#/components/schemas/Workout'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete a workout
+      operationId: deleteWorkout
+      description: findOneAndDelete({ _id, owner }). Missing OR not-owned returns
+        404. Success returns 204 No Content.
+      security:
+        - cookieAuth: []
+      responses:
+        '204':
+          description: Deleted (no body)
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: access_token
+  responses:
+    ValidationError:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing, invalid, or expired token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found (missing OR owned by another user — identical body)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    Category:
+      type: string
+      enum: [strength, cardio, flexibility, hybrid, other]
+    Exercise:
+      type: object
+      required: [name, sets, reps]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: trimmed
+        sets:
+          type: integer
+          minimum: 1
+          maximum: 50
+        reps:
+          type: integer
+          minimum: 1
+          maximum: 500
+        weightKg:
+          type: number
+          minimum: 0
+          description: optional; 0/omitted = bodyweight
+        notes:
+          type: string
+          maxLength: 500
+        restTimeSec:
+          type: integer
+          minimum: 0
+          maximum: 600
+          description: optional, not required by UI on Day 2
+    Workout:
+      type: object
+      required: [id, title, category, date, exercises]
+      properties:
+        id:
+          type: string
+          description: Mongo _id serialized
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        date:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        exercises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Exercise'
+    WorkoutCreateRequest:
+      type: object
+      required: [title, category]
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+        category:
+          $ref: '#/components/schemas/Category'
+        date:
+          type: string
+          format: date
+          description: optional; defaults to today
+        notes:
+          type: string
+          maxLength: 2000
+        exercises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Exercise'
+    WorkoutUpdateRequest:
+      type: object
+      description: partial; exercises replace the full array when provided
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+        category:
+          $ref: '#/components/schemas/Category'
+        date:
+          type: string
+          format: date
+        notes:
+          type: string
+          maxLength: 2000
+        exercises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Exercise'
+    Profile:
+      type: object
+      required: [id, name, email]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        bio:
+          type: string
+        age:
+          type: integer
+          minimum: 13
+          maximum: 120
+        weightKg:
+          type: number
+          minimum: 20
+          maximum: 400
+        heightCm:
+          type: number
+          minimum: 60
+          maximum: 280
+        goal:
+          type: string
+          enum: [lose, maintain, gain, other]
+        fitnessLevel:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        avatarUrl:
+          type: string
+          nullable: true
+    ProfileUpdateRequest:
+      type: object
+      description: partial; omitted or null fields left unchanged; no email
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        bio:
+          type: string
+          maxLength: 500
+        age:
+          type: integer
+          minimum: 13
+          maximum: 120
+        weightKg:
+          type: number
+          minimum: 20
+          maximum: 400
+        heightCm:
+          type: number
+          minimum: 60
+          maximum: 280
+        goal:
+          type: string
+          enum: [lose, maintain, gain, other]
+        fitnessLevel:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        avatarUrl:
+          type: string
+          nullable: true
+    ProfileResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+        data:
+          $ref: '#/components/schemas/Profile'
+    Error:
+      type: object
+      required: [message, code]
+      properties:
+        message:
+          type: string
+          description: generic public message, no stack traces or DB details
+        code:
+          type: string
+    ErrorResponse:
+      type: object
+      description: 400 uses VALIDATION_ERROR; 401 uses UNAUTHORIZED; 404 uses NOT_FOUND
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'

@@ -1,0 +1,24 @@
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import { authRouter } from './routes/auth.js';
+import { profileRouter } from './routes/profile.js';
+import { workoutRouter } from './routes/workout.js';
+import { nutritionRouter } from './routes/nutrition.js';
+import { errorHandler } from './middleware/errorHandler.js';
+import { CLIENT_ORIGIN } from './config/index.js';
+export function createApp() {
+    const app = express();
+    app.use(cors({ origin: CLIENT_ORIGIN, credentials: true }));
+    app.use(express.json());
+    app.use(cookieParser());
+    app.use('/api/auth', authRouter);
+    app.use('/api/users/me', profileRouter);
+    app.use('/api/workouts', workoutRouter);
+    app.use('/api/nutrition', nutritionRouter);
+    app.use((_req, res) => {
+        res.status(404).json({ success: false, error: { message: 'Not found', code: 'NOT_FOUND' } });
+    });
+    app.use(errorHandler);
+    return app;
+}
