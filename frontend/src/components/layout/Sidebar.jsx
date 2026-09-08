@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Activity, Dumbbell, LogOut, Salad, X } from 'lucide-react';
+import { Activity, Dumbbell, LogOut, Salad, Target, TrendingUp, X } from 'lucide-react';
 import { SIDEBAR_MENU } from '../../data/constants';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -7,6 +7,8 @@ const menuIcons = {
     dashboard: Dumbbell,
     exercise: Activity,
     nutrition: Salad,
+    progress: TrendingUp,
+    goals: Target,
 };
 
 function Logo() {

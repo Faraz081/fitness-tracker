@@ -1,39 +1,37 @@
 <!--
   ============================================================================
-  SYNC IMPACT REPORT
+  SYNC IMPACT REPORT (Day 2.1 amendment)
   ============================================================================
-  Version change      : (major) 2.2.0  ->  3.0.0  (Day 1.1: dark dashboard)
-  Modified principles : Principle V "Type-Safe & Strict Coding Standards" -
-                        for the FRONTEND DASHBOARD PHASE ONLY, the language
-                        standard is overridden from TypeScript to JavaScript
-                        (.js/.jsx only). The original TS mandate still governs
-                        any backend work. No core Day 1-3 rule is deleted.
-                        Principle I "Project Structure" - the Dashboard phase
-                        is scoped to the existing `frontend/` workspace in
-                        place; no new workspace is created by this phase.
-  Added sections      : Day 1.1 Dashboard - Project Goal & Definition
-                        Day 1.1 Dashboard - Core Principles (D1-D8)
-                        Day 1.1 - Folder & Component Structure
-                        Day 1.1 - Design System Decisions
-                        Day 1.1 - State Management Approach
-                        Day 1.1 - Empty State Behaviour
-                        Day 1.1 - Responsive Behaviour Rules
-                        Day 1.1 - Coding Standards
-                        Day 1.1 - Definition of Done (Success Criteria)
-                        Day 1.1 - Out of Scope (Deferred)
-  Removed sections    : (none). All Day 1-3 sections retained as governed
-                        history; Day 1.1 is the current active phase and
-                        does not disturb completed work.
+  Version change      : (minor) 3.0.0  ->  3.1.0  (Day 2.1: Progress & Goals)
+  Modified principles : No principle removed or redefined. Core Principles
+                        I-VIII and Day 1.1 principles D1-D8 all continue to
+                        govern. The Day 1.1 frontend JavaScript-only override
+                        (Principle V amendment + D1) is EXTENDED to cover the
+                        Day 2.1 frontend phase. Day 1.1 heading marker changed
+                        from (CURRENT ACTIVE PHASE) to (COMPLETE).
+  Added sections      : Day 2.1 Progress & Goals - Project Goal & Definition
+                        Day 2.1 - Core Principles (P1-P9)
+                        Day 2.1 - Folder & Component Structure
+                        Day 2.1 - Data Shape Decisions
+                        Day 2.1 - Chart & Graph Behaviour
+                        Day 2.1 - Goal System Rules
+                        Day 2.1 - Streak System Rules
+                        Day 2.1 - State Management Approach
+                        Day 2.1 - UI/UX Rules
+                        Day 2.1 - Coding Standards
+                        Day 2.1 - Definition of Done (Success Criteria)
+                        Day 2.1 - Out of Scope (Deferred)
+  Removed sections    : (none). All Day 1-3 and Day 1.1 sections retained as
+                        governed history.
   Templates           : ✅ plan-template.md   - Constitution Check gate stays
-                                                 generic; dashboard phase adds no
+                                                 generic; frontend phases add no
                                                  new gate type
-                        ✅ spec-template.md   - acceptance scenarios / success
-                                                 criteria align with the dashboard
-                                                 DoD; user-story grouping reused
+                        ✅ spec-template.md   - user-story grouping + acceptance
+                                                 scenarios align with the Day 2.1
+                                                 DoD; reused as-is
                         ✅ tasks-template.md  - [P] parallel labelling and
-                                                 user-story grouping remain valid
-                                                 for the component-by-component
-                                                 dashboard build
+                                                 [US#] user-story grouping remain
+                                                 valid for the section build
                         ⚠ commands/           - NO commands/*.md directory exists
                                                  in this repo (PowerShell setup);
                                                  plan-template.md line 6 references
@@ -41,13 +39,12 @@
                                                  as a note only — non-blocking,
                                                  left as-is (no edit needed)
   Deferred TODOs      : (none). Ratification date (2026-08-27) and amendment date
-                        (2026-08-28) confirmed from footer + git history.
-  NOTE                : The reference screenshot named in the Day 1.1 input is
-                        NOT present in the repo. The constitution encodes the
-                        dashboard requirements as written; the implementing
-                        agent MUST treat the reference screenshot as the visual
-                        authority if it is provided, and the written spec as
-                        binding where the two diverge.
+                        (2026-09-08) confirmed from footer + prior PHRs.
+  NOTE                : Day 2.1 is a frontend-only, mock-data phase exactly like
+                        Day 1.1. /progress and /goals render inside the existing
+                        DashboardLayout shell (Sidebar + TopNavbar). No backend,
+                        no API, no auth wiring, no TypeScript, and no new runtime
+                        dependencies in scope.
   ============================================================================
 -->
 
@@ -193,6 +190,11 @@ constitution and in the feature contracts before implementation.
 > principle (naming, one-unit-per-file, no hardcoded secrets, clean declarative
 > control flow) applies unchanged. This override is scoped to the frontend
 > dashboard work; any backend code remains TypeScript-governed.
+>
+> **Day 2.1 amendment:** The override above EXTENDS to the Day 2.1 Progress &
+> Goals phase (frontend-only, same dark dashboard shell). All Day 2.1 work is
+> `.js`/`.jsx` only. Any backend/TypeScript task beyond Day 2.1 scope requires a
+> new amendment.
 
 Rationale: Strict typing is the cheapest correctness tool in a MERN app and is
 a precondition for reliable refactoring on later days. This becomes more
@@ -270,7 +272,7 @@ ownership isolation, avoiding drift if computed in two places.
 
 ---
 
-## Day 1.1 — Dark Fitness Tracker Dashboard (CURRENT ACTIVE PHASE)
+## Day 1.1 — Dark Fitness Tracker Dashboard (COMPLETE)
 
 ### Project Goal & Definition
 
@@ -551,6 +553,356 @@ These MUST NOT be silently added to Day 1.1; open a new spec if one is required.
 
 ---
 
+## Day 2.1 — Progress & Goals (CURRENT ACTIVE PHASE)
+
+### Project Goal & Definition
+
+Day 2.1 builds the **Progress & Goals** section of the Fitness Tracker,
+continuing the Day 1.1 modern dark dashboard. It is **frontend-only** using
+**only `.js` and `.jsx` files (strictly no TypeScript)**, scoped to the existing
+`frontend/` workspace, and reuses the committed React + Vite + React Router +
+Tailwind setup plus the Day 1.1 layout shell (`DashboardLayout` = `Sidebar` +
+`TopNavbar`) and design tokens. It MUST NOT break, modify, or regress any Day 1.1
+dashboard behaviour (the dark shell, tokens, `ui/` primitives, existing routes).
+
+The phase delivers TWO new pages plus the features they surface, matching the
+existing visual language (deep charcoal background, `dash-card` surfaces, lime
+accent, consistent type scale):
+
+1. **Progress page** (`/progress`): weight tracking (log + list + graph), body
+   measurements, weight progress graph, workout performance graph, strength /
+   progression history.
+2. **Goals page** (`/goals`): personal goals with progress bars, goal completion
+   status, milestones, and the streak system.
+
+Both pages MUST render inside the existing `DashboardLayout` shell. The top-nav
+tabs and sidebar menu may activate real routes (`Dashboard`, `Workouts`,
+`Nutrition`, **`Progress`**, **`Goals`**) while any tab without an implemented
+page stays an inert placeholder exactly as Day 1.1 did. Inert tabs DO NOT
+warrant new routes.
+
+### Core Principles (Day 2.1)
+
+#### P1. Frontend-Only, Mock-Data Phase (NON-NEGOTIABLE)
+
+Day 2.1 MUST NOT touch the backend, add API calls, require authentication, or
+change any data model or environment variable. All data is mock/local, imported
+from clearly-named modules under `frontend/src/data/` so it can later be swapped
+for real API responses. Existing `services/` API code is out of scope.
+
+Rationale: Matches the Day 1.1 delivery model; keeps the phase shippable and
+reviewable without server, DB, or auth dependencies.
+
+#### P2. JavaScript-Only (NON-NEGOTIABLE)
+
+Same rule as Day 1.1 D1: `.js` for logic/util/constants/data modules, `.jsx` for
+components and pages. No `.ts`/`.tsx`, no type annotations, no `@ts-check`, no
+`tsconfig` changes governing the frontend.
+
+#### P3. Reuse the Day 1.1 Shell and Primitives (NON-NEGOTIABLE)
+
+The Progress and Goals pages MUST reuse `DashboardLayout` (Sidebar + TopNavbar),
+the `dash-card`, `dash-num`, `accent-text`, `ring-track` utilities/tokens from
+`index.css`, and the existing `ui/` primitives (`Card`, `ProgressBar`,
+`EmptyState`, `Spinner`). Do not fork or restyle copies of Day 1.1 markup. New
+shared primitives ONLY when needed and non-colliding with existing exports.
+
+Rationale: "Match the overall visual language of the existing dashboard" is an
+explicit requirement; duplication is the anti-pattern D4 forbids.
+
+#### P4. Every Section Has Proper Empty, Loading, and Error States
+
+Each data-driven section MUST render a designed `EmptyState` when its data is
+absent, a `Spinner`/loading branch while loading, and a friendly error message
+(never a stack trace) on error. Charts with zero/one points, empty goal lists,
+and empty streak data MUST show designed empty states, never broken axes or NaN.
+
+#### P5. No New Runtime Dependencies
+
+Reuse the committed stack; hand-rolled SVG for all graphs. No charting library,
+no date library, no state library. If a task appears to need one, open a
+constitution amendment first and record it in Complexity Tracking.
+
+#### P6. Charts Must Be Interpretable
+
+Every chart MUST have: a clear label/title (from its section), readable axis
+labels or captions, explicit point values on hover/title where sensible, and a
+legend or inline key for multi-series. Charts MUST reflow with the card width
+(`viewBox` + `w-full`), never overflow, and never render blank.
+
+#### P7. Derived Values Are Pure Functions
+
+Progress percentage, goal completion status, milestone reached/not-reached, and
+streak counts MUST be computed by small, exported, **pure JavaScript
+functions** in `frontend/src/utils/` (e.g. `progressUtils.js`, `streakUtils.js`)
+that take data and return values. Components render results; they do not embed
+calculations inline. This makes the rules testable and ready for a future API
+swap.
+
+Rationale: Goal/streak math is finicky; isolating it in pure functions keeps UI
+components dumb and the rules single-sourced.
+
+#### P8. Local State Only; Same Discipline as Day 1.1
+
+Page/section state uses `useState` locally. Lift only when two or more
+components share it. No external state library. Optional user interactions
+(e.g. logging a weight entry) may append to local state for the session; nothing
+persists, and refresh resets to mock data.
+
+#### P9. Fully Responsive, Desktop-First (Same as D8)
+
+Progress & Goals MUST be fully responsive: full side-by-side layout at desktop,
+stacking/reflow at tablet, single-column with no horizontal scroll at mobile.
+All grids (goal cards, measurement cards, streak row) reflow like the Day 1.1
+summary/progress grids.
+
+### Folder & Component Structure (Day 2.1)
+
+All under the existing `frontend/src/` workspace. Additions are additive — no
+Day 1.1 file is moved or renamed, except `App.jsx` gaining two routes and
+`index.css` MAY gain strictly-additive token/utility classes.
+
+```text
+frontend/src/
+├── App.jsx                     # + <Route path="/progress"> and <Route path="/goals">
+│                               #   (standalone like "/", inside DashboardLayout)
+├── components/
+│   ├── progress/
+│   │   ├── ProgressPageLayout? # NOT needed — reuse components/layout/DashboardLayout
+│   │   ├── WeightTracker.jsx   # Latest weight + quick-add + entry list
+│   │   ├── Measurements.jsx    # Body measurement cards (chest/waist/arms/hips/thighs)
+│   │   ├── WeightChart.jsx     # Weight-progress line/area chart (hand-rolled SVG)
+│   │   ├── PerformanceChart.jsx# Workout performance graph (volume/load over time)
+│   │   ├── StrengthHistory.jsx # Strength / progression history (best lifts, PRs)
+│   │   ├── GoalsList.jsx       # Goals page: grid of GoalCards
+│   │   ├── GoalCard.jsx        # Reusable goal card (title, ProgressBar, status, milestones)
+│   │   ├── Milestones.jsx      # Milestone checklist within a goal card
+│   │   ├── StreakRow.jsx       # Row of streak stats
+│   │   ├── StreakStat.jsx      # Reusable streak display (icon + count + unit + best)
+│   │   └── StatusBadge.jsx     # status pill (on track / completed / missed / no goal)
+│   └── ui/                     # existing; add non-colliding primitives ONLY if needed
+├── pages/
+│   ├── Progress.jsx            # /progress — composes Progress-page sections
+│   └── Goals.jsx               # /goals — composes Goals-page sections
+├── data/
+│   ├── progressData.js         # weightEntries, measurements, performance, strengthHistory
+│   ├── goalsData.js            # goals (+ milestones), streaks; EMPTY variants
+│   └── constants.js            # + MEASUREMENT_FIELDS, GOAL_CATEGORIES, STREAK_TYPES
+└── utils/
+    ├── progressUtils.js        # progressPct, goalStatus, milestonesReached (pure)
+    └── streakUtils.js          # computeStreak, streakLabel (pure)
+```
+
+Rules:
+- One logical unit per file; components that render JSX are `.jsx`; pure logic
+  and data are `.js`.
+- Sections are composed in `pages/Progress.jsx` and `pages/Goals.jsx` exactly as
+  Day 1.1 composes sections in `pages/Dashboard.jsx`.
+- `data/` and `utils/` are the ONLY places mock data and calculations live.
+
+### Data Shape Decisions (Day 2.1)
+
+All mock data is plain JS objects/arrays in `data/progressData.js` and
+`data/goalsData.js`, each with a populated and an EMPTY variant (mirroring Day
+1.1 `dashboardData.js` / `emptyDashboardData`).
+
+**Weight entries** — one object per day logged:
+
+```js
+{ id, date: "2026-09-01", weightKg: 78.5 }
+```
+
+**Body measurements** — one object per measuring session (all values optional,
+cm):
+
+```js
+{ id, date: "2026-09-01", chestCm, waistCm, armsCm, hipsCm, thighsCm }
+```
+
+**Workout performance** — per-week aggregate to feed the performance graph:
+
+```js
+{ id, week: "2026-08-31", totalVolumeKg: 12400, sessions: 4, bestLiftKg: 95 }
+```
+
+**Strength / progression history** — best-effort records (PRs):
+
+```js
+{ id, exercise: "Bench Press", date: "2026-09-05", prKg: 95, sets: 4, reps: 8, note }
+```
+
+**Goals** — each goal has a current vs target value plus completion info and
+nested milestones:
+
+```js
+{ id, title: "Squat 120kg", category: "strength",
+  targetValue: 120, currentValue: 110, unit: "kg",
+  startDate, targetDate, completedAt: null,
+  milestones: [{ id, title: "50% — 60kg", threshold: 50, reachedAt }] }
+```
+
+**Streaks** — display-level records (count + best):
+
+```js
+{ key: "workout", label: "Workout Streak", current: 12, best: 21, unit: "days" }
+```
+
+Constants in `constants.js`: `MEASUREMENT_FIELDS` (key + label + unit per
+measurement), `GOAL_CATEGORIES` (e.g. `strength`, `weight`, `habit`,
+`endurance`), `STREAK_TYPES` (workout, hydration, check-in).
+
+### Chart & Graph Behaviour (Day 2.1)
+
+- **WeightChart**: line/area chart, x = date, y = weightKg. One point renders as
+  a marker + value; two point-ish renders a flat line; a single point is NOT an
+  empty state but shows the recorded value. Zero entries → `EmptyState`
+  ("No weight entries yet").
+- **PerformanceChart**: bar or line of weekly `totalVolumeKg` (or sessions);
+  empty → `EmptyState`. Show per-bar/week value via `title`/caption.
+- Both charts: hand-rolled SVG with `viewBox` scaling, `w-full`, `role="img"`,
+  `aria-label`, no external library (P5).
+- Every section follows P4: loading (Spinner), error (friendly message), empty
+  (EmptyState).
+
+### Goal System Rules (Day 2.1)
+
+1. **Progress percentage** — `progressPct(current, target)` returns an integer
+   clamped to 0–100. `target <= 0` (or missing) → returns `null` and the card
+   shows a "No goal set" state (0-width bar + caption, per Day 1.1 empty
+   behaviour).
+2. **Completion status** — `goalStatus(goal)` derives from data, never stored
+   as a free-for-all string:
+   - `completed` if `currentValue >= targetValue` OR `completedAt` is set.
+   - `missed` if not completed AND `targetDate` is in the past.
+   - `on-track` otherwise.
+3. **Milestones** — each milestone has a numeric `threshold` (0–100). A
+   milestone is `reached` when `progressPct >= threshold` (or its `reachedAt` is
+   set). Reached milestones render as checked/`accent`; unreached render muted.
+   Milestones display within their goal card, never as a separate top-level
+   section without a goal.
+4. **Status display** — a `StatusBadge` pill uses semantic colors from the
+   theme: `on-track` = success green, `completed` = accent (lime),
+   `missed` = warning amber, `no-goal` = muted gray.
+
+### Streak System Rules (Day 2.1)
+
+1. Streaks count **consecutive occurrences** of a behaviour (days with logged
+   workouts, exercise, or check-in) up to today.
+2. A pure helper `computeStreak(dates, { cadenceDays = 1 })` in
+   `streakUtils.js`:
+   - sorts unique dates ascending,
+   - walks backwards from the most recent date,
+   - increments while the previous date is within `cadenceDays` of the prior
+     (gap > cadenceDays breaks the streak),
+   - returns `{ current, best, active }` where `active=false` when the most
+     recent occurrence is older than `cadenceDays` (streak counts as broken).
+3. Day 2.1 mock: `goalsData.js`/`progressData.js` MAY ship static `current`/
+   `best` values, but the displayed values MUST still flow through the same
+   formatting helpers so behavior matches real computation. When workout dates
+   are available, `computeStreak` SHOULD be used to derive the workout streak.
+4. **Display** — `StreakStat` shows icon + prominent current count + unit and a
+   secondary "Best: N" line. The streak row (Hydration/Workout/Check-in or
+   similar) renders on the Goals page (and MAY on Progress). Empty → "No streak
+   data yet" EmptyState; `current: 0` is valid and renders "0 days — start
+   today", never a blank.
+5. Streaks are per-user and derived; they are NOT editable mock numbers stored
+   in components.
+
+### State Management Approach (Day 2.1)
+
+- `useState` in the page owning each slice (weight entries, measurements,
+  goals, streaks). Import mock data; never re-create it in components.
+- Section components receive data + optional handlers as props (same pattern as
+  Day 1.1 `SummaryCards`, `ProgressCards`).
+- Lift state only if two or more components share it (e.g. a quick-add that must
+  update both the latest-weight card and the weight list → lift to the page).
+- No Context required for Day 2.1 unless the plan demonstrates shared state that
+  local `useState` cannot cleanly handle; if added, a single `ProgressDataContext`
+  in `context/`.
+
+### UI/UX Rules (Day 2.1)
+
+- Same dark theme, tokens, `dash-card` sections, `dash-num` headline numbers,
+  lime accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1.
+- Progress bars reuse `ui/ProgressBar` with the same `ring-track`/status color
+  conventions established in Day 1.1.
+- Status indicators are the `StatusBadge` pill only; never invent new color
+  meanings beyond success/accent/warning/muted.
+- Numeric formatting: weights/measurements with one decimal (e.g. `78.5 kg`),
+  volumes with thousands separators (e.g. `12,400 kg`), streak counts as whole
+  numbers + unit.
+- Accessibility: measurement inputs as real `<input>`s, icon-only controls get
+  `aria-label`, semantic `<section>`/`<ul>` markup, focus-visible rings use the
+  accent color, contrast readable on dark.
+- Long exercise/goal names truncate (`truncate`), never wrap awkwardly.
+
+### Coding Standards (Day 2.1)
+
+- **Language**: JavaScript only (`.js`/`.jsx`); no TypeScript (P2).
+- **Naming**: `camelCase` functions/variables, `PascalCase` components,
+  `SCREAMING_SNAKE` constants. Default export for pages/components, named
+  exports for utils/constants.
+- **Imports**: clean and grouped (react → libraries → local relative).
+- **Comments**: none explaining the obvious; only decision/non-obvious
+  justifications. No AI-looking boilerplate.
+- **Dead code**: none; remove unused imports/variables.
+- **Purity**: calculations live in `utils/` pure functions (P7), not in render.
+- All other Day 1.1 coding standards apply unchanged.
+
+### Definition of Done (Day 2.1 Success Criteria)
+
+Day 2.1 is DONE only when ALL of the following hold, in addition to Day 1.1
+still passing:
+
+1. Day 1.1 dashboard at `/` renders unchanged (shell, sections, charts, empty
+   states, responsive behaviour) — no regression.
+2. `/progress` renders inside the existing `DashboardLayout` and shows: weight
+   tracking (latest + list), body measurements, weight progress graph, workout
+   performance graph, and strength / progression history.
+3. `/goals` renders inside the existing `DashboardLayout` and shows: personal
+   goals with progress bars, completion status badges, and milestones.
+4. The streak system renders correctly: current count + best display, derived
+   via `streakUtils`, with a valid "0 / broken" state and an empty state.
+5. Progress percentages clamp at 0–100; `target <= 0` shows "No goal set";
+   statuses are exactly `on-track | completed | missed` derived from data.
+6. Every chart and section has designed empty, loading, and error states — none
+   render blank/broken/NaN (P4).
+7. Design matches the existing dark dashboard: same tokens, cards, accent,
+   type; fully responsive with no horizontal scroll at any breakpoint.
+8. All new files are `.js`/`.jsx` (no `.ts`/`.tsx`); no new runtime dependency;
+   no backend, API, env, or model changes.
+9. `npm run build` (vite build) succeeds cleanly.
+10. Manual browser verification is recorded (both pages, all sections, empty/
+    loading/error exercised, responsive at 3 breakpoints, Day 1.1 `/` regression
+    check).
+11. Navigation: implemented tabs (Dashboard, Workouts, Nutrition, Progress,
+    Goals) navigate correctly; any inert tabs remain inert placeholders.
+
+### Out of Scope (Day 2.1 — Deferred)
+
+Explicitly NOT part of Day 2.1; do not expand Day 2.1 work to include:
+
+- Any backend, API, or database change (no models, routes, controllers, or
+  services); server-side computation of stats.
+- Authentication/registration/login changes or protecting `/progress`/`/goals`
+  behind auth (they render as standalone mock pages like Day 1.1 `/`).
+- TypeScript adoption or conversion of existing files.
+- Real persistence, storage, sync, import/export (CSV/Fitbit/Apple Health),
+  or device integrations.
+- Notifications, reminders, push, email, social sharing, and public/community
+  leaderboards.
+- Advanced analytics: one-rep-max estimation algorithms beyond recorded lifts,
+  machine-learning coaching, trend-line forecasting, body-composition estimation.
+- Editing/deleting weight or measurement historical entries beyond a mock quick-
+  add in local state; goal creation/editing UI beyond the mock goal list.
+- Automated test suite and CI for the frontend.
+- New runtime dependencies (charts/date/state libraries).
+- Deployment or production hosting.
+
+These MUST NOT be silently added to Day 2.1; open a new spec if one is required.
+
+---
+
 ## Environment Variables & Secrets
 
 `.env` is git-ignored; `.env.example` is committed with placeholder values only.
@@ -583,6 +935,9 @@ constitution amendment first.
 > with mock data it needs NO environment variables. If the plan reuses prior-day
 > API services, it uses the existing `VITE_API_URL` from the frontend
 > `.env.example`; Day 1.1 adds no new variables.
+
+> **Day 2.1 amendment:** The Progress & Goals phase is frontend-only with mock
+> data and adds NO environment variables or new required config.
 
 `.env.example` (client): no secrets on the client.
 
@@ -927,6 +1282,12 @@ requests. Reuse exactly what Day 1 built — do not re-architect.
 > if it renders standalone with mock data, the plan MUST state the route wiring
 > explicitly. No other prior-day routes are removed.
 
+> **Day 2.1 amendment:** Day 2.1 adds `/progress` and `/goals` as standalone
+> routes that render `Progress`/`Goals` pages inside the existing
+> `DashboardLayout` (mirroring the Day 1.1 `/` wiring). No auth route (`/login`,
+> `/register`) is touched; auth-protected routes (`/profile`, `/workouts*`,
+> `/nutrition`) stay unchanged. The plan MUST state the exact `App.jsx` wiring.
+
 ### Profile page (`client/src/pages/Profile.tsx`)
 
 - **View mode** by default: shows `name`, `email`, `bio`, `age`, `heightCm`,
@@ -1108,7 +1469,9 @@ change any rule above:
   → **2.1.0** (MINOR). Day 3 added Principle VIII + the Nutrition domain
   (models, contracts, frontend, DoD) → **2.2.0** (MINOR). Day 1.1 added the
   frontend-only Dashboard phase and redefined the frontend language standard
-  (TypeScript → JavaScript-only for the Dashboard) → **3.0.0** (MAJOR).
+  (TypeScript → JavaScript-only for the Dashboard) → **3.0.0** (MAJOR). Day 2.1
+  added the Progress & Goals frontend phase (extends the JS-only override,
+  adds P1-P9 + domain sections) → **3.1.0** (MINOR).
 - **Compliance review**: All plans, specs, and task lists MUST pass the
   "Constitution Check" gate before implementation. Pull requests/reviews MUST
   confirm no violation of the security, ownership, and coding standards. Any
@@ -1118,8 +1481,8 @@ change any rule above:
   truth; append amendments here and propagate changes to dependent templates.
 - **Day ownership**: This document governs the whole project. Day 1 scope is
   complete; Day 2 (profile + workouts) is complete; Day 3 (nutrition tracking)
-  is complete; Day 1.1 (dark dashboard) is the current governed day. Later days
-  append here via amendment, never by rewriting prior rules without a MAJOR bump
-  and migration note.
+  is complete; Day 1.1 (dark dashboard) is complete; Day 2.1 (Progress & Goals)
+  is the current governed day. Later days append here via amendment, never by
+  rewriting prior rules without a MAJOR bump and migration note.
 
-**Version**: 3.0.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-08
+**Version**: 3.1.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-08

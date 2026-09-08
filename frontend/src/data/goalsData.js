@@ -1,0 +1,66 @@
+export const goalsData = {
+    goals: [
+        {
+            id: 'g1',
+            title: 'Squat 120 kg',
+            category: 'strength',
+            targetValue: 120,
+            currentValue: 80,
+            unit: 'kg',
+            startDate: '2026-06-01',
+            targetDate: '2026-10-15',
+            completedAt: null,
+            milestones: [
+                { id: 'ms1', title: '50% — 60 kg', threshold: 50, reachedAt: '2026-07-10' },
+                { id: 'ms2', title: '75% — 90 kg', threshold: 75, reachedAt: null },
+                { id: 'ms3', title: '90% — 108 kg', threshold: 90, reachedAt: null },
+            ],
+        },
+        {
+            id: 'g2',
+            title: 'Weigh 78 kg',
+            category: 'weight',
+            targetValue: 78,
+            currentValue: 78,
+            unit: 'kg',
+            startDate: '2026-07-01',
+            targetDate: '2026-09-30',
+            completedAt: '2026-09-05',
+            milestones: [],
+        },
+        {
+            id: 'g3',
+            title: 'Run a 5K race',
+            category: 'endurance',
+            targetValue: 5,
+            currentValue: 2,
+            unit: 'km',
+            startDate: '2026-06-15',
+            targetDate: '2026-08-20',
+            completedAt: null,
+            milestones: [],
+        },
+        {
+            id: 'g4',
+            title: 'Workout 3× per week',
+            category: 'habit',
+            targetValue: 12,
+            currentValue: 7,
+            unit: 'sessions',
+            startDate: '2026-08-01',
+            targetDate: '2026-09-30',
+            completedAt: null,
+            milestones: [],
+        },
+    ],
+    streaks: [
+        { key: 'workout', label: 'Workout Streak', current: 12, best: 21, unit: 'days' },
+        { key: 'checkin', label: 'Check-in Streak', current: 5, best: 9, unit: 'days' },
+        { key: 'hydration', label: 'Hydration Streak', current: 0, best: 4, unit: 'days' },
+    ],
+};
+
+export const emptyGoalsData = {
+    goals: [],
+    streaks: [],
+};

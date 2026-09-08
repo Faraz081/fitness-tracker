@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
+import Progress from './pages/Progress';
+import Goals from './pages/Goals';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -22,6 +24,12 @@ function PublicOnly({ children }) {
 export default function App() {
     return (<Routes>
   <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>
+      <Route path="/progress" element={<ProtectedRoute>
+            <Progress />
+          </ProtectedRoute>}/>
+      <Route path="/goals" element={<ProtectedRoute>
+            <Goals />
+          </ProtectedRoute>}/>
       <Route element={<Layout />}>
         <Route path="/login" element={<PublicOnly>
               <Login />
