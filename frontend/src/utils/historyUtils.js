@@ -1,3 +1,5 @@
+import { kgToLb, weightUnitLabel } from './units';
+
 export function workoutVolume(workout) {
     if (!workout?.exercises?.length) {
         return 0;
@@ -8,14 +10,18 @@ export function workoutVolume(workout) {
     }, 0);
 }
 
-export function formatVolume(value) {
-    const n = Math.round(Number(value) || 0);
-    return `${n.toLocaleString()} kg`;
+export function formatVolume(value, units = 'kg') {
+    const raw = Math.round(Number(value) || 0);
+    const n = units === 'lb' ? Math.round(kgToLb(raw)) : raw;
+    return `${n.toLocaleString()} ${weightUnitLabel(units)}`;
 }
 
-export function filterWorkouts(workouts, { category = 'all', from, to } = {}) {
+export function filterWorkouts(workouts, { category = 'all', from, to, query = '' } = {}) {
     return workouts
         .filter((w) => {
+            if (query && !searchableWorkoutText(w).includes(query.toLocaleLowerCase())) {
+                return false;
+            }
             const categoryMatch = !category || category === 'all' || w.category === category;
             const fromMatch = !from || w.date >= from;
             const toMatch = !to || w.date <= to;
@@ -23,6 +29,13 @@ export function filterWorkouts(workouts, { category = 'all', from, to } = {}) {
         })
         .slice()
         .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+function searchableWorkoutText(workout) {
+    return [workout.name, workout.notes, workout.category, ...(workout.exercises || []).map((ex) => ex.name)]
+        .filter(Boolean)
+        .join(' ')
+        .toLocaleLowerCase();
 }
 
 export function groupByDate(workouts) {

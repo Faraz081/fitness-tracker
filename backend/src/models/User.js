@@ -12,6 +12,10 @@ const userSchema = new Schema({
     goal: { type: String, enum: ['lose', 'maintain', 'gain', 'other'] },
     fitnessLevel: { type: String, enum: ['beginner', 'intermediate', 'advanced'] },
     avatarUrl: { type: String, trim: true, maxlength: 500, default: null },
+    preferences: {
+        units: { type: String, enum: ['kg', 'lb'], default: 'kg' },
+        theme: { type: String, enum: ['dark', 'light'], default: 'dark' },
+    },
 });
 userSchema.pre('save', async function hashPassword() {
     if (!this.isModified('password')) {

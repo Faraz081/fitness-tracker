@@ -1,6 +1,10 @@
 import { formatVolume } from '../../utils/historyUtils';
+import { formatWeight, weightUnitLabel } from '../../utils/units';
+import { useSettings } from '../../context/SettingsContext';
 
 export function ExerciseRow({ exercise, date }) {
+    const { preferences } = useSettings();
+    const units = preferences.units;
     const weight = Number(exercise?.weightKg);
     const hasWeight = weight > 0;
     const label = `${exercise.sets} × ${exercise.reps}`;
@@ -22,11 +26,11 @@ export function ExerciseRow({ exercise, date }) {
             </div>
             <div className="shrink-0 text-right">
                 <p className="text-sm tabular-nums text-[var(--color-ink-soft)]">
-                    {label} {hasWeight ? `@ ${weight} kg` : '· Bodyweight'}
+                    {label} {hasWeight ? `@ ${formatWeight(weight, units)} ${weightUnitLabel(units)}` : '· Bodyweight'}
                 </p>
                 {hasWeight && (
                     <p className="text-xs tabular-nums text-[var(--color-ink-muted)]">
-                        {formatVolume(exercise.sets * exercise.reps * weight)} volume
+                        {formatVolume(exercise.sets * exercise.reps * weight, units)} volume
                     </p>
                 )}
             </div>

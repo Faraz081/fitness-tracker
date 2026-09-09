@@ -1,7 +1,11 @@
 import { Trophy } from 'lucide-react';
 import { EmptyState } from '../ui';
+import { useSettings } from '../../context/SettingsContext';
+import { formatWeight, weightUnitLabel } from '../../utils/units';
 
 export function StrengthHistory({ records }) {
+    const { preferences } = useSettings();
+    const units = preferences.units;
     if (!records || records.length === 0) {
         return <EmptyState icon={<Trophy className="h-7 w-7" />} title="No strength records yet" message="Your best lifts will appear here." />;
     }
@@ -21,7 +25,7 @@ export function StrengthHistory({ records }) {
                             {record.sets} × {record.reps} · {record.date}
                         </p>
                     </div>
-                    <span className="shrink-0 dash-num text-[var(--color-ink)]">{record.prKg} <span className="text-xs font-normal text-[var(--color-ink-muted)]">kg</span></span>
+                    <span className="shrink-0 dash-num text-[var(--color-ink)]">{formatWeight(record.prKg, units)} <span className="text-xs font-normal text-[var(--color-ink-muted)]">{weightUnitLabel(units)}</span></span>
                 </li>
             ))}
         </ul>

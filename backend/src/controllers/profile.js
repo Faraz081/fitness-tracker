@@ -8,3 +8,11 @@ export async function updateProfileHandler(req, res) {
     const profile = await profileService.updateProfile(req.userId ?? '', req.body);
     success(res, profile);
 }
+export async function getPreferencesHandler(req, res) {
+    const preferences = await profileService.getPreferences(req.userId ?? '');
+    success(res, { preferences });
+}
+export async function updatePreferencesHandler(req, res) {
+    const preferences = await profileService.updatePreferences(req.userId ?? '', req.body);
+    success(res, { preferences });
+}

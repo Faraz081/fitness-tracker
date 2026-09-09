@@ -25,3 +25,13 @@ export async function logoutHandler(_req, res) {
     res.clearCookie(COOKIE_NAME, { sameSite: 'lax' });
     success(res, {});
 }
+export async function changePasswordHandler(req, res) {
+    await authService.changePassword(req.userId ?? '', req.body);
+    res.clearCookie(COOKIE_NAME, { sameSite: 'lax' });
+    success(res, {});
+}
+export async function deleteAccountHandler(req, res) {
+    await authService.deleteAccount(req.userId ?? '', req.body.email);
+    res.clearCookie(COOKIE_NAME, { sameSite: 'lax' });
+    success(res, {});
+}

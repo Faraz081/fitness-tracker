@@ -1,10 +1,11 @@
 import { EmptyState } from '../ui';
-
-function toKg(value) {
-    return Number(value).toFixed(1);
-}
+import { useSettings } from '../../context/SettingsContext';
+import { formatWeight, weightUnitLabel } from '../../utils/units';
 
 export function WeightChart({ entries }) {
+    const { preferences } = useSettings();
+    const units = preferences.units;
+    const format = (kg) => `${formatWeight(kg, units)} ${weightUnitLabel(units)}`;
     const series = (entries || []).slice().sort((a, b) => (a.date < b.date ? -1 : 1));
 
     if (series.length === 0) {
@@ -20,7 +21,7 @@ export function WeightChart({ entries }) {
                     <circle cx="160" cy="50" r="4" fill="var(--color-accent)" />
                 </svg>
                 <div className="mt-2 flex items-center justify-center gap-2">
-                    <span className="dash-num text-[var(--color-ink)]">{toKg(entry.weightKg)} kg</span>
+                    <span className="dash-num text-[var(--color-ink)]">{format(entry.weightKg)}</span>
                     <span className="text-xs text-[var(--color-ink-muted)]">{entry.date}</span>
                 </div>
             </div>
@@ -57,7 +58,7 @@ export function WeightChart({ entries }) {
                 <polyline points={line} fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinejoin="round" />
                 {points.map(({ x, y, entry }) => (
                     <circle key={entry.id} cx={x} cy={y} r="3" fill="var(--color-bg)" stroke="var(--color-accent)" strokeWidth="2">
-                        <title>{`${entry.date}: ${toKg(entry.weightKg)} kg`}</title>
+                        <title>{`${entry.date}: ${format(entry.weightKg)}`}</title>
                     </circle>
                 ))}
             </svg>

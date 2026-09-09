@@ -1,4 +1,5 @@
 import * as workoutService from '../services/workoutService.js';
+import * as notificationService from '../services/notificationService.js';
 import { success } from '../utils/response.js';
 const getParam = (value) => {
     const id = Array.isArray(value) ? value[0] : value;
@@ -6,6 +7,12 @@ const getParam = (value) => {
 };
 export async function createWorkoutHandler(req, res) {
     const workout = await workoutService.createWorkout(req.userId ?? '', req.body);
+    try {
+        await notificationService.createWorkoutCompletion(req.userId ?? '', workout);
+    }
+    catch {
+        // Notification creation must never fail the workout itself.
+    }
     success(res, workout, 201);
 }
 export async function listWorkoutsHandler(req, res) {

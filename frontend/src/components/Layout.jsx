@@ -2,14 +2,11 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { useToast } from '../hooks/useToast';
-import { ToastContainer } from './ui';
 import { Sidebar } from './layout/Sidebar';
 
 export default function Layout() {
     const { user } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const { toasts, dismiss } = useToast();
 
     return (
         <div className="dashboard-body min-h-screen">
@@ -29,7 +26,6 @@ export default function Layout() {
                     <Outlet />
                 </main>
             </div>
-            <ToastContainer toasts={toasts} onDismiss={dismiss} />
         </div>
     );
 }

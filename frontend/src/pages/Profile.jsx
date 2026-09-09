@@ -1,76 +1,21 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Cake, Dumbbell, Edit3, Flag, Globe, Pencil, Ruler, Save, Scale, User as UserIcon, X, Check, } from 'lucide-react';
+import { Activity, Cake, Dumbbell, Edit3, Flag, Globe, Ruler, Scale, User as UserIcon, X, Check } from 'lucide-react';
 import * as api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
-import { Badge, Button, Card, Input, Select } from '../components/ui';
-const GOALS = ['lose', 'maintain', 'gain', 'other'];
-const LEVELS = ['beginner', 'intermediate', 'advanced'];
-const emptyForm = {
-    name: '',
-    bio: '',
-    age: '',
-    weightKg: '',
-    heightCm: '',
-    goal: '',
-    fitnessLevel: '',
-    avatarUrl: '',
-};
-const toProfileState = (p) => ({
-    name: p.name,
-    bio: p.bio ?? '',
-    age: p.age === null ? '' : String(p.age),
-    weightKg: p.weightKg === null ? '' : String(p.weightKg),
-    heightCm: p.heightCm === null ? '' : String(p.heightCm),
-    goal: p.goal ?? '',
-    fitnessLevel: p.fitnessLevel ?? '',
-    avatarUrl: p.avatarUrl ?? '',
-});
-function validate(form) {
-    const errors = {};
-    if (!form.name.trim()) {
-        errors.name = 'Name is required';
-    }
-    else if (form.name.trim().length > 100) {
-        errors.name = 'Name must be 100 characters or fewer';
-    }
-    if (form.bio.length > 500) {
-        errors.bio = 'Bio must be 500 characters or fewer';
-    }
-    if (form.age !== '' && (Number(form.age) < 13 || Number(form.age) > 120)) {
-        errors.age = 'Age must be between 13 and 120';
-    }
-    if (form.weightKg !== '' && (Number(form.weightKg) < 20 || Number(form.weightKg) > 400)) {
-        errors.weightKg = 'Weight must be between 20 and 400 kg';
-    }
-    if (form.heightCm !== '' && (Number(form.heightCm) < 60 || Number(form.heightCm) > 280)) {
-        errors.heightCm = 'Height must be between 60 and 280 cm';
-    }
-    if (form.avatarUrl !== '' && !/^https?:\/\/.+/i.test(form.avatarUrl)) {
-        errors.avatarUrl = 'Avatar URL must be a valid http(s) URL';
-    }
-    return errors;
-}
-const goalLabel = {
-    lose: 'Lose weight',
-    maintain: 'Maintain weight',
-    gain: 'Gain muscle',
-    other: 'Other',
-};
-const levelLabel = {
-    beginner: 'Beginner',
-    intermediate: 'Intermediate',
-    advanced: 'Advanced',
-};
+import { useSettings } from '../context/SettingsContext';
+import { Badge, Button, Card } from '../components/ui';
+import { ProfileForm, PROFILE_GOAL_LABELS, PROFILE_LEVEL_LABELS } from '../components/profile/ProfileForm';
+import { formatWeight, weightUnitLabel } from '../utils/units';
+
 export default function ProfilePage() {
     const { refreshUser } = useAuth();
+    const { preferences } = useSettings();
+    const units = preferences.units;
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState(null);
     const [editing, setEditing] = useState(false);
-    const [form, setForm] = useState(emptyForm);
-    const [errors, setErrors] = useState({});
-    const [pending, setPending] = useState(false);
     const [saved, setSaved] = useState(false);
     useEffect(() => {
         let cancelled = false;
@@ -80,7 +25,6 @@ export default function ProfilePage() {
             if (cancelled)
                 return;
             setProfile(p);
-            setForm(toProfileState(p));
         })
             .catch((err) => {
             if (cancelled)
@@ -112,56 +56,15 @@ export default function ProfilePage() {
     if (!profile) {
         return null;
     }
-    const setField = (field, value) => {
-        setForm((prev) => ({ ...prev, [field]: value }));
-        setSaved(false);
-    };
     function startEdit() {
-        if (!profile)
-            return;
-        setForm(toProfileState(profile));
-        setErrors({});
         setSaved(false);
         setEditing(true);
     }
-    function cancelEdit() {
-        if (!profile)
-            return;
-        setForm(toProfileState(profile));
-        setErrors({});
+    function handleSaved(updated) {
+        setProfile(updated);
+        setSaved(true);
         setEditing(false);
-    }
-    async function handleSave(e) {
-        e.preventDefault();
-        const next = validate(form);
-        setErrors(next);
-        if (Object.keys(next).length > 0)
-            return;
-        const patch = {
-            name: form.name.trim(),
-            bio: form.bio.trim(),
-            age: form.age === '' ? undefined : Number(form.age),
-            weightKg: form.weightKg === '' ? undefined : Number(form.weightKg),
-            heightCm: form.heightCm === '' ? undefined : Number(form.heightCm),
-            goal: form.goal === '' ? undefined : form.goal,
-            fitnessLevel: form.fitnessLevel === '' ? undefined : form.fitnessLevel,
-            avatarUrl: form.avatarUrl.trim() === '' ? null : form.avatarUrl.trim(),
-        };
-        setPending(true);
-        try {
-            const updated = await api.updateProfile(patch);
-            setProfile(updated);
-            setForm(toProfileState(updated));
-            setEditing(false);
-            setSaved(true);
-            await refreshUser();
-        }
-        catch (err) {
-            setErrors({ form: err instanceof Error ? err.message : 'Failed to save profile' });
-        }
-        finally {
-            setPending(false);
-        }
+        void refreshUser();
     }
     const displayValue = (v) => {
         if (v === null || v === undefined || v === '')
@@ -173,8 +76,8 @@ export default function ProfilePage() {
         {
             icon: Scale,
             label: 'Weight',
-            value: displayValue(profile.weightKg),
-            unit: profile.weightKg ? 'kg' : '',
+            value: profile.weightKg === null || profile.weightKg === undefined ? '—' : formatWeight(profile.weightKg, units),
+            unit: profile.weightKg ? ` ${weightUnitLabel(units)}` : '',
         },
         {
             icon: Ruler,
@@ -196,11 +99,11 @@ export default function ProfilePage() {
               <h1 className="text-2xl font-bold tracking-tight font-display">{profile.name}</h1>
               {profile.goal && (<Badge color="primary">
                   <Flag className="h-3 w-3 mr-1"/>
-                  {goalLabel[profile.goal] ?? profile.goal}
+                  {PROFILE_GOAL_LABELS[profile.goal] ?? profile.goal}
                 </Badge>)}
               {profile.fitnessLevel && (<Badge color="success">
                   <Dumbbell className="h-3 w-3 mr-1"/>
-                  {levelLabel[profile.fitnessLevel] ?? profile.fitnessLevel}
+                  {PROFILE_LEVEL_LABELS[profile.fitnessLevel] ?? profile.fitnessLevel}
                 </Badge>)}
             </div>
             <p className="text-sm text-text-muted mt-1">
@@ -222,11 +125,6 @@ export default function ProfilePage() {
           Profile saved successfully.
         </motion.div>)}
 
-      {errors.form && (<motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-sm text-error bg-error/10 border border-error/20 rounded-xl p-4">
-          <X className="h-5 w-5 shrink-0"/>
-          {errors.form}
-        </motion.div>)}
-
       {!editing ? (<div className="grid grid-cols-3 gap-4">
           {statItems.map((item, i) => (<motion.div key={item.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
               <Card hover index={i} className="stat-card text-center">
@@ -240,50 +138,12 @@ export default function ProfilePage() {
                 <p className="text-xs text-text-muted mt-1">{item.label}</p>
               </Card>
             </motion.div>))}
-        </div>) : (<Card>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Pencil className="h-5 w-5 text-primary"/>
-            </div>
-            <h2 className="text-lg font-bold font-display">Edit your profile</h2>
-          </div>
-
-          <form onSubmit={handleSave} noValidate>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
-              <Input id="name" label="Name" value={form.name} onChange={(e) => setField('name', e.target.value)} autoComplete="name" error={errors.name}/>
-              <Input id="bio" label="Bio" value={form.bio} onChange={(e) => setField('bio', e.target.value)} error={errors.bio}/>
-              <Input id="age" label="Age" type="number" inputMode="numeric" placeholder="e.g. 28" value={form.age} onChange={(e) => setField('age', e.target.value)} error={errors.age}/>
-              <Input id="weightKg" label="Weight (kg)" type="number" inputMode="decimal" placeholder="e.g. 75" value={form.weightKg} onChange={(e) => setField('weightKg', e.target.value)} error={errors.weightKg}/>
-              <Input id="heightCm" label="Height (cm)" type="number" inputMode="decimal" placeholder="e.g. 178" value={form.heightCm} onChange={(e) => setField('heightCm', e.target.value)} error={errors.heightCm}/>
-              <Input id="avatarUrl" label="Avatar URL" type="url" placeholder="https://..." value={form.avatarUrl} onChange={(e) => setField('avatarUrl', e.target.value)} error={errors.avatarUrl}/>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 mt-2">
-              <Select id="goal" label="Goal" value={form.goal} onChange={(e) => setField('goal', e.target.value)}>
-                <option value="">Select goal…</option>
-                {GOALS.map((g) => (<option key={g} value={g}>
-                    {goalLabel[g]}
-                  </option>))}
-              </Select>
-              <Select id="fitnessLevel" label="Fitness level" value={form.fitnessLevel} onChange={(e) => setField('fitnessLevel', e.target.value)}>
-                <option value="">Select level…</option>
-                {LEVELS.map((l) => (<option key={l} value={l}>
-                    {levelLabel[l]}
-                  </option>))}
-              </Select>
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <Button type="submit" size="lg" isLoading={pending}>
-                {!pending && <Save className="h-4 w-4"/>}
-                {pending ? 'Saving…' : 'Save changes'}
-              </Button>
-              <Button type="button" variant="secondary" size="lg" onClick={cancelEdit}>
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </Card>)}
+        </div>) : (<ProfileForm
+          key={`${profile.id}-${editing ? 'edit' : 'view'}`}
+          profile={profile}
+          onSaved={handleSaved}
+          onCancel={() => setEditing(false)}
+        />)}
 
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs text-text-muted flex items-center justify-center gap-1.5">
         <Activity className="h-3.5 w-3.5"/>

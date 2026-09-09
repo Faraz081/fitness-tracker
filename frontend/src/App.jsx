@@ -3,7 +3,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Progress from './pages/Progress';
+import Analytics from './pages/Analytics';
 import Goals from './pages/Goals';
+import Notifications from './pages/Notifications';
+import Settings from './pages/Settings';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -30,8 +33,17 @@ export default function App() {
       <Route path="/progress" element={<ProtectedRoute>
             <Progress />
           </ProtectedRoute>}/>
+      <Route path="/analytics" element={<ProtectedRoute>
+            <Analytics />
+          </ProtectedRoute>}/>
       <Route path="/goals" element={<ProtectedRoute>
             <Goals />
+          </ProtectedRoute>}/>
+      <Route path="/notifications" element={<ProtectedRoute>
+            <Notifications />
+          </ProtectedRoute>}/>
+      <Route path="/settings" element={<ProtectedRoute>
+            <Settings />
           </ProtectedRoute>}/>
       <Route element={<Layout />}>
         <Route path="/login" element={<PublicOnly>

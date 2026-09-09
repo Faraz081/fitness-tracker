@@ -1,6 +1,8 @@
 import { EmptyState } from '../ui';
 import { PR_FIELDS } from '../../data/constants';
 import { bestLift, bestSet } from '../../utils/historyUtils';
+import { formatWeight } from '../../utils/units';
+import { useSettings } from '../../context/SettingsContext';
 
 function exerciseVolume(exercise) {
     return exercise.sets * exercise.reps * (Number(exercise.weightKg) || 0);
@@ -27,6 +29,8 @@ function toDisplay(value) {
 }
 
 export function PersonalRecords({ exerciseName, workouts }) {
+    const { preferences } = useSettings();
+    const units = preferences.units;
     const lift = bestLift(exerciseName, workouts);
     const set = bestSet(exerciseName, workouts);
     const volume = bestWorkoutVolume(exerciseName, workouts);
@@ -43,10 +47,20 @@ export function PersonalRecords({ exerciseName, workouts }) {
         );
     }
 
+    function recordValue(value, fieldUnit) {
+        if (value === null) {
+            return { value: '—', unit: fieldUnit };
+        }
+        if (units === 'lb') {
+            return { value: formatWeight(value, units), unit: 'lb' };
+        }
+        return { value: toDisplay(value), unit: fieldUnit };
+    }
+
     const records = [
-        { key: PR_FIELDS[0].key, label: PR_FIELDS[0].label, value: lift, unit: PR_FIELDS[0].unit },
-        { key: PR_FIELDS[1].key, label: PR_FIELDS[1].label, value: set, unit: PR_FIELDS[1].unit },
-        { key: PR_FIELDS[2].key, label: PR_FIELDS[2].label, value: volume, unit: PR_FIELDS[2].unit },
+        { key: PR_FIELDS[0].key, label: PR_FIELDS[0].label, ...recordValue(lift, PR_FIELDS[0].unit) },
+        { key: PR_FIELDS[1].key, label: PR_FIELDS[1].label, ...recordValue(set, PR_FIELDS[1].unit) },
+        { key: PR_FIELDS[2].key, label: PR_FIELDS[2].label, ...recordValue(volume, PR_FIELDS[2].unit) },
     ];
 
     return (
@@ -57,7 +71,7 @@ export function PersonalRecords({ exerciseName, workouts }) {
                 {records.map((r) => (
                     <div key={r.key} className="text-center">
                         <p className="dash-num text-lg text-[var(--color-accent)]">
-                            {r.value === null ? '—' : toDisplay(r.value)}
+                            {r.value}
                             <span className="ml-1 text-xs font-normal text-[var(--color-ink-muted)]">
                                 {r.unit}
                             </span>

@@ -27,6 +27,7 @@ export function HistoryFilters({ filters, onChange, dateOptions }) {
                 <select
                     value={filters.category}
                     onChange={(e) => updateCategory(e.target.value)}
+                    aria-label="Filter by category"
                     className="w-full cursor-pointer rounded-xl border border-[var(--color-line)] bg-[var(--color-panel-soft)] px-3.5 py-2.5 text-sm text-[var(--color-ink)] transition-colors focus:border-[var(--color-accent)] focus:outline-none"
                 >
                     <option value="all">All categories</option>
@@ -45,6 +46,7 @@ export function HistoryFilters({ filters, onChange, dateOptions }) {
                 <select
                     value={filters.dateOption}
                     onChange={(e) => updateDateOption(e.target.value)}
+                    aria-label="Time range"
                     className="w-full cursor-pointer rounded-xl border border-[var(--color-line)] bg-[var(--color-panel-soft)] px-3.5 py-2.5 text-sm text-[var(--color-ink)] transition-colors focus:border-[var(--color-accent)] focus:outline-none"
                 >
                     {dateOptions.map((o) => (
@@ -65,6 +67,7 @@ export function HistoryFilters({ filters, onChange, dateOptions }) {
                             type="date"
                             value={filters.from}
                             onChange={(e) => updateFrom(e.target.value)}
+                            aria-label="From date"
                             className="w-full rounded-xl border border-[var(--color-line)] bg-[var(--color-panel-soft)] px-3.5 py-2.5 text-sm text-[var(--color-ink)] transition-colors focus:border-[var(--color-accent)] focus:outline-none"
                         />
                     </div>
@@ -76,6 +79,7 @@ export function HistoryFilters({ filters, onChange, dateOptions }) {
                             type="date"
                             value={filters.to}
                             onChange={(e) => updateTo(e.target.value)}
+                            aria-label="To date"
                             className="w-full rounded-xl border border-[var(--color-line)] bg-[var(--color-panel-soft)] px-3.5 py-2.5 text-sm text-[var(--color-ink)] transition-colors focus:border-[var(--color-accent)] focus:outline-none"
                         />
                     </div>

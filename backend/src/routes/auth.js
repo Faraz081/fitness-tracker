@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { loginHandler, logoutHandler, meHandler, registerHandler } from '../controllers/auth.js';
+import { changePasswordHandler, deleteAccountHandler, loginHandler, logoutHandler, meHandler, registerHandler } from '../controllers/auth.js';
 import { authenticate } from '../middleware/authenticate.js';
 import { validate } from '../middleware/validate.js';
-import { loginSchema, registerSchema } from '../utils/validators.js';
+import { changePasswordSchema, deleteAccountSchema, loginSchema, registerSchema } from '../utils/validators.js';
 export const authRouter = Router();
 authRouter.post('/register', validate(registerSchema), registerHandler);
 authRouter.post('/login', validate(loginSchema), loginHandler);
 authRouter.get('/me', authenticate, meHandler);
 authRouter.post('/logout', logoutHandler);
+authRouter.post('/change-password', authenticate, validate(changePasswordSchema), changePasswordHandler);
+authRouter.delete('/account', authenticate, validate(deleteAccountSchema), deleteAccountHandler);

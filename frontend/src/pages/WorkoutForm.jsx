@@ -4,6 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Calendar, Dumbbell, Plus, Save, Trash2, X, Activity, TrendingUp, Target, ClipboardList, } from 'lucide-react';
 import * as api from '../services/api';
 import { Button, Input, Select } from '../components/ui';
+import { useNotifications } from '../context/NotificationsContext';
+import { useSettings } from '../context/SettingsContext';
+import { displayWeight, toKg, weightUnitLabel } from '../utils/units';
 const CATEGORIES = [
     { value: 'strength', label: 'Strength', icon: Dumbbell },
     { value: 'cardio', label: 'Cardio', icon: Activity },
@@ -28,11 +31,11 @@ const toDateInput = (iso) => {
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
 };
-const toRows = (exercises) => exercises.map((ex) => ({
+const toRows = (exercises, units) => exercises.map((ex) => ({
     name: ex.name,
     sets: String(ex.sets),
     reps: String(ex.reps),
-    weightKg: ex.weightKg === null ? '' : String(ex.weightKg),
+    weightKg: ex.weightKg === null ? '' : units === 'lb' ? String(displayWeight(ex.weightKg, units)) : String(ex.weightKg),
     notes: ex.notes ?? '',
     restTimeSec: ex.restTimeSec === null ? '' : String(ex.restTimeSec),
 }));
@@ -40,6 +43,9 @@ export default function WorkoutForm() {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
+    const notifications = useNotifications();
+    const { preferences } = useSettings();
+    const units = preferences.units;
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
     const [date, setDate] = useState('');
@@ -62,7 +68,7 @@ export default function WorkoutForm() {
             setCategory(w.category);
             setDate(toDateInput(w.date));
             setNotes(w.notes ?? '');
-            setExercises(toRows(w.exercises).length > 0 ? toRows(w.exercises) : [emptyRow()]);
+            setExercises(toRows(w.exercises, units).length > 0 ? toRows(w.exercises, units) : [emptyRow()]);
         })
             .catch((err) => {
             if (cancelled)
@@ -134,7 +140,7 @@ export default function WorkoutForm() {
             name: row.name.trim(),
             sets: Number(row.sets),
             reps: Number(row.reps),
-            weightKg: row.weightKg === '' ? undefined : Number(row.weightKg),
+            weightKg: row.weightKg === '' ? undefined : Number(toKg(row.weightKg, units)),
             notes: row.notes.trim() === '' ? undefined : row.notes.trim(),
             restTimeSec: row.restTimeSec === '' ? undefined : Number(row.restTimeSec),
         }));
@@ -154,6 +160,12 @@ export default function WorkoutForm() {
                 await api.createWorkout(payload);
             }
             navigate('/workouts');
+            try {
+                notifications.refresh();
+            }
+            catch {
+                // Notification refresh must never block the workout redirect.
+            }
         }
         catch (err) {
             setErrors({ form: err instanceof Error ? err.message : 'Failed to save workout' });
@@ -278,7 +290,7 @@ export default function WorkoutForm() {
                       <Input id={`ex-reps-${index}`} label="Reps" type="number" inputMode="numeric" placeholder="12" value={row.reps} onChange={(e) => updateRow(index, 'reps', e.target.value)}/>
                     </div>
                     <div>
-                      <Input id={`ex-weight-${index}`} label="Weight (kg)" type="number" inputMode="decimal" placeholder="60" value={row.weightKg} onChange={(e) => updateRow(index, 'weightKg', e.target.value)}/>
+                      <Input id={`ex-weight-${index}`} label={`Weight (${weightUnitLabel(units)})`} type="number" inputMode="decimal" placeholder={units === 'lb' ? '135' : '60'} value={row.weightKg} onChange={(e) => updateRow(index, 'weightKg', e.target.value)}/>
                     </div>
                     <div>
                       <Input id={`ex-rest-${index}`} label="Rest (sec)" type="number" inputMode="numeric" placeholder="60" value={row.restTimeSec} onChange={(e) => updateRow(index, 'restTimeSec', e.target.value)}/>

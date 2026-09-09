@@ -12,6 +12,10 @@ const toProfile = (user) => ({
     fitnessLevel: user.fitnessLevel ?? null,
     avatarUrl: user.avatarUrl ?? null,
 });
+const toPreferences = (user) => ({
+    units: user.preferences?.units ?? 'kg',
+    theme: user.preferences?.theme ?? 'dark',
+});
 export async function getProfile(userId) {
     const user = await User.findById(userId);
     if (!user) {
@@ -25,4 +29,22 @@ export async function updateProfile(userId, patch) {
         throw new AppError(401, 'Unauthorized', 'UNAUTHORIZED');
     }
     return toProfile(user);
+}
+export async function getPreferences(userId) {
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new AppError(401, 'Unauthorized', 'UNAUTHORIZED');
+    }
+    return toPreferences(user);
+}
+export async function updatePreferences(userId, patch) {
+    const user = await User.findByIdAndUpdate(
+        userId,
+        { $set: { preferences: patch } },
+        { new: true, runValidators: true }
+    );
+    if (!user) {
+        throw new AppError(401, 'Unauthorized', 'UNAUTHORIZED');
+    }
+    return toPreferences(user);
 }

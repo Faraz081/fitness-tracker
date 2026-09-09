@@ -81,6 +81,54 @@
   --animate-scale-in: scale-in 0.3s ease-out;
 }
 
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-dark-800: #FFFFFF;
+  --color-dark-700: #F4F6F8;
+  --color-dark-600: #EDF0F4;
+  --color-dark-500: #E1E6EC;
+  --color-dark-400: #CBD5E1;
+  --color-dark-300: #94A3B8;
+  --color-dark-200: #64748B;
+  --color-dark-100: #334155;
+
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: #F1F5F9;
+
+  --color-bg: #F1F5F9;
+  --color-panel: #FFFFFF;
+  --color-panel-soft: #F8FAFC;
+  --color-line: #E2E8F0;
+  --color-ink: #0F172A;
+  --color-ink-soft: #475569;
+  --color-ink-muted: #64748B;
+
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748B;
+}
+
+[data-theme="light"] body {
+  background-color: var(--color-bg);
+}
+
+[data-theme="light"] .glass,
+[data-theme="light"] .glass-elevated,
+[data-theme="light"] .card-base,
+[data-theme="light"] .card-interactive {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .stat-card {
+  background: linear-gradient(135deg, #FFFFFF, #F1F5F9);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }

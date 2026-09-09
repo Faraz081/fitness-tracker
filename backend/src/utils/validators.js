@@ -85,3 +85,58 @@ export const nutritionQuerySchema = z
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'date must be YYYY-MM-DD' }).optional(),
 })
     .strict();
+const notificationTypeKeys = [
+    'workout-completion',
+    'goal-progress',
+    'goal-completed',
+    'workout-reminder',
+    'meal-reminder',
+    'goal-reminder',
+];
+export const notificationSettingsPatchSchema = z
+    .object({
+    muted: z.boolean().optional(),
+    types: z
+        .object(Object.fromEntries(notificationTypeKeys.map((key) => [key, z.boolean().optional()])))
+        .optional(),
+})
+    .strict()
+    .refine((data) => Object.keys(data).length > 0, {
+    message: 'At least one field must be provided',
+});
+export const preferencesPatchSchema = z
+    .object({
+    units: z.enum(['kg', 'lb']).optional(),
+    theme: z.enum(['dark', 'light']).optional(),
+})
+    .strict()
+    .refine((data) => Object.keys(data).length > 0, {
+    message: 'At least one field must be provided',
+});
+export const changePasswordSchema = z
+    .object({
+    currentPassword: z.string().min(1, { message: 'Current password is required' }),
+    newPassword: z.string().min(6, { message: 'New password must be at least 6 characters' }),
+})
+    .strict();
+export const deleteAccountSchema = z
+    .object({
+    email: z.string().trim().toLowerCase().email(),
+})
+    .strict();
+const goalMilestoneSchema = z.object({
+    id: z.string().trim().min(1).max(200).optional(),
+    title: z.string().trim().min(1).max(200).optional(),
+    threshold: z.number().optional(),
+    reachedAt: z.string().optional(),
+});
+const goalSchema = z.object({
+    id: z.string().trim().min(1).max(200),
+    title: z.string().trim().min(1).max(200),
+    targetDate: z.string().optional(),
+    completedAt: z.string().optional(),
+    milestones: z.array(goalMilestoneSchema).optional(),
+});
+export const notificationSyncSchema = z.object({
+    goals: z.array(goalSchema).max(50).optional(),
+});

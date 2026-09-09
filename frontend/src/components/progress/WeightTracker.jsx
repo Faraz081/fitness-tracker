@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Scale } from 'lucide-react';
 import { EmptyState } from '../ui';
+import { useSettings } from '../../context/SettingsContext';
+import { formatWeight, lbToKg, weightUnitLabel } from '../../utils/units';
 
 function latestEntry(entries) {
     if (!entries || entries.length === 0) {
@@ -9,11 +11,9 @@ function latestEntry(entries) {
     return entries.reduce((a, b) => (a.date > b.date ? a : b));
 }
 
-function toKg(value) {
-    return Number(value).toFixed(1);
-}
-
 export function WeightTracker({ entries, onAdd }) {
+    const { preferences } = useSettings();
+    const units = preferences.units;
     const [value, setValue] = useState('');
     const parsed = Number.parseFloat(value);
     const valid = Number.isFinite(parsed) && parsed > 0;
@@ -25,7 +25,7 @@ export function WeightTracker({ entries, onAdd }) {
         if (!valid) {
             return;
         }
-        onAdd({ weightKg: parsed });
+        onAdd({ weightKg: units === 'lb' ? lbToKg(parsed) : parsed });
         setValue('');
     }
 
@@ -40,7 +40,7 @@ export function WeightTracker({ entries, onAdd }) {
                 <div>
                     <p className="text-xs text-[var(--color-ink-muted)]">Latest Weight</p>
                     <p className="mt-1 dash-num text-3xl text-[var(--color-ink)]">
-                        {latest ? `${toKg(latest.weightKg)} kg` : '—'}
+                        {latest ? `${formatWeight(latest.weightKg, units)} ${weightUnitLabel(units)}` : '—'}
                     </p>
                 </div>
                 {latest && <p className="pb-1 text-xs text-[var(--color-ink-muted)]">{latest.date}</p>}
@@ -54,8 +54,8 @@ export function WeightTracker({ entries, onAdd }) {
                     min="0.1"
                     value={value}
                     onChange={(event) => setValue(event.target.value)}
-                    placeholder="e.g. 78.5"
-                    aria-label="New weight in kg"
+                    placeholder={units === 'lb' ? 'e.g. 173' : 'e.g. 78.5'}
+                    aria-label={`New weight in ${weightUnitLabel(units)}`}
                     className="w-full min-w-0 flex-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-panel-soft)] px-3 py-2 text-sm text-[var(--color-ink)] placeholder:text-[var(--color-ink-muted)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
                 />
                 <button
@@ -74,7 +74,7 @@ export function WeightTracker({ entries, onAdd }) {
                     {sorted.map((entry) => (
                         <li key={entry.id} className="flex items-center justify-between py-2.5 text-sm">
                             <span className="text-[var(--color-ink-muted)]">{entry.date}</span>
-                            <span className="dash-num text-[var(--color-ink)]">{toKg(entry.weightKg)} kg</span>
+                            <span className="dash-num text-[var(--color-ink)]">{formatWeight(entry.weightKg, units)} {weightUnitLabel(units)}</span>
                         </li>
                     ))}
                 </ul>

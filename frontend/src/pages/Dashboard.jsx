@@ -13,8 +13,12 @@ import { RecentWorkouts } from '../components/dashboard/RecentWorkouts';
 import { QuickActions } from '../components/dashboard/QuickActions';
 import { Spinner, EmptyState } from '../components/ui';
 import { dashboardData, emptyDashboardData } from '../data/dashboardData';
+import { useSettings } from '../context/SettingsContext';
+import { formatWeight, weightUnitLabel } from '../utils/units';
 
 export default function Dashboard() {
+    const { preferences } = useSettings();
+    const units = preferences.units;
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -34,6 +38,11 @@ export default function Dashboard() {
     }, []);
 
     const showEmpty = data === emptyDashboardData;
+    const summary = (data?.summary || []).map((item) =>
+        item.key === 'weight'
+            ? { ...item, value: formatWeight(item.value, units), unit: weightUnitLabel(units) }
+            : item,
+    );
 
     return (
         <DashboardLayout>
@@ -55,7 +64,7 @@ export default function Dashboard() {
                                 {showEmpty ? (
                                     <EmptyState title="No summary data" message="Key stats will appear here." />
                                 ) : (
-                                    <SummaryCards items={data.summary} />
+                                    <SummaryCards items={summary} />
                                 )}
                             </Section>
 

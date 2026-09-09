@@ -1,7 +1,8 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Dumbbell, History, LogOut, Salad, Target, TrendingUp, X } from 'lucide-react';
+import { BarChart3, Bell, Dumbbell, History, LogOut, Salad, Settings, Target, TrendingUp, X } from 'lucide-react';
 import { SIDEBAR_MENU } from '../../data/constants';
 import { useAuth } from '../../hooks/useAuth';
+import { useNotifications } from '../../context/NotificationsContext';
 
 const menuIcons = {
     dashboard: Dumbbell,
@@ -10,6 +11,9 @@ const menuIcons = {
     progress: TrendingUp,
     goals: Target,
     history: History,
+    analytics: BarChart3,
+    notifications: Bell,
+    settings: Settings,
 };
 
 function Logo() {
@@ -26,6 +30,7 @@ function Logo() {
 export function Sidebar({ open = false, onClose = () => {} }) {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const { badgeLabel, unreadCount } = useNotifications();
 
     async function handleLogout() {
         await logout();
@@ -66,6 +71,14 @@ export function Sidebar({ open = false, onClose = () => {} }) {
                             >
                                 <Icon className="h-5 w-5" />
                                 <span>{item.label}</span>
+                                {item.key === 'notifications' && unreadCount > 0 && (
+                                    <span
+                                        className="ml-auto rounded-full bg-[var(--color-accent)] px-2 py-0.5 text-xs font-semibold text-[var(--color-bg)]"
+                                        aria-label={`${unreadCount} unread notifications`}
+                                    >
+                                        {badgeLabel}
+                                    </span>
+                                )}
                             </NavLink>
                         );
                     })}

@@ -1,9 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Apple, Calendar, Edit3, Plus, Trash2, Utensils, Zap, } from 'lucide-react';
+import { Apple, Calendar, Edit3, Plus, SearchX, Trash2, Utensils, Zap, } from 'lucide-react';
 import * as api from '../services/api';
 import { MealForm } from '../components/MealForm';
-import { Badge, Button, Input, ListSkeleton } from '../components/ui';
+import { Badge, Button, EmptyState, Input, ListSkeleton } from '../components/ui';
+import { SearchInput } from '../components/search/SearchInput';
+import { FilterBar } from '../components/search/FilterBar';
+import { ActiveFilters } from '../components/search/ActiveFilters';
+import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import { applyFilters, filtersToSearchParams, parseSearchParams } from '../utils/filterUtils';
 const MEAL_ORDER = ['breakfast', 'lunch', 'dinner', 'snack'];
 const MEAL_META = {
     breakfast: { label: 'Breakfast', icon: Apple },
@@ -23,6 +29,11 @@ function formatQuantity(entry) {
         return '';
     return `${entry.quantity}${entry.unit ? ` ${entry.unit}` : ''}`;
 }
+function mealTextFor(entry) {
+    return [entry.foodName, entry.mealType, MEAL_META[entry.mealType]?.label ?? '']
+        .filter(Boolean)
+        .join(' ');
+}
 export default function Nutrition() {
     const [date, setDate] = useState(today());
     const [entries, setEntries] = useState([]);
@@ -35,6 +46,16 @@ export default function Nutrition() {
     const [deletingId, setDeletingId] = useState(null);
     const [confirmId, setConfirmId] = useState(null);
     const [successNote, setSuccessNote] = useState(null);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [initial] = useState(() => ({
+        search: '',
+        mealTypes: [],
+        ...parseSearchParams(searchParams, {}, { mealType: MEAL_ORDER }),
+    }));
+    const [searchDraft, setSearchDraft] = useState(initial.search);
+    const search = useDebouncedValue(searchDraft, 250);
+    const [mealTypes, setMealTypes] = useState(initial.mealTypes);
+    const skipUrlWrite = useRef(true);
     const load = useCallback(async () => {
         setLoading(true);
         setError(null);
@@ -56,6 +77,21 @@ export default function Nutrition() {
     useEffect(() => {
         void load();
     }, [load]);
+    useEffect(() => {
+        if (skipUrlWrite.current) {
+            skipUrlWrite.current = false;
+            return;
+        }
+        setSearchParams(filtersToSearchParams({ search, mealTypes }, ['search', 'mealTypes']), { replace: false });
+    }, [search, mealTypes, setSearchParams]);
+    function toggleMeal(key) {
+        setMealTypes((prev) => (prev.includes(key) ? prev.filter((m) => m !== key) : [...prev, key]));
+    }
+    function clearAllFilters() {
+        setSearchDraft('');
+        setMealTypes([]);
+        setSearchParams(new URLSearchParams(), { replace: false });
+    }
     function showSuccess(message) {
         setSuccessNote(message);
         window.setTimeout(() => setSuccessNote(null), 3000);
@@ -110,11 +146,23 @@ export default function Nutrition() {
             setDeletingId(null);
         }
     }
+    const filtered = useMemo(() => applyFilters(entries, { search, textFor: mealTextFor, mealTypes }), [entries, search, mealTypes]);
     const grouped = MEAL_ORDER.map((mealType) => ({
         mealType,
         ...MEAL_META[mealType],
-        items: entries.filter((e) => e.mealType === mealType),
+        items: filtered.filter((e) => e.mealType === mealType),
     }));
+    const chips = [];
+    if (search) {
+        chips.push({ id: 'search', label: `Search: ${search}`, onRemove: () => setSearchDraft('') });
+    }
+    mealTypes.forEach((key) => {
+        chips.push({
+            id: `meal-${key}`,
+            label: MEAL_META[key]?.label ?? key,
+            onRemove: () => toggleMeal(key),
+        });
+    });
     return (<div>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div className="flex items-center gap-3">
@@ -133,6 +181,40 @@ export default function Nutrition() {
           Add entry
         </Button>
       </motion.div>
+
+      <div className="mb-6">
+        <FilterBar title="Filter foods">
+          <SearchInput
+            id="nutrition-search"
+            label="Search foods"
+            value={searchDraft}
+            onChange={setSearchDraft}
+            placeholder="Search foods…"
+          />
+          <div>
+            <span className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
+              Meals
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {MEAL_ORDER.map((key) => {
+                    const active = mealTypes.includes(key);
+                    return (<button
+                        key={key}
+                        type="button"
+                        aria-pressed={active}
+                        onClick={() => toggleMeal(key)}
+                        className={active
+                            ? 'inline-flex items-center gap-1.5 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent)]/15 px-3 py-1.5 text-xs font-medium text-[var(--color-accent)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]'
+                            : 'inline-flex items-center gap-1.5 rounded-full border border-[var(--color-line)] bg-[var(--color-panel-soft)] px-3 py-1.5 text-xs font-medium text-[var(--color-ink-soft)] transition-colors hover:border-[var(--color-accent)]/40 hover:text-[var(--color-ink)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]'}
+                    >
+                      {MEAL_META[key].label}
+                    </button>);
+                })}
+            </div>
+          </div>
+        </FilterBar>
+        <ActiveFilters chips={chips} onClearAll={clearAllFilters} label="Active filters" />
+      </div>
 
       <div className="glass-elevated rounded-2xl p-4 sm:p-6 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-end gap-2">
@@ -186,7 +268,12 @@ export default function Nutrition() {
             <Plus className="h-4 w-4"/>
             Add your first entry
           </Button>
-        </motion.div>) : (<div className="space-y-6">
+        </motion.div>) : filtered.length === 0 ? (<EmptyState
+            icon={<SearchX className="h-7 w-7"/>}
+            title="No nutrition entries match your filters"
+            message="Try a different search term or meal selection to see more entries."
+            action={<Button variant="secondary" onClick={clearAllFilters}>Clear all filters</Button>}
+          />) : (<div aria-live="polite" className="space-y-6">
           {grouped.map((group) => group.items.length > 0 && (<motion.div key={group.mealType} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-elevated rounded-2xl overflow-hidden">
                   <div className="flex items-center gap-2 px-4 py-3 bg-dark-700/40 border-b border-white/5">
                     <group.icon className="h-4 w-4 text-primary"/>

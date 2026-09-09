@@ -1,5 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { User } from '../models/User.js';
+import { Workout } from '../models/Workout.js';
+import { Nutrition } from '../models/Nutrition.js';
+import { Notification } from '../models/Notification.js';
+import { NotificationSettings } from '../models/NotificationSettings.js';
 import { AppError } from '../utils/apiError.js';
 const toSanitizedUser = (user) => ({
     id: String(user._id),
@@ -34,5 +38,37 @@ export async function getUserById(userId) {
     if (!user) {
         throw new AppError(401, 'Unauthorized', 'UNAUTHORIZED');
     }
+    return toSanitizedUser(user);
+}
+export async function changePassword(userId, input) {
+    const user = await User.findById(userId).select('+password');
+    if (!user) {
+        throw new AppError(401, 'Unauthorized', 'UNAUTHORIZED');
+    }
+    const validCurrent = await bcrypt.compare(input.currentPassword, user.password);
+    if (!validCurrent) {
+        throw new AppError(401, 'Invalid current password', 'INVALID_PASSWORD');
+    }
+    const sameAsCurrent = await bcrypt.compare(input.newPassword, user.password);
+    if (sameAsCurrent) {
+        throw new AppError(400, 'New password must be different from the current password', 'VALIDATION_ERROR');
+    }
+    user.password = input.newPassword;
+    await user.save();
+    return toSanitizedUser(user);
+}
+export async function deleteAccount(userId, email) {
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new AppError(401, 'Unauthorized', 'UNAUTHORIZED');
+    }
+    if (email !== user.email) {
+        throw new AppError(403, 'Confirmation email does not match your account', 'CONFIRMATION_MISMATCH');
+    }
+    await Notification.deleteMany({ owner: userId });
+    await NotificationSettings.deleteMany({ owner: userId });
+    await Workout.deleteMany({ owner: userId });
+    await Nutrition.deleteMany({ owner: userId });
+    await User.findByIdAndDelete(userId);
     return toSanitizedUser(user);
 }
