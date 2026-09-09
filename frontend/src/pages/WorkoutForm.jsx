@@ -163,7 +163,7 @@ export default function WorkoutForm() {
         }
     }
     if (loading) {
-        return (<div className="max-w-3xl mx-auto space-y-4">
+        return (<div className="space-y-4">
         <div className="h-8 w-1/3 skeleton rounded"/>
         <div className="glass-elevated rounded-2xl p-6 space-y-4">
           <div className="h-10 w-full skeleton rounded-xl"/>
@@ -177,7 +177,7 @@ export default function WorkoutForm() {
       </div>);
     }
     if (loadError) {
-        return (<div className="max-w-3xl mx-auto glass-elevated rounded-2xl p-8 text-center">
+        return (<div className="glass-elevated rounded-2xl p-8 text-center">
         <div className="h-12 w-12 mx-auto rounded-xl bg-error/10 flex items-center justify-center mb-4">
           <X className="h-6 w-6 text-error"/>
         </div>
@@ -188,7 +188,7 @@ export default function WorkoutForm() {
         </Link>
       </div>);
     }
-    return (<div className="max-w-3xl mx-auto">
+    return (<div>
       <Link to="/workouts" className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-primary transition-colors mb-4">
         <ArrowLeft className="h-4 w-4"/>
         Back to workouts

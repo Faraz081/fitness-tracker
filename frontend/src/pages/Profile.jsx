@@ -183,7 +183,7 @@ export default function ProfilePage() {
             unit: profile.heightCm ? 'cm' : '',
         },
     ];
-    return (<div className="max-w-3xl mx-auto space-y-6">
+    return (<div className="space-y-6">
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="relative overflow-hidden glass-elevated rounded-3xl p-6 sm:p-8">
         <div className="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl"/>
         <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-success/5 blur-3xl"/>

@@ -3,7 +3,7 @@ import { Activity, Bell, Menu } from 'lucide-react';
 import { NAV_TABS } from '../../data/constants';
 import { useAuth } from '../../hooks/useAuth';
 
-const implementedTabs = new Set(['dashboard', 'workouts', 'nutrition', 'progress', 'goals']);
+const implementedTabs = new Set(['dashboard', 'workouts', 'nutrition', 'progress', 'goals', 'history']);
 
 export function TopNavbar({ onMenuClick = () => {} }) {
     const { user } = useAuth();

@@ -13,6 +13,8 @@ export const SIDEBAR_MENU = [
     { key: 'nutrition', label: 'Nutrition', path: '/nutrition' },
     { key: 'progress', label: 'Progress', path: '/progress' },
     { key: 'goals', label: 'Goals', path: '/goals' },
+    { key: 'history', label: 'History', path: '/workouts-history' },
+    { key: 'profile', label: 'Profile', path: '/profile' },
 ];
 
 export const NAV_TABS = [
@@ -21,6 +23,7 @@ export const NAV_TABS = [
     { key: 'nutrition', label: 'Nutrition', path: '/nutrition' },
     { key: 'progress', label: 'Progress', path: '/progress' },
     { key: 'goals', label: 'Goals', path: '/goals' },
+    { key: 'history', label: 'History', path: '/workouts-history' },
     { key: 'bmi', label: 'BMI', path: '/bmi' },
 ];
 
@@ -42,4 +45,26 @@ export const STREAK_TYPES = [
     { key: 'workout', label: 'Workout Streak', unit: 'days' },
     { key: 'checkin', label: 'Check-in Streak', unit: 'days' },
     { key: 'hydration', label: 'Hydration Streak', unit: 'days' },
+];
+
+export const WORKOUT_CATEGORIES = [
+    { key: 'strength', label: 'Strength' },
+    { key: 'cardio', label: 'Cardio' },
+    { key: 'flexibility', label: 'Flexibility' },
+    { key: 'hybrid', label: 'Hybrid' },
+    { key: 'other', label: 'Other' },
+];
+
+export const PR_FIELDS = [
+    { key: 'bestLiftKg', label: 'Best Lift', unit: 'kg' },
+    { key: 'bestSet', label: 'Best Set', unit: 'kg' },
+    { key: 'bestVolumeKg', label: 'Best Volume', unit: 'kg' },
+];
+
+export const DATE_FILTER_OPTIONS = [
+    { key: 'all', label: 'All' },
+    { key: 'week', label: 'This Week' },
+    { key: 'month', label: 'This Month' },
+    { key: 'last3', label: 'Last 3 Months' },
+    { key: 'custom', label: 'Custom Range' },
 ];

@@ -2,13 +2,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #FF8C42;
-  --color-primary-light: #FF9F43;
-  --color-primary-dark: #E07030;
-  --color-primary-50: rgba(255, 140, 66, 0.1);
-  --color-primary-100: rgba(255, 140, 66, 0.2);
-  --color-primary-200: rgba(255, 140, 66, 0.3);
-  --color-primary-glow: rgba(255, 159, 67, 0.4);
+  --color-primary: #A3E635;
+  --color-primary-light: #BEF264;
+  --color-primary-dark: #84CC16;
+  --color-primary-50: rgba(163, 230, 53, 0.1);
+  --color-primary-100: rgba(163, 230, 53, 0.2);
+  --color-primary-200: rgba(163, 230, 53, 0.3);
+  --color-primary-glow: rgba(190, 242, 100, 0.4);
 
   --color-dark: #0F0F0F;
   --color-dark-800: #1A1A1A;
@@ -196,9 +196,9 @@
 
   .gradient-mesh {
     background:
-      radial-gradient(at 20% 20%, rgba(255, 140, 66, 0.08) 0px, transparent 50%),
-      radial-gradient(at 80% 80%, rgba(34, 197, 94, 0.05) 0px, transparent 50%),
-      radial-gradient(at 50% 50%, rgba(255, 140, 66, 0.03) 0px, transparent 50%);
+      radial-gradient(at 20% 20%, rgba(163, 230, 53, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, rgba(132, 204, 22, 0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(163, 230, 53, 0.03) 0px, transparent 50%);
   }
 
   .text-gradient {

@@ -1,23 +1,24 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Activity, Dumbbell, LogOut, Salad, Target, TrendingUp, X } from 'lucide-react';
+import { Dumbbell, History, LogOut, Salad, Target, TrendingUp, X } from 'lucide-react';
 import { SIDEBAR_MENU } from '../../data/constants';
 import { useAuth } from '../../hooks/useAuth';
 
 const menuIcons = {
     dashboard: Dumbbell,
-    exercise: Activity,
+    exercise: Dumbbell,
     nutrition: Salad,
     progress: TrendingUp,
     goals: Target,
+    history: History,
 };
 
 function Logo() {
     return (
         <div className="flex items-center gap-2.5 px-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-accent)] text-[var(--color-bg)]">
-                <Activity className="h-5 w-5" />
+                <Dumbbell className="h-5 w-5" />
             </div>
-            <span className="dash-num text-lg tracking-tight text-[var(--color-ink)]">Fitness Tracker</span>
+            <span className="dash-num text-lg tracking-tight text-[var(--color-ink)]">FitTrack</span>
         </div>
     );
 }
@@ -79,8 +80,9 @@ export function Sidebar({ open = false, onClose = () => {} }) {
                             <p className="truncate text-sm font-semibold text-[var(--color-ink)]">{user?.name}</p>
                             <p className="truncate text-xs text-[var(--color-ink-muted)]">{user?.email}</p>
                         </div>
-                        <button type="button" onClick={() => void handleLogout()} className="rounded-lg p-1.5 text-[var(--color-ink-muted)] hover:bg-[var(--color-line)] hover:text-[var(--color-ink)]" aria-label="Log out">
+                        <button type="button" onClick={() => void handleLogout()} className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm font-medium text-[var(--color-ink-muted)] hover:bg-[var(--color-line)] hover:text-[var(--color-ink)]" aria-label="Log out">
                             <LogOut className="h-4 w-4" />
+                            <span>Logout</span>
                         </button>
                     </div>
                 </div>

@@ -1,33 +1,39 @@
 <!--
   ============================================================================
-  SYNC IMPACT REPORT (Day 2.1 amendment)
+  SYNC IMPACT REPORT (Day 3.1 amendment)
   ============================================================================
-  Version change      : (minor) 3.0.0  ->  3.1.0  (Day 2.1: Progress & Goals)
+  Version change      : (minor) 3.1.0  ->  3.2.0  (Day 3.1: Activities &
+                        Workout History)
   Modified principles : No principle removed or redefined. Core Principles
-                        I-VIII and Day 1.1 principles D1-D8 all continue to
-                        govern. The Day 1.1 frontend JavaScript-only override
-                        (Principle V amendment + D1) is EXTENDED to cover the
-                        Day 2.1 frontend phase. Day 1.1 heading marker changed
+                        I-VIII, Day 1.1 principles D1-D8, and Day 2.1 principles
+                        P1-P9 all continue to govern. The Day 1.1 frontend
+                        JavaScript-only override (Principle V amendment + D1,
+                        extended to Day 2.1 by P2) is EXTENDED to cover the
+                        Day 3.1 frontend phase. Day 2.1 heading marker changed
                         from (CURRENT ACTIVE PHASE) to (COMPLETE).
-  Added sections      : Day 2.1 Progress & Goals - Project Goal & Definition
-                        Day 2.1 - Core Principles (P1-P9)
-                        Day 2.1 - Folder & Component Structure
-                        Day 2.1 - Data Shape Decisions
-                        Day 2.1 - Chart & Graph Behaviour
-                        Day 2.1 - Goal System Rules
-                        Day 2.1 - Streak System Rules
-                        Day 2.1 - State Management Approach
-                        Day 2.1 - UI/UX Rules
-                        Day 2.1 - Coding Standards
-                        Day 2.1 - Definition of Done (Success Criteria)
-                        Day 2.1 - Out of Scope (Deferred)
-  Removed sections    : (none). All Day 1-3 and Day 1.1 sections retained as
-                        governed history.
+  Added sections      : Day 3.1 Activities & Workout History - Project Goal &
+                        Definition
+                        Day 3.1 - Core Principles (H1-H10)
+                        Day 3.1 - Folder & Component Structure
+                        Day 3.1 - Data Shape Decisions
+                        Day 3.1 - Workout History Page Layout & Behaviour
+                        Day 3.1 - Workout Detail View Rules
+                        Day 3.1 - Filtering System (Category + Date)
+                        Day 3.1 - Personal Records / Best Performance Logic
+                        Day 3.1 - Improved Workout Card Design Rules
+                        Day 3.1 - Empty State Behaviour
+                        Day 3.1 - State Management Approach
+                        Day 3.1 - UI/UX Rules
+                        Day 3.1 - Coding Standards
+                        Day 3.1 - Definition of Done (Success Criteria)
+                        Day 3.1 - Out of Scope (Deferred)
+  Removed sections    : (none). All Day 1-3, Day 1.1 and Day 2.1 sections
+                        retained as governed history.
   Templates           : ✅ plan-template.md   - Constitution Check gate stays
                                                  generic; frontend phases add no
                                                  new gate type
                         ✅ spec-template.md   - user-story grouping + acceptance
-                                                 scenarios align with the Day 2.1
+                                                 scenarios align with the Day 3.1
                                                  DoD; reused as-is
                         ✅ tasks-template.md  - [P] parallel labelling and
                                                  [US#] user-story grouping remain
@@ -40,11 +46,12 @@
                                                  left as-is (no edit needed)
   Deferred TODOs      : (none). Ratification date (2026-08-27) and amendment date
                         (2026-09-08) confirmed from footer + prior PHRs.
-  NOTE                : Day 2.1 is a frontend-only, mock-data phase exactly like
-                        Day 1.1. /progress and /goals render inside the existing
-                        DashboardLayout shell (Sidebar + TopNavbar). No backend,
-                        no API, no auth wiring, no TypeScript, and no new runtime
-                        dependencies in scope.
+  NOTE                : Day 3.1 is a frontend-only, mock-data phase exactly like
+                        Day 1.1 and Day 2.1. It reuses the existing DashboardLayout
+                        shell (Sidebar + TopNavbar), UI primitives and dark design
+                        tokens, and adds new /workouts-history, /workouts/:id and
+                        /exercises routes. No backend, no API, no auth wiring, no
+                        TypeScript, and no new runtime dependencies in scope.
   ============================================================================
 -->
 
@@ -195,6 +202,11 @@ constitution and in the feature contracts before implementation.
 > Goals phase (frontend-only, same dark dashboard shell). All Day 2.1 work is
 > `.js`/`.jsx` only. Any backend/TypeScript task beyond Day 2.1 scope requires a
 > new amendment.
+>
+> **Day 3.1 amendment:** The override above EXTENDS to the Day 3.1 Activities &
+> Workout History phase (frontend-only, same dark dashboard shell). All Day 3.1
+> work is `.js`/`.jsx` only. Any backend/TypeScript task beyond Day 3.1 scope
+> requires a new amendment.
 
 Rationale: Strict typing is the cheapest correctness tool in a MERN app and is
 a precondition for reliable refactoring on later days. This becomes more
@@ -553,7 +565,7 @@ These MUST NOT be silently added to Day 1.1; open a new spec if one is required.
 
 ---
 
-## Day 2.1 — Progress & Goals (CURRENT ACTIVE PHASE)
+## Day 2.1 — Progress & Goals (COMPLETE)
 
 ### Project Goal & Definition
 
@@ -903,6 +915,403 @@ These MUST NOT be silently added to Day 2.1; open a new spec if one is required.
 
 ---
 
+## Day 3.1 — Activities & Workout History (CURRENT ACTIVE PHASE)
+
+### Project Goal & Definition
+
+Day 3.1 builds the **Activities & Workout History** section of the Fitness
+Tracker, continuing the Day 1.1 dark dashboard and the Day 2.1 Progress & Goals
+phase. It is **frontend-only** using **only `.js` and `.jsx` files (strictly no
+TypeScript)**, scoped to the existing `frontend/` workspace, and reuses the
+committed React + Vite + React Router + Tailwind setup, the `DashboardLayout`
+shell (`Sidebar` + `TopNavbar`), the `ui/` primitives, and the dark design
+tokens. It MUST NOT break, modify, or regress any Day 1.1 dashboard or Day 2.1
+Progress & Goals behaviour.
+
+The phase delivers the training-history pages and their features, matching the
+existing visual language (deep charcoal background, `dash-card` surfaces, lime
+accent, consistent type scale):
+
+1. **Workout History page** (`/workouts-history`): complete, filterable workout
+   history list with category and date-based filtering and improved workout
+   cards.
+2. **Workout Detail view** (`/workouts/:id`): a single workout's full detail —
+   header, meta, and its exercises with per-exercise sets/reps/weight.
+3. **Exercise History page** (`/exercises`): per-exercise history across all
+   workouts (sets/reps/weight progression over time).
+4. **Personal Records / Best Performance** surfaced within the Exercise History
+   and Detail views (computed best lifts and best efforts).
+
+These pages MUST render inside the existing `DashboardLayout` shell and follow
+the nav pattern established in Day 2.1: implemented tabs (`Workouts`,
+`Nutrition`, `Progress`, `Goals`, and a new `History`/`Activities` link) activate
+real routes while any tab without an implemented page stays an inert placeholder.
+Day 3.1 navigates to existing `/workouts` routes only where they already exist; it
+does not rework the existing auth-phase Workout List/Form CRUD.
+
+### Core Principles (Day 3.1)
+
+#### H1. Frontend-Only, Mock-Data Phase (NON-NEGOTIABLE)
+
+Day 3.1 MUST NOT touch the backend, add API calls, require authentication, or
+change any data model or environment variable. All data is mock/local, imported
+from clearly-named modules under `frontend/src/data/` so it can later be swapped
+for real API responses. Existing `services/` API code is out of scope and MUST
+NOT be called by these pages.
+
+Rationale: Matches the Day 1.1 and Day 2.1 delivery model; keeps the phase
+shippable and reviewable without server, DB, or auth dependencies.
+
+#### H2. JavaScript-Only (NON-NEGOTIABLE)
+
+Same rule as Day 1.1 D1 and Day 2.1 P2: `.js` for logic/util/constants/data
+modules, `.jsx` for components and pages. No `.ts`/`.tsx`, no type annotations,
+no `@ts-check`, no `tsconfig` changes governing the frontend.
+
+#### H3. Reuse the Existing Shell and Primitives (NON-NEGOTIABLE)
+
+The new pages MUST reuse `DashboardLayout`, the `dash-card`, `dash-num`,
+`accent-text`, `ring-track` utilities/tokens from `index.css`, and the existing
+`ui/` primitives (`Card`, `Badge`, `EmptyState`, `Spinner`, `Skeleton`,
+`ProgressBar`, `Select`, `Input`). Do not fork or restyle copies of Day 1.1/2.1
+markup. New shared primitives ONLY when needed and non-colliding with existing
+exports.
+
+Rationale: "Match the overall visual language of the existing dashboard" is an
+explicit requirement; duplication is the anti-pattern D4 forbids.
+
+#### H4. Every Section Has Proper Empty, Loading, and Error States
+
+Each data-driven section MUST render a designed `EmptyState` when its data is
+absent, a `Spinner`/`Skeleton` loading branch while loading, and a friendly error
+message (never a stack trace) on error. Empty workout lists, empty exercise
+histories, and empty personal records MUST show designed empty states, never
+broken layouts or `NaN`.
+
+#### H5. No New Runtime Dependencies
+
+Reuse the committed stack; hand-rolled SVG for any mini-charts. No charting
+library, no date library, no state library. If a task appears to need one, open a
+constitution amendment first and record it in Complexity Tracking.
+
+#### H6. Filtering Is Pure and Derivable
+
+Category and date-based filtering MUST be computed by small, exported, **pure
+JavaScript functions** in `frontend/src/utils/` (e.g. `historyUtils.js`) that
+take the full workout array plus filter inputs and return the filtered array
+(and, where needed, grouped results). Components render results; they do not
+embed filter calculations inline. Filter state (selected category, date range)
+lives in page `useState` and is applied via these pure functions.
+
+Rationale: Filtering logic is central and must be single-sourced, testable, and
+ready for a future API swap where filtering may move server-side.
+
+#### H7. Personal Records Are Derived, Never Stored
+
+Personal records / best performance MUST be computed on the fly by pure
+functions over the workout/exercise data (`bestLift(exercise, workouts)`,
+`bestSet`, `bestVolume`, etc.) — never persisted as editable mock numbers.
+Components render the derived result.
+
+Rationale: PRs are a projection of logged history; deriving them keeps one source
+of truth and guarantees correctness as the history grows.
+
+#### H8. Local State Only; Same Discipline as Day 1.1/2.1
+
+Page/section state uses `useState` locally. Lift only when two or more components
+share it. No external state library. Filter selections and any quick interactions
+may use local state for the session; nothing persists, and refresh resets to mock
+data.
+
+#### H9. Fully Responsive, Desktop-First (Same as D8)
+
+Activities & Workout History MUST be fully responsive: full side-by-side layout
+at desktop, stacking/reflow at tablet, single-column with no horizontal scroll at
+mobile. Workout card grids, the detail layout, and exercise tables reflow like
+the Day 1.1/2.1 grids.
+
+#### H10. Navigation Is Additive and Non-Destructive
+
+Day 3.1 MAY add nav entries (a `History`/`Activities` link in sidebar/tabs) and
+new routes, but MUST NOT remove or repurpose existing nav entries. Inert tabs
+remain inert placeholders exactly as prior days. Workbook/history routes use
+distinct paths that do not collide with existing auth-phase routes.
+
+### Folder & Component Structure (Day 3.1)
+
+All under the existing `frontend/src/` workspace. Additions are additive — no
+Day 1.1, Day 2.1, or Day 2 file is moved or renamed, except `App.jsx` gaining
+new routes and `index.css` MAY gain strictly-additive token/utility classes.
+
+```text
+frontend/src/
+├── App.jsx                     # + <Route path="/workouts-history">,
+│                               #   /workouts/:id (detail), /exercises
+│                               #   (all inside DashboardLayout, like /progress)
+├── components/
+│   ├── history/                # (new; mirrors components/progress/)
+│   │   ├── WorkoutHistoryList.jsx # workout list / grid of WorkoutCards
+│   │   ├── WorkoutCard.jsx     # improved workout card (name, category, date, sets)
+│   │   ├── WorkoutDetail.jsx   # single workout full detail view
+│   │   ├── ExerciseHistory.jsx # per-exercise progression list
+│   │   ├── PersonalRecords.jsx # best lifts / best performance list
+│   │   ├── HistoryFilters.jsx  # category + date filter controls
+│   │   ├── CategoryBadge.jsx   # category pill (semantic color)
+│   │   └── ExerciseRow.jsx     # one exercise row (sets/reps/weight)
+│   └── ui/                     # existing; add non-colliding primitives ONLY if needed
+├── pages/
+│   ├── WorkoutHistory.jsx      # /workouts-history — composes list + filters
+│   ├── WorkoutDetail.jsx       # /workouts/:id — composes detail view
+│   └── ExerciseHistory.jsx     # /exercises — composes exercise + PRs
+├── data/
+│   ├── workoutHistoryData.js   # workouts[] (full history, categories/dates/exercises),
+│   │                           #   EMPTY variant; exercises for Exercise History
+│   └── constants.js            # + WORKOUT_CATEGORIES, PR_FIELDS, DATE_FILTER_OPTIONS
+└── utils/
+    ├── historyUtils.js         # filterWorkouts, groupByDate, bestLift, bestSet,
+    │                           #   bestVolume, formatVolume (pure)
+    └── (existing progressUtils.js / streakUtils.js reused where relevant)
+```
+
+Rules:
+- One logical unit per file; components that render JSX are `.jsx`; pure logic
+  and data are `.js`.
+- Sections are composed in the pages exactly as Day 1.1 `Dashboard.jsx` and Day
+  2.1 `Progress.jsx`/`Goals.jsx`.
+- `data/` and `utils/` are the ONLY places mock data and calculations live.
+
+### Data Shape Decisions (Day 3.1)
+
+All mock data is plain JS objects/arrays in `data/workoutHistoryData.js`, with a
+populated and an EMPTY variant (mirroring `dashboardData.js` /
+`emptyDashboardData` and the Day 2.1 data modules).
+
+**Workout** — the canonical shape the history pages render:
+
+```js
+{ id, name: "Push Day", category: "strength", date: "2026-09-05", notes,
+  exercises: [ { id, name: "Bench Press", sets: 4, reps: 8, weightKg: 60 } ] }
+```
+
+- `category` comes from `WORKOUT_CATEGORIES` (e.g. `strength`, `cardio`,
+  `flexibility`, `hybrid`, `other`), stored lowercase.
+- `date` is a `YYYY-MM-DD` string (matches Day 2.1 date convention) so filtering
+  is a straightforward string compare.
+
+**Exercise** — embedded per-workout, each with sets/reps/weight:
+
+```js
+{ id, name: "Bench Press", sets: 4, reps: 8, weightKg: 60 }
+```
+
+- `weightKg` is optional; `0`/`undefined` = bodyweight (matches the Day 2 model).
+
+**Category structure** — a fixed array in `constants.js`:
+
+```js
+export const WORKOUT_CATEGORIES = [
+  { key: 'strength',  label: 'Strength' },
+  { key: 'cardio',    label: 'Cardio' },
+  { key: 'flexibility', label: 'Flexibility' },
+  { key: 'hybrid',    label: 'Hybrid' },
+  { key: 'other',     label: 'Other' },
+];
+```
+
+**Personal records structure** — derived, described by a field list:
+
+```js
+export const PR_FIELDS = [
+  { key: 'bestLiftKg',  label: 'Best Lift',  unit: 'kg' },
+  { key: 'bestSet',     label: 'Best Set',   unit: 'kg' },
+  { key: 'bestVolumeKg',label: 'Best Volume',unit: 'kg' },
+];
+```
+
+Date filter options (`DATE_FILTER_OPTIONS`) support quick ranges (e.g. All,
+This Week, This Month, Last 3 Months) plus a custom `from`/`to` date pair.
+
+### Workout History Page Layout & Behaviour (Day 3.1)
+
+- **Layout**: a filters row (category `<select>` + date range incl. quick
+  ranges) above a grid of `WorkoutCard`s, grouped newest-first by date (a date
+  heading per group when useful).
+- **Default state**: shows ALL workouts newest-first with no filter applied.
+- **Filter controls** must read/write page `useState` and re-render the list via
+  the pure `filterWorkouts` helper — never mutate the source array.
+- **Card actions**: each card links to its `/workouts/:id` detail view. Cards
+  show name, `CategoryBadge`, date, exercise count, and a summary (e.g. total
+  sets or a headline metric). No edit/delete in this phase (see Out of Scope).
+- **Listed count** ("N workouts") should be shown so filtering is observable.
+
+### Workout Detail View Rules (Day 3.1)
+
+- Route `/workouts/:id` loads the matching workout from mock data by `id`
+  (a pure `findWorkout(workouts, id)`); a missing/unknown id MUST render a
+  friendly "Workout not found" `EmptyState` with a back link, never a crash.
+- Header: workout name, `CategoryBadge`, full date, optional notes.
+- Body: a table/list of exercises — name, sets, reps, weightKg (or "Bodyweight"),
+  and a derived per-exercise volume (`sets × reps × weightKg`) when weight exists.
+- A "Back to history" link returns to `/workouts-history`.
+- Detail uses the same `dash-card` and type conventions; the total workout volume
+  (sum of exercise volumes) MAY be shown as a headline metric.
+
+### Filtering System (Category + Date) (Day 3.1)
+
+1. **Category filter**: single-select from `WORKOUT_CATEGORIES` (plus "All").
+   `filterWorkouts(workouts, { category })` returns workouts whose `category`
+   matches (empty/`all` = no category filter).
+2. **Date filter**: supports quick ranges and/or explicit `from`/`to`
+   `YYYY-MM-DD` bounds. A workout matches when its `date` string is within the
+   inclusive range. `filterWorkouts` treats absent bounds as unbounded.
+3. **Composition**: both filters MUST compose (AND). `filterWorkouts` accepts one
+   options object `{ category, from, to }` and returns a NEW array (never mutates
+   input).
+4. **Empty result**: when filters match nothing, the list renders the
+   `EmptyState` ("No workouts match your filters") — distinct from the
+   no-workouts-at-all state — with an action to clear filters.
+5. **Sort**: results stay newest-first by `date` after filtering.
+
+### Personal Records / Best Performance Logic (Day 3.1)
+
+Pure functions in `historyUtils.js` aggregate over exercise history:
+
+1. **bestLift(exerciseName, workouts)** → highest `weightKg` recorded across all
+   workouts for that exercise (ignores bodyweight `0`/`undefined` records).
+2. **bestSet(exerciseName, workouts)** → the single set with the highest
+   volume (`sets × reps × weightKg`) for that exercise.
+3. **bestVolumeKg(workout)** → `sum(exercises: sets × reps × weightKg)` for one
+   workout; `bestVolumeHg(history)` → the max across a set of workouts.
+4. **PR display**: On the Exercise History page show a `PersonalRecords` panel
+   with the best lift + best set for the selected exercise, and on the Detail
+   view show total volume. Derived each render from current data (H7) — no
+   stored PR numbers.
+5. **Empty**: when an exercise has no weighted history, show "No personal records
+   yet" `EmptyState`, never `0 kg`/`NaN`.
+
+### Improved Workout Card Design Rules (Day 3.1)
+
+- Build on the Day 1.1 `dash-card` surface; a `WorkoutCard` is a reusable
+  component (D4 reuse, not duplication).
+- **Content**: workout name (prominent), `CategoryBadge`, date, a compact
+  summary line (e.g. "4 exercises · 32 sets" or headline metric + total volume),
+  and an explicit hover/active state signalling it links to the detail view.
+- **Visual rules**: same rounded corners, border, shadow, and 4px spacing as
+  existing cards; the category is a `Badge` with a semantic color mapped from
+  `WORKOUT_CATEGORIES`; text truncates (`truncate`) for long names; numeric
+  values use the `dash-num` style.
+- Cards MUST be keyboard-focusable with visible focus rings when they are links.
+
+### Empty State Behaviour (Day 3.1)
+
+- Shared `EmptyState` (icon + short message + optional action) is used for:
+  - no workouts at all ("No workouts recorded yet"),
+  - no workouts matching filters ("No workouts match your filters" + clear
+    action),
+  - workout not found by id ("Workout not found" + back link),
+  - no exercise history ("No exercise history yet"),
+  - no personal records ("No personal records yet").
+- Loading (`Spinner`/`Skeleton`) and error (friendly message, never a stack
+  trace) branches MUST be present on every data-driven section (H4).
+
+### State Management Approach (Day 3.1)
+
+- `useState` in each page for its slice: the mock workouts array, the selected
+  category filter, and the date filter.
+- `filterWorkouts` and the PR helpers are called in render (or a memo) from that
+  state; they return new arrays/values.
+- Lift state only when two or more components share it (e.g. filter state
+  shared between the filter row and the list may live in the page).
+- No Context required for Day 3.1 unless the plan demonstrates shared state that
+  local `useState` cannot cleanly handle; if added, one `HistoryDataContext` in
+  `context/`.
+
+### UI/UX Rules (Day 3.1)
+
+- Same dark theme, tokens, `dash-card` sections, `dash-num` headline numbers,
+  lime accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1/2.1.
+- Category indicators are a `CategoryBadge` pill using semantic colors; never
+  invent new color meanings beyond success/accent/warning/muted.
+- Numeric formatting: weights/volume with one decimal or whole numbers as
+  appropriate (e.g. `60 kg`, `1,440 kg` volume with thousands separators); dates
+  formatted consistently.
+- Accessibility: filter controls are real `<select>`/`<input>`s, link cards are
+  real `<a>`/`<button>`s with `aria-label` where icon-only, semantic
+  `<section>`/`<ul>` markup, focus-visible rings use the accent color, contrast
+  readable on dark.
+
+### Coding Standards (Day 3.1)
+
+- **Language**: JavaScript only (`.js`/`.jsx`); no TypeScript (H2).
+- **Naming**: `camelCase` functions/variables, `PascalCase` components,
+  `SCREAMING_SNAKE` constants. Default export for pages/components, named
+  exports for utils/constants.
+- **Imports**: clean and grouped (react → libraries → local relative).
+- **Comments**: none explaining the obvious; only decision/non-obvious
+  justifications. No AI-looking boilerplate.
+- **Dead code**: none; remove unused imports/variables.
+- **Purity**: filtering and PR math live in `historyUtils.js` pure functions
+  (H6/H7), not in render.
+- All other Day 1.1/2.1 coding standards apply unchanged.
+
+### Definition of Done (Day 3.1 Success Criteria)
+
+Day 3.1 is DONE only when ALL of the following hold, in addition to Day 1.1 and
+Day 2.1 still passing:
+
+1. Day 1.1 dashboard at `/` and the Day 2.1 `/progress` + `/goals` pages render
+   unchanged — no regression.
+2. `/workouts-history` renders inside `DashboardLayout` and shows the complete
+   workout history as improved `WorkoutCard`s, newest-first, with category and
+   date filters that work and compose.
+3. `/workouts/:id` renders the workout detail view (name, category, date, notes,
+   exercises with sets/reps/weight, derived volume); an unknown id shows the
+   "Workout not found" empty state.
+4. `/exercises` renders per-exercise history across workouts with sets/reps/
+   weight progression over time and a `PersonalRecords` panel (best lift, best
+   set) derived via pure functions.
+5. Category + date filtering returns correctly ordered, non-mutated results and
+   shows a distinct "no matches" empty state with a clear-filters action.
+6. Every section has designed empty, loading, and error states — none render
+   blank/broken/`NaN` (H4).
+7. Design matches the existing dark dashboard: same tokens, cards, badges,
+   accent, type; fully responsive with no horizontal scroll at any breakpoint.
+8. All new files are `.js`/`.jsx` (no `.ts`/`.tsx`); no new runtime dependency;
+   no backend, API, env, or model changes.
+9. `npm run build` (vite build) succeeds cleanly.
+10. Manual browser verification is recorded (all three pages, filters, PRs,
+    empty/loading/error exercised, responsive at 3 breakpoints, Day 1.1 + Day
+    2.1 regression check).
+11. Navigation: implemented tabs navigate correctly; any inert tabs remain inert
+    placeholders; existing routes are not removed or repurposed (H10).
+
+### Out of Scope (Day 3.1 — Deferred)
+
+Explicitly NOT part of Day 3.1; do not expand Day 3.1 work to include:
+
+- Any backend, API, or database change (no models, routes, controllers, or
+  services); server-side filtering or statistics.
+- Authentication/registration/login changes or protecting the new pages behind
+  additional auth beyond the existing shell (they render like Day 1.1 `/` and
+  Day 2.1 `/progress`/`/goals`).
+- TypeScript adoption or conversion of existing files.
+- Real persistence, storage, sync, import/export, or device integrations.
+- Editing/deleting workouts from these pages, or creating new workouts here
+  (the existing auth-phase Workout List/Form CRUD is separate and untouched).
+- Exercise library/catalog with muscle groups, supersets, rest timers, or
+  dedicated per-exercise REST endpoints.
+- Advanced analytics: one-rep-max estimation algorithms beyond recorded lifts,
+  trend forecasting, form/technique analysis.
+- Notifications, reminders, push, email, social sharing, and public/community
+  leaderboards.
+- Automated test suite and CI for the frontend.
+- New runtime dependencies (charts/date/state libraries).
+- Deployment or production hosting.
+
+These MUST NOT be silently added to Day 3.1; open a new spec if one is required.
+
+---
+
 ## Environment Variables & Secrets
 
 `.env` is git-ignored; `.env.example` is committed with placeholder values only.
@@ -938,6 +1347,9 @@ constitution amendment first.
 
 > **Day 2.1 amendment:** The Progress & Goals phase is frontend-only with mock
 > data and adds NO environment variables or new required config.
+
+> **Day 3.1 amendment:** The Activities & Workout History phase is frontend-only
+> with mock data and adds NO environment variables or new required config.
 
 `.env.example` (client): no secrets on the client.
 
@@ -1288,6 +1700,13 @@ requests. Reuse exactly what Day 1 built — do not re-architect.
 > `/register`) is touched; auth-protected routes (`/profile`, `/workouts*`,
 > `/nutrition`) stay unchanged. The plan MUST state the exact `App.jsx` wiring.
 
+> **Day 3.1 amendment:** Day 3.1 adds `/workouts-history`, `/workouts/:id`
+> (detail), and `/exercises` as standalone routes that render inside the existing
+> `DashboardLayout`, mirroring the Day 2.1 `/progress` wiring. These do NOT
+> collide with or replace the existing auth-phase `/workouts`, `/workouts/new`,
+> or `/workouts/:id/edit` routes. The plan MUST state the exact `App.jsx`
+> wiring and confirm no route removals (H10).
+
 ### Profile page (`client/src/pages/Profile.tsx`)
 
 - **View mode** by default: shows `name`, `email`, `bio`, `age`, `heightCm`,
@@ -1471,7 +1890,9 @@ change any rule above:
   frontend-only Dashboard phase and redefined the frontend language standard
   (TypeScript → JavaScript-only for the Dashboard) → **3.0.0** (MAJOR). Day 2.1
   added the Progress & Goals frontend phase (extends the JS-only override,
-  adds P1-P9 + domain sections) → **3.1.0** (MINOR).
+  adds P1-P9 + domain sections) → **3.1.0** (MINOR). Day 3.1 added the
+  Activities & Workout History frontend phase (extends the JS-only override,
+  adds H1-H10 + domain sections) → **3.2.0** (MINOR).
 - **Compliance review**: All plans, specs, and task lists MUST pass the
   "Constitution Check" gate before implementation. Pull requests/reviews MUST
   confirm no violation of the security, ownership, and coding standards. Any
@@ -1482,7 +1903,8 @@ change any rule above:
 - **Day ownership**: This document governs the whole project. Day 1 scope is
   complete; Day 2 (profile + workouts) is complete; Day 3 (nutrition tracking)
   is complete; Day 1.1 (dark dashboard) is complete; Day 2.1 (Progress & Goals)
-  is the current governed day. Later days append here via amendment, never by
-  rewriting prior rules without a MAJOR bump and migration note.
+  is complete; Day 3.1 (Activities & Workout History) is the current governed
+  day. Later days append here via amendment, never by rewriting prior rules
+  without a MAJOR bump and migration note.
 
-**Version**: 3.1.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-08
+**Version**: 3.2.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-08

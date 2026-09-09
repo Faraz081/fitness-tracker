@@ -115,7 +115,7 @@ export default function Nutrition() {
         ...MEAL_META[mealType],
         items: entries.filter((e) => e.mealType === mealType),
     }));
-    return (<div className="max-w-4xl mx-auto">
+    return (<div>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div className="flex items-center gap-3">
           <div className="gradient-primary h-10 w-10 rounded-xl flex items-center justify-center glow shrink-0">

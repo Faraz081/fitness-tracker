@@ -58,7 +58,7 @@ export default function WorkoutList() {
             setDeletingId(null);
         }
     }
-    return (<div className="max-w-4xl mx-auto">
+    return (<div>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight font-display">
