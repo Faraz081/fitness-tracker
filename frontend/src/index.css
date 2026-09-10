@@ -428,3 +428,147 @@
 .ring-track {
   color: var(--color-line);
 }
+
+/* ===== Landing Page (Day 8.2) ===== */
+.landing-root {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* Public marketing page always uses the dark brand palette, even if a
+   logged-out visitor still has a persisted light-theme document attribute. */
+[data-theme="light"] .landing-root {
+  --color-bg: #0B0F14;
+  --color-panel: #131821;
+  --color-panel-soft: #161C26;
+  --color-line: #232A33;
+  --color-ink: #F4F6F8;
+  --color-ink-soft: #A9B0BC;
+  --color-ink-muted: #6B7280;
+}
+
+.landing-container {
+  margin-inline: auto;
+  max-width: 76rem;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .landing-container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-container {
+    padding-inline: 2rem;
+  }
+}
+
+.landing-section {
+  padding-block: 4.5rem;
+}
+
+@media (min-width: 768px) {
+  .landing-section {
+    padding-block: 6.5rem;
+  }
+}
+
+.landing-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-family-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.landing-eyebrow::before {
+  content: '';
+  width: 1.75rem;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 9999px;
+}
+
+.landing-skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 60;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  font-weight: 600;
+  transition: top 0.15s ease;
+}
+
+.landing-skip-link:focus {
+  top: 1rem;
+}
+
+.landing-hero-ring {
+  position: relative;
+  width: min(22rem, 80vw);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at center, rgba(190, 242, 100, 0.18) 0%, rgba(163, 230, 53, 0.06) 34%, transparent 62%);
+}
+
+.landing-hero-ring::before,
+.landing-hero-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid rgba(163, 230, 53, 0.28);
+}
+
+.landing-hero-ring::before {
+  inset: 12%;
+  border-color: rgba(163, 230, 53, 0.18);
+}
+
+.landing-hero-ring::after {
+  inset: 26%;
+  background: radial-gradient(circle at center, rgba(190, 242, 100, 0.22) 0%, rgba(163, 230, 53, 0.05) 70%);
+}
+
+@keyframes landing-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(163, 230, 53, 0.18);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 55px rgba(190, 242, 100, 0.3);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes landing-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Reduced-motion guard: base layer already zeroes animation-duration for all
+   elements when the OS requests reduced motion, so these fall back to static. */
+.landing-glow {
+  animation: landing-glow-pulse 3.5s ease-in-out infinite;
+}
+
+.landing-float {
+  animation: landing-float 4.5s ease-in-out infinite;
+}

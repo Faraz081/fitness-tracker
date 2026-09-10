@@ -1,72 +1,71 @@
 <!--
   ============================================================================
-  SYNC IMPACT REPORT (Day 7.1 Settings amendment)
+  SYNC IMPACT REPORT (Day 8.2 Public Landing Page constitution amendment)
   ============================================================================
-  Version change      : (minor) 3.5.1  ->  3.6.0  (Day 7.1: Settings system)
-  Modified principles : No Core Principle (I-VIII) removed or redefined. The
-                        Day 1.1 frontend JavaScript-only override (Principle V
-                        amendment + D1) is EXTENDED to the Day 7.1 Settings
-                        phase by ST-stated coding standards. Day 6.1 heading
-                        marker changed from (CURRENT ACTIVE PHASE) to (COMPLETE)
-                        — its phase shipped under Amendment 2026-09-09
-                        (3.5.1). The Day 6.1 notification settings remain the
-                        single source of truth for notification preferences
-                        (ST8 reuses I, no second storage key).
-  Added sections      : Day 7.1 Settings - Project Goal & Definition
-                        Day 7.1 - Core Principles (ST1-ST8)
-                        Day 7.1 - Required Capabilities (non-negotiable)
-                        Day 7.1 - Account & Profile Rules
-                        Day 7.1 - Units Rule
-                        Day 7.1 - Theme Rule
-                        Day 7.1 - Notification Preference Rules
-                        Day 7.1 - Password Change Rules
-                        Day 7.1 - Logout Rules
-                        Day 7.1 - Delete Account Rules (Danger Zone)
-                        Day 7.1 - Backend Surface & Persistence
-                        Day 7.1 - Folder & Component Structure
-                        Day 7.1 - UI/UX Rules
-                        Day 7.1 - Coding Standards
-                        Day 7.1 - Definition of Done (Success Criteria)
-                        Day 7.1 - Out of Scope (Deferred)
-                        Route amendment note (Day 7.1) in Routes section
-  Removed sections    : (none). All prior-day sections retained as governed
+  Version change      : (minor) 3.9.0  ->  3.10.0 (Day 8.2: added L1-L9
+                        non-negotiable principles for the Public Landing Page)
+  Modified principles : No Core Principle (I-VIII) removed or redefined.
+                        All prior-day principles (D1-D2, P1-P9, H1-H10, A1-A10,
+                        S1-S10, N1-N10, ST1-ST8, R1-R9) unchanged and binding.
+                        L1-L9 ADDED as new non-negotiable principles for Day 8.2.
+                        Day 8.1 heading marker -> (COMPLETE); Day 8.2 becomes
+                        (CURRENT ACTIVE PHASE).
+  Added sections      : Day 8.2 - L1. Conversion-Focused
+                        Day 8.2 - L2. Clarity & Immediate Impact
+                        Day 8.2 - L3. Visual Consistency
+                        Day 8.2 - L4. Modern & Premium
+                        Day 8.2 - L5. Mobile-First Responsive
+                        Day 8.2 - L6. Performance & Lightweight Animation
+                        Day 8.2 - L7. Authentic Content
+                        Day 8.2 - L8. Content Maintainability
+                        Day 8.2 - L9. Additive & Non-Destructive
+  Removed sections    : (none). Prior-day sections retained as governed
                         history.
   Templates           : ✅ plan-template.md   - Constitution Check gate stays
-                                                   generic; the Day 7.1 phase
-                                                   adds no new gate type
-                        ✅ spec-template.md   - user-story grouping + acceptance
-                                                   scenarios align with the
-                                                   Day 7.1 DoD; reused as-is
-                        ✅ tasks-template.md  - [P] parallel labelling and
-                                                   [US#] user-story grouping
-                                                   remain valid
-                        ⚠ commands/           - NO commands/*.md directory exists
-                                                   in this repo (PowerShell
-                                                   setup); plan-template.md
-                                                   references it as a note only
-                                                   - non-blocking, left as-is
-                        ⚠ AGENTS.md           - generated from feature plans;
-                                                   refresh via
-                                                   update-agent-context.ps1
-                                                   when THE Day 7.1 plan lands
+                                                    generic; no new gate type
+                         ✅ spec-template.md   - user-story grouping + acceptance
+                                                    scenarios align with the
+                                                    expanded DoD; reused as-is
+                         ✅ tasks-template.md  - [P] parallel labelling and
+                                                    [US#] user-story grouping
+                                                    remain valid
+                         ⚠ commands/           - NO commands/*.md directory exists
+                                                    in this repo (PowerShell
+                                                    setup); plan-template.md
+                                                    references it as a note only
+                                                    - non-blocking, left as-is
+                         ⚠ AGENTS.md           - generated from feature plans;
+                                                    refresh via
+                                                    update-agent-context.ps1
+                                                    when THE Day 8.2 plan lands
   Deferred TODOs      : (none). Ratification date (2026-08-27) and amendment
-                        date (2026-09-09) confirmed from footer + prior PHRs.
-  NOTE                : Day 7.1 defines the Settings system as an ADDITIVE
-                        phase on the shipped MERN app: a new /settings route
-                        inside DashboardLayout, owner-scoped preference
-                        persistence (units kg/lb, theme), logout reusing the
-                        existing auth path, secure change-password and
-                        delete-account flows (both auth-scoped, confirmation-
-                        gated), and notification preferences that REUSE the
-                        Day 6.1 notification settings (Amendment 2026-09-09).
-                        Delete Account is the first destructive data action;
-                        it MUST be confirmation-gated and cascade-delete only
-                        the acting user's owned data (Principle VII). Theme is
-                        limited to dark (default) + at most one light scheme
-                        via the existing token system. Out of scope: 2FA,
-                        social accounts, advanced privacy, data export,
-                        extra themes. JS-only, no new runtime deps, no new env
-                        vars.
+                        date (2026-09-10) confirmed from footer + prior PHRs.
+  NOTE                : This is the first Day 8.2 constitution pass (3.9.0 ->
+                        3.10.0): adds nine non-negotiable principles from the
+                        /sp.constitution spec — L1 (Conversion-Focused: every
+                        element serves the headline -> value -> proof -> action
+                        funnel, CTAs above the fold and repeated, no dead ends),
+                        L2 (Clarity & Immediate Impact: value prop within
+                        seconds, benefit-driven copy, deliberate hierarchy),
+                        L3 (Visual Consistency: dark shell + lime accent
+                        tokens, unmistakably FitTrack), L4 (Modern & Premium:
+                        token-built gradients/glows, refined craft, not
+                        template-made), L5 (Mobile-First Responsive: no
+                        horizontal scroll, accessible nav, 3 breakpoints), L6
+                        (Performance & Lightweight Animation: transform/opacity
+                        only, bundled framer-motion, reduced-motion, LCP
+                        budget, zero new deps), L7 (Authentic Content: honest
+                        centrally-sourced stats, visibly illustrative
+                        testimonials, no fabricated claims), L8 (Content
+                        Maintainability: ONE data/landingContent.js module for
+                        all copy/stats/nav/CTA targets), and L9 (Additive &
+                        Non-Destructive: public route added without removing
+                        /login, /register, or the protected Dashboard; exact
+                        App.jsx wiring stated in the plan). Required page
+                        sections: navbar, animated hero + CTAs, features,
+                        how-it-works, fitness statistics, benefits,
+                        testimonials, final CTA, footer. All earlier governance
+                        (D1-D2 through R1-R9) is unchanged and binding.
   ============================================================================
 -->
 
@@ -2317,7 +2316,7 @@ These MUST NOT be silently added to Day 6.1; open a new spec if one is required.
 
 ---
 
-## Day 7.1 — Settings (CURRENT ACTIVE PHASE)
+## Day 7.1 — Settings (COMPLETE)
 
 ### Project Goal & Definition
 
@@ -2549,6 +2548,787 @@ Explicitly NOT part of Day 7.1; do not expand Day 7.1 work to include:
 
 ---
 
+## Day 8.1 — Reports & Export (COMPLETE)
+
+### Project Goal & Definition
+
+Day 8.1 builds the **Reports & Export** system for the Fitness Tracker,
+continuing the shipped MERN application on the Day 7.1 additive pattern. Reports
+MUST reflect real persisted user data over a user-selected date range and offer
+reliable CSV and PDF exports. It is **JavaScript-only (`.js`/`.jsx`, no
+TypeScript)**, reuses the committed React + Vite + React Router + Express +
+Mongoose + Tailwind stack, renders inside the existing `DashboardLayout` shell
+(`Sidebar` + `TopNavbar`), and MUST NOT break, modify, or regress any prior-day
+behaviour or route.
+
+Unlike the mock-data phases (Day 1.1-6.1), Day 8.1 is an **additive MERN phase**:
+report data is aggregated **server-side** from the real, owner-scoped `workouts`
+and `nutrition` collections over the selected date range (Principle VII), and
+totals follow the server-computed rule of Principle VIII. The client renders and
+exports that pre-aggregated data. This honors Accuracy First (real data only),
+Reliability (no drift between view and export), and Performance
+(pre-aggregated queries).
+
+The phase delivers a dedicated **Reports page** (`/reports`) with report tabs,
+matching the existing visual language (deep charcoal background, `dash-card`
+surfaces, lime accent, consistent type scale):
+
+1. **Fitness Report (Overview)** — a summary dashboard combining key KPIs from
+   Workout, Nutrition, and Progress: Total Workouts, Total Volume, Calories
+   Consumed (vs goal when a persisted goal exists), Weight Change (when weight
+   history exists), and a derived Consistency Score, with tab navigation into
+   the detailed reports.
+2. **Workout report** — workout count, total volume, frequency, per-category
+   breakdown, and notable lifts / PRs for the range. Duration and muscle-group
+   breakdowns are shown ONLY where that data is persisted (currently NOT in the
+   model → graceful "not tracked" states, never invented).
+3. **Nutrition report** — server-computed daily calorie/macro totals, averages,
+   per-meal-type breakdown, and the logged meals list for the range; goal
+   comparison ONLY when a persisted goal target exists.
+4. **Progress report** — real-data-only progress (profile weight, workout +
+   nutrition consistency); strength progression and PRs derived from real
+   exercises; weight history and milestones ONLY if persisted owner-scoped data
+   exists (progress photos are not reportable — no such feature exists).
+5. **Date-range selection** — presets (Last 7/30/90 days, This Month, Last
+   Month, This Year, All Time) + custom `from`/`to`, default **Last 30 days**,
+   respected by every report and export and persisted across tabs via the URL.
+6. **Export** — accurate, downloadable **CSV** and **PDF** per report (including
+   the Overview), plus clear Generate / Download buttons.
+
+### Core Principles (R1-R9)
+
+#### R1. Accuracy First (NON-NEGOTIABLE)
+
+Every report MUST reflect the acting user's real, persisted data for the selected
+range. The system MUST NEVER invent, estimate, or approximate missing values;
+gaps render as explicit "no data" states, never as filler numbers or trends.
+All report aggregation MUST be server-computed from owner-scoped rows
+(`{ owner: req.userId }` queries) — extending the Principle VIII totals rule to
+every report aggregate, not just calories/macros. Valid report sources are the
+`workouts` and `nutrition` collections plus the user's own profile fields
+(`weightKg`, `goal`). Frontend-only mock datasets (Day 2.1 weight/measurement/
+streak mocks, Day 3.1 history mocks, Day 4.1 analytics mocks) are NOT report
+sources under any circumstances.
+
+Data that the persisted model does not capture — workout `duration`, exercise
+muscle-group metadata, progress photos, macro/calorie goal targets, historical
+weight entries — MUST NOT be approximated from other fields and MUST render as
+graceful "not tracked / no data in this range" states until the model actually
+persists them (see Report Type Rules and Out of Scope).
+
+Rationale: A report is a claim about past activity. Fabricating or approximating
+values makes the report untrustworthy — the exact failure mode this phase exists
+to prevent.
+
+#### R2. Clarity (NON-NEGOTIABLE)
+
+Every report MUST be understandable at a glance: a clear report heading, the
+applied date range, a sectioned layout, summary headline metrics, and consistent
+labels/units throughout. No jargon, no unexplained metrics, and no number on a
+report that cannot be traced to the data behind it.
+
+#### R3. Dashboard Consistency (NON-NEGOTIABLE)
+
+The Reports page MUST use the exact same design system as the Dashboard: the
+fixed left sidebar, dark theme, `--color-*` tokens, `dash-card` surfaces,
+`dash-num` headline numbers, lime accent, 4px spacing scale, and tight side
+spacing (no large empty black areas). Day 8.1 MAY add a `Reports` nav entry and a
+`/reports` route inside `DashboardLayout`, but MUST NOT remove, hide, or
+repurpose any existing nav entry or route (additive/non-destructive, mirroring
+ST7).
+
+#### R4. User Control (NON-NEGOTIABLE)
+
+Users MUST be able to select an inclusive date range and choose exactly which
+report(s) to generate and export. The date-range selector (presets + custom
+`from`/`to`, default Last 30 days) and the Generate/Download action buttons MUST
+be clearly visible and consistent with the design system. Presets and the custom
+range MUST all drive the same aggregation path.
+
+#### R5. Reliability (NON-NEGOTIABLE)
+
+CSV and PDF exports MUST produce correctly formatted, downloadable files without
+errors. CSV MUST open cleanly in spreadsheet software (UTF-8 BOM, quoted/escaped
+cells). PDF MUST be a well-formatted, share/print-ready file. Exports MUST be
+generated from the exact same pre-aggregated data the page rendered — never from
+a second, different fetch that could drift — and MUST never throw on empty or
+sparse data (a valid "no records" file is still a valid export). Failed fetches
+or failed export generation MUST surface an error state with a Retry action,
+never a silent no-op.
+
+#### R6. Performance Through Pre-Aggregation
+
+Report data MUST be computed server-side via pre-aggregated, owner-scoped
+aggregation queries (index-friendly, no N+1). The client renders and exports the
+returned summaries without re-aggregating large datasets. Aggregation and
+formatting helpers MUST be pure and memoizable. Generating a report or export
+MUST stay fast even with larger historical datasets (Performance Targets).
+
+#### R7. Accessibility & Internationalization (NON-NEGOTIABLE)
+
+All interactive elements (date picker, filters, download buttons) MUST be
+keyboard-accessible and screen-reader friendly. Numeric formats, date formats,
+and units MUST respect user locale settings. Provide text alternatives for
+charts and visual summaries.
+
+- All controls MUST be operable by keyboard alone (Tab, Enter, Space, Escape).
+- Interactive elements MUST have `aria-label` or associated `<label>` elements.
+- Export progress/success/error MUST be announced via `aria-live` regions
+  without blocking the user.
+- Chart SVGs MUST include `role="img"` and `aria-label` with a text summary.
+- Numeric formatting MUST respect the user's locale; units (kg/lb) MUST
+  respect the user's preference and convert consistently everywhere.
+
+Rationale: Accessibility ensures all users can benefit from reports. Locale
+awareness prevents confusion when numbers or dates appear in unexpected formats.
+
+#### R8. Testing & Reliability (NON-NEGOTIABLE)
+
+Define contract tests for each report type: given sample data, assert exact
+CSV/PDF structure and content. Include edge-case tests: empty data, single-day
+range, very large ranges, missing fields. All export endpoints MUST have
+integration tests verifying headers, content-type, and streaming behavior.
+
+- Contract tests MUST verify: given known persisted data and a specific date
+  range, each report returns the exact expected metrics, tables, and chart
+  series.
+- CSV export tests MUST verify: UTF-8 BOM, correct headers, proper quoting/
+  escaping, valid file structure.
+- PDF export tests MUST verify: header items present, charts included where
+  data exists, "No data" notes for empty sections.
+- Edge-case tests MUST cover: empty range, single-day range, All-Time range,
+  missing profile fields, no workouts, no nutrition logs, concurrent users.
+- Integration tests MUST verify: correct HTTP headers, content-type, streaming
+  behavior, authentication enforcement.
+
+Rationale: Reports make claims about user data. Testing ensures those claims
+are accurate and that exports are reliable under all conditions.
+
+#### R9. Evolution & Governance (NON-NEGOTIABLE)
+
+New report types MUST conform to the shared report model and export pipeline.
+Any change to the report schema requires a migration plan and backward-
+compatible export behavior for at least one major version. This constitution
+can be amended via a documented proposal that includes impact analysis on
+existing reports and exports.
+
+- New report types MUST use the same data model shape and export pipeline.
+- Schema changes MUST include a migration plan and maintain backward-compatible
+  exports for at least one major version.
+- Constitution amendments MUST be proposed in writing with rationale, impact
+  analysis, and migration plan before implementation.
+
+Rationale: The module will evolve as the app grows. Governance ensures changes
+are deliberate, backward-compatible, and documented.
+
+### Required Capabilities (non-negotiable)
+
+The Reports & Export system MUST support, and ship with:
+
+- Dedicated Fitness Report page (`/reports`)
+- Fitness Report overview (KPI summary of the three detailed reports)
+- Workout report
+- Nutrition report
+- Progress report
+- Report tabs / navigation between overview and detailed reports
+- Date-range selection (presets + custom range, default Last 30 days)
+- Export to CSV (per report, incl. overview)
+- Export to PDF (per report, incl. overview)
+- Clear Generate / Download report buttons
+- Loading (skeleton), empty, and error/retry states for reports and exports
+
+### Fitness Report (Overview) Rules
+
+- The Overview combines the SAME pre-aggregated data as the three detailed
+  reports for the SAME range into KPI cards: Total Workouts, Total Volume,
+  Calories Consumed (daily average and, when a persisted calorie goal target
+  exists, adherence vs goal), Weight Change (only when persisted weight history
+  covers the range; otherwise current weight or "no data"), and a **Consistency
+  Score**.
+- **Consistency Score** MUST be a pure, derived function (`reportUtils.js`) of
+  real activity days — e.g. `% of days with a logged workout AND/OR nutrition
+  entry` — with the exact formula stated in the plan. Never fabricated; zero
+  activity → "no data", never `0%` with fake precision.
+- Overview KPI cards reuse the `dash-num` summary-card style (Day 1.1). A tab
+  row (Overview / Workout / Nutrition / Progress) switches views; all tabs share
+  the one date-range selector.
+- Overview export = a combined CSV (a sectioned sheet/columns per report) and a
+  PDF that includes each report's summary + key tables/charts.
+
+### Report Type Rules
+
+**Workout report** (from `workouts`): workout count; total volume and total
+sessions; average sessions per week; frequency series; per-category breakdown
+(strength/cardio/flexibility/hybrid/other); notable lifts and **PR count**
+(best lift by `weightKg` across recorded exercises — the plan MUST pin whether a
+PR compares against the caller's full history or only the range; both are pure
+over real data). **Duration** (average/total) and **muscle-group distribution**
+are NOT computable from the current `Workout`/`Exercise` model (no such fields)
+and MUST render "Not tracked" no-data states, never estimates (R1). Drill-down
+to a single workout's details reuses the existing `WorkoutDetail` view or data.
+
+**Nutrition report** (from `nutrition`): per-day totals for calories, protein,
+carbs, fat plus range totals and daily averages; per-meal-type breakdown
+(breakfast/lunch/dinner/snack); the logged meals list for the range. All totals
+MUST come from the server aggregation (Principle VIII) — the client never sums
+raw entries as the source of truth. **Comparison against goals** is shown ONLY
+when a persisted calorie/macro goal target exists; otherwise "No goal set in this
+range" (macro goal targets are not currently persisted — see Out of Scope).
+
+**Progress report** (real data only): latest recorded weight and goal from the
+user's profile; workout consistency (workouts per week, count); nutrition
+consistency (days logged in range); strength progression and PRs derived from
+real exercise records (weight/reps/volume over time). **Weight trend/changes**
+and **milestones** are included ONLY if persisted owner-scoped data exists; when
+it does not, show a graceful "No weight history in this range" / "No milestone
+data yet" state. Never derive history from the Day 2.1 mock data or the single
+profile `weightKg`. Progress photos / visual progress timeline are NOT
+reportable (no such feature exists).
+
+Rationale: Reports must claim only what the app actually persists (R1). The Day
+2.1 weight/measurement/streak mocks and any model field that is not persisted
+(e.g. duration, muscle groups, macro goals) are barred as report sources by
+definition until the underlying model actually stores them.
+
+### Date Range Rules
+
+- Inclusive `from`/`to` in `YYYY-MM-DD` (same convention as prior days).
+- Presets are FIXED: **Last 7 days, Last 30 days (default), Last 90 days, This
+  Month, Last Month, This Year, All Time** plus a custom pair of date inputs.
+- Changing the range MUST re-fetch / re-calculate every metric, chart, and export
+  on the current report AND the Overview — a single shared aggregation path
+  (R4/R6).
+- **Persistence**: the applied range MUST be serialized to the URL query params
+  (`?from=...&to=...`) via `useSearchParams` (the Day 5.1 S5 convention), so it
+  is shared consistently across all report tabs and survives refresh within the
+  session. NO localStorage, NO backend persistence.
+- Server validation: an invalid, empty, or inverted range MUST be rejected with
+  `400 VALIDATION_ERROR` (friendly message), never rendered as a broken report.
+- Every report and export MUST display the applied range; exports embed it in
+  the filename and document header.
+
+### Server-Side Aggregation & API Surface
+
+- New **auth-scoped, `authenticate`-gated aggregation endpoints** mirroring the
+  existing route/controller/service pattern (final paths in the plan; one or few
+  endpoints, e.g. `GET /api/reports/:type?from&to`, including an overview
+  aggregate), each returning pre-aggregated data in the standard
+  `{ success, data?, error? }` envelope.
+- Every query MUST be owner-scoped by `req.userId` (Principle VII); an
+  empty-aggregation result must never leak another user's data.
+- **No new Mongoose models** — aggregates derive from the existing `workouts` and
+  `nutrition` collections (owner+date indexes already exist) and the user's
+  profile.
+- **No new environment variables.**
+
+### CSV Export Rules
+
+- Built **client-side** from the pre-aggregated data already fetched for display
+  (R5 — single source of truth), via a pure function in `reportUtils.js` and a
+  Blob + anchor download.
+- Format: UTF-8 **with BOM** so spreadsheet software opens it cleanly; an
+  optional report title + date-range header row; a data header row; comma-
+  separated; fields containing commas, quotes, or newlines MUST be quoted with
+  doubled quotes escaped; every value stringified consistently.
+- Filename: `<report-type>-<from>_<to>.csv` (e.g.
+  `workout-2026-08-11_2026-09-10.csv`); overview exports use `fitness-...`.
+- Empty range: still export a valid file — headers present, zero data rows, and a
+  summary line like `No records for 2026-08-11 to 2026-09-10` (never an empty or
+  broken file, never fabricated rows).
+
+### PDF Export Rules
+
+- A REAL downloadable `.pdf` file (not `window.print()`; no print-CSS
+  substitute).
+- One **approved client-side PDF library** is allowed as a constitution-approved
+  exception (plan picks it and records it in Complexity Tracking with
+  justification). This is the ONLY new runtime dependency of the phase. No other
+  chart/date/state/export libraries.
+- Layout: clean, professional, print-ready — a header with the app name
+  ("Fitness Tracker"), report title, user name, applied date range, and the
+  **generation timestamp**; summary/KPI metrics; section headings; simple
+  tables; and charts rendered as STATIC vector drawings (bars/lines) using the
+  approved library's drawing API, or rasterized from the app's hand-rolled SVG
+  without adding another dependency. A chart with data MUST NOT be silently
+  omitted; a section with no data shows a "No data" note instead of an empty
+  image.
+- Basic app-identity header (app name + timestamp) IS in scope; watermarking and
+  full branded template kits remain out of scope.
+- Generated from the same pre-aggregated data as the page and CSV (R5). An empty
+  range produces a valid one-page "No records" PDF (still titled + timestamped).
+
+### Empty & Sparse Data Rules
+
+- **Empty range**: each report section renders the shared `EmptyState` with a
+  range-scoped message ("No workouts in this date range", etc.) and an action
+  (e.g. widen the range). Exports remain valid zero-data files (R5).
+- **Sparse data**: render exactly what exists — real counts and real averages;
+  0 rows show "no data", never `0`/`NaN` artifacts; 1-point series render as
+  markers, never broken axes; no fabricated percentages or approximated trends
+  (R1).
+- **Loading**: cards/tables/charts use `Skeleton` loaders (skeleton shimmer for
+  charts), i.e. progressive loading on every data-driven section.
+- **Error**: a failed data fetch or failed export generation MUST show a friendly
+  error state with a **Retry** action (never a stack trace, never a silent
+  no-op).
+
+### Performance Targets
+
+- Reports MUST load within **< 2s** for a typical 30-day range (server
+  aggregation + client render, warm).
+- Exports MUST complete within **< 10s** for normal ranges.
+- Large ranges (e.g. All Time) MUST degrade gracefully: pure, memoized
+  aggregation, daily-bucketed/capped series for charts, and clear messaging if a
+  request exceeds a sane limit — never a timeout crash. Verification of these
+  targets MUST be recorded in the plan/spec.
+
+### Folder & Component Structure (Day 8.1)
+
+Frontend (all under the existing `frontend/src/` workspace, additive only):
+
+```text
+frontend/src/
+├── App.jsx                     # + <Route path="/reports">
+│                               #   (inside DashboardLayout, like /settings)
+├── components/reports/         # (new; mirrors components/settings/)
+│   ├── ReportTabs.jsx          # Overview / Workout / Nutrition / Progress tabs
+│   ├── DateRangeSelector.jsx   # presets + custom from/to + Generate button
+│   ├── ReportCard.jsx          # reusable report section card + header
+│   ├── OverviewReport.jsx      # KPI summary cards + Consistency Score
+│   ├── WorkoutReport.jsx       # workout report section
+│   ├── NutritionReport.jsx     # nutrition report section
+│   ├── ProgressReport.jsx      # progress report section
+│   ├── ReportSummary.jsx       # headline metrics row (dash-num)
+│   └── ExportButtons.jsx       # per-report CSV + PDF actions (two buttons or one Export dropdown)
+├── pages/
+│   └── Reports.jsx             # /reports — composes tabs + selector + report views
+├── services/
+│   └── reports.js              # fetch pre-aggregated endpoints (API layer only)
+└── utils/
+    └── reportUtils.js          # pure: buildReportMetrics, consistencyScore,
+                                #   buildCsv, exportPdf, serializeRange
+```
+
+Backend (additive, mirroring the existing route/controller/service shape):
+`routes/reports`, `controllers/reports`, `services/reports` (or the plan's
+equivalent) implementing the owner-scoped aggregation endpoints. No new models,
+no env changes.
+
+Rules: components are `.jsx`, logic/data/formatting are `.js` (V override). One
+logical unit per file. `services/` is the only place `fetch` is called (IV).
+
+### UI/UX Rules
+
+- Same dark shell, tokens, accent, `dash-card` surfaces, `dash-num`, 4px scale,
+  and tight side spacing as every prior day (Day 1.1 D2/D3, Day 7.1 ST3).
+- Page layout: report tabs (Overview / Workout / Nutrition / Progress) with a
+  shared date-range selector + Generate button at top (visible on every tab);
+  per-report Export actions (Export CSV / Export PDF — two buttons or one Export
+  dropdown with both options), styled as clear primary actions.
+- Consistent component usage across all report views (same cards, tables, chart
+  wrappers); fully responsive desktop + mobile (charts reflow, no horizontal
+  scroll at any breakpoint).
+- Designed empty states per report for the selected range; `Skeleton` loaders
+  during load; error states with a Retry action.
+- Controls are real `<button>`/`<select>`/`<input type="date">`; export buttons
+  show a pending/spinner + success state (announced via `aria-live`) and never
+  block; focus-visible rings use the accent; `aria-label` for icon-only
+  controls; reduced motion respected.
+- Numeric formatting consistent with the app (weights with decimals, volume with
+  thousands separators, kcal whole numbers, percentages whole); long names
+  truncate.
+
+### Coding Standards
+
+- **Language**: JavaScript only (`.js`/`.jsx`); no TypeScript (V override, as
+  applied by Day 7.1).
+- **Dependencies**: exactly ONE new runtime dependency (the approved PDF library,
+  R5 / Complexity Tracking); no others. No new env vars (D6/A7 budget
+  unchanged).
+- Naming, imports, comments, dead-code, and purity rules identical to the Day
+  4.1/5.1/6.1/7.1 coding standards; report + export math lives in
+  `reportUtils.js` pure functions (R6), never in render.
+
+### Definition of Done (Day 8.1 Success Criteria)
+
+Day 8.1 is DONE only when ALL of the following hold, in addition to Day 1.1
+through Day 7.1 still passing:
+
+1. `/reports` renders inside `DashboardLayout` (same shell, tokens, tight
+   spacing) with a `Reports` nav entry; existing nav/routes are not removed or
+   repurposed.
+2. The Fitness Report **Overview** shows the combined KPIs (Total Workouts, Total
+   Volume, Calories, Weight Change or no-data, Consistency Score) for the
+   selected range, computed purely from real pre-aggregated data.
+3. Report tabs (Overview / Workout / Nutrition / Progress) navigate correctly and
+   share the single date-range selector.
+4. Workout, Nutrition, and Progress report sections render correct values for the
+   selected date range, aggregated server-side from the real owner-scoped data.
+5. Date-range selection works with ALL presets (Last 7/30/90 days, This/Last
+   Month, This Year, All Time; default Last 30 days) plus custom from/to, drives
+   every report simultaneously, is validated (invalid/inverted range → friendly
+   400 message), and persists across tabs via URL params.
+6. Duration, muscle-group, progress-photo, macro-goal, and weight-history items
+   that the model does not persist render graceful "not tracked / no data"
+   states — no fabricated values (R1).
+7. CSV export downloads a correctly structured file for every report incl. the
+   Overview (UTF-8 BOM, valid headers, proper quoting/escaping) that opens
+   cleanly in spreadsheet software and reflects exactly what the page showed.
+8. PDF export downloads a clean, print-ready file for every report incl. the
+   Overview (app-name header, title, date range, generation timestamp, KPIs,
+   tables, static chart renderings) generated from the same data as the page.
+9. Empty/sparse ranges render designed empty states and still export valid
+   zero-data CSV/PDF; no `NaN`, no fabricated values, no broken sections
+   (R1/R5); failed fetches/exports show an error state with Retry.
+10. Ownership isolation holds: a second user can never influence or read another
+    user's reports (aggregation is owner-scoped, Principle VII).
+11. Performance targets met: 30-day report loads < 2s and exports complete < 10s;
+    All-Time ranges degrade gracefully (recorded in the plan/spec).
+12. All new files are `.js`/`.jsx`; exactly zero new env vars; exactly one
+    approved new npm dependency (the PDF library) documented in Complexity
+    Tracking.
+13. `npm run build` (vite build) succeeds cleanly; backend `node --check`/import
+    smoke passes for new/changed modules.
+14. Manual browser verification is recorded (overview + all reports, all presets +
+    custom range, URL persistence across tabs, CSV + PDF downloads
+    opened/validated, empty/sparse/error/retry states, responsive at 3
+    breakpoints, prior-day regression check).
+15. Accessibility pass: labelled controls, keyboard nav, `aria-live` export
+    feedback, contrast readable on dark.
+
+### Out of Scope (Day 8.1 — Deferred)
+
+Explicitly NOT part of Day 8.1; do not expand Day 8.1 work to include:
+
+- Emailing reports; scheduling / recurring reports.
+- Sharing reports via social media, public/secret links, or with
+  coaches/trainers.
+- Advanced custom report builders / report personalization.
+- Advanced filtering beyond the date range (reuses any Day 5.1 filters already in
+  the app, nothing new).
+- Excel (.xlsx) export (CSV + PDF only).
+- Watermarking or full branded PDF template kits beyond the basic app-name +
+  timestamp header.
+- Adding muscle-group metadata, workout `duration`, macro/calorie goal-target
+  CRUD, or a persisted weight-history collection to the data model — the reports
+  MAY use such data only if it already exists, never create or fake it.
+- Progress photos / visual progress timeline (no such feature exists in the app).
+- Server-side file generation/file storage of reports; report export history or
+  saved exports.
+- Charting/analytics libraries, date libraries, or any export library beyond the
+  single approved PDF library.
+- Automated test suite and CI for the frontend.
+- Deployment or production hosting; cross-device report sync.
+
+These MUST NOT be silently added to Day 8.1; open a new spec if one is required.
+
+---
+
+## Day 8.2 — Public Landing Page (CURRENT ACTIVE PHASE)
+
+### Project Goal & Definition
+
+Day 8.2 builds the **public landing page** for the Fitness Tracker
+("FitTrack"), continuing the shipped MERN application on the additive pattern.
+The landing page is the product's conversion-focused public face: it presents
+FitTrack's value proposition, features, and proof to visitors who are NOT yet
+authenticated, and funnels them into the sign-up flow. It is a single, generic
+public page rendered from a **single content module**, so copy, statistics,
+testimonials, nav links, and CTA targets can be updated without touching
+component code.
+
+The page is **JavaScript-only (`.js`/`.jsx`, no TypeScript)**, reuses the
+committed React + Vite + Tailwind + framer-motion stack (framer-motion is
+already bundled; **zero new runtime dependencies**), MUST use the exact same
+design system as the Dashboard (dark theme, `--color-*` tokens, lime accent,
+4px spacing scale, existing type scale), is **mobile-first**, and MUST NOT
+break, modify, or regress any prior-day behaviour or route. Because it is
+public-facing, accessibility + basic SEO (semantic landmarks, one `<h1>`, meta
+description, labelled links, alt text) are part of the phase.
+
+### Core Principles (L1-L9)
+
+#### L1. Conversion-Focused (NON-NEGOTIABLE)
+
+Every element of the landing page MUST serve the conversion narrative:
+headline → value → proof → action. Primary CTAs ("Get Started" / "Start
+Tracking") MUST be above the fold, repeated at logical decision points (after
+Features, after Statistics, and in the Final CTA), and remain the visually
+dominant action on every viewport. No section MAY end in a dead end — each
+section MUST lead to the next or to a CTA.
+
+#### L2. Clarity & Immediate Impact (NON-NEGOTIABLE)
+
+The hero headline MUST communicate the value proposition within seconds, and
+the first viewport MUST be instantly scannable (headline → supporting line →
+CTA). Copy MUST be benefit-driven, plain-language, and free of jargon. Visual
+hierarchy MUST lead the eye deliberately; no vague claims, no unexplained
+statistics, no walls of text.
+
+#### L3. Visual Consistency (NON-NEGOTIABLE)
+
+The landing page MUST be unmistakably FitTrack: the same dark theme as the
+Dashboard, `--color-*` tokens, lime accent (`--color-accent: #A3E635`), 4px
+spacing scale, existing type scale, and the same card/surface language
+(`dash-card` / `dash-num` where used). No new color system, no off-brand
+styling, no third-party theme. Glow/gradient effects MUST be built from the
+existing accent tokens (`--color-accent-glow`, `--color-primary-glow`), never
+new colors.
+
+#### L4. Modern & Premium (NON-NEGOTIABLE)
+
+Craft MUST be product-launch quality: precise spacing rhythm, cohesive type
+scale, accent-tinted gradients/glows built from tokens (e.g. hero backdrop,
+primary-button treatment), refined silhouette cards, and purposeful
+micro-motion. The page defines the product's first impression and MUST NOT look
+generic, template-made, or like a stock landing page.
+
+#### L5. Mobile-First Responsive (NON-NEGOTIABLE)
+
+Mobile-first and fully responsive with **no horizontal scroll at any
+breakpoint** (D8/A9). On mobile the nav collapses to an accessible menu, CTAs
+remain large and thumb-friendly, and every section stacks cleanly. All sections
+MUST render correctly at 3 breakpoints (mobile, tablet, desktop).
+
+#### L6. Performance & Lightweight Animation (NON-NEGOTIABLE)
+
+No heavy media, no 3D/WebGL, no hero video backgrounds, no image carousels, no
+large image assets. Animations MUST use transforms + opacity only, prefer the
+already-bundled framer-motion for reveal effects, be GPU-friendly, collapse to
+static under `prefers-reduced-motion`, and respect an LCP budget (performance
+target, recorded in the plan). The landing page MUST NOT measurably bloat the
+app bundle or slow first paint. Zero new npm dependencies.
+
+#### L7. Authentic Content (NON-NEGOTIABLE)
+
+Statistics and testimonials MUST be truthful or clearly labelled (extends the
+R1 real-data spirit to public marketing content). Stats MAY show honest,
+clearly-labelled placeholder figures that the app can genuinely produce; they
+MUST NOT present invented user claims as real. Testimonials MUST be visibly
+marked as illustrative/mock (consistent with the mock-data phases) until real
+user content exists, and MUST be swapped in from the single content module
+without code changes. No fabricated reviews presented as fact.
+
+#### L8. Content Maintainability (NON-NEGOTIABLE)
+
+ALL copy, statistics, testimonial items, nav links, and CTA targets MUST live
+in ONE content module (e.g. `frontend/src/data/landingContent.js`).
+Components MUST render from data, never hardcode strings across files. Editing
+the page's content MUST NOT require component changes, and CTA route targets
+MUST be centralized in the same module.
+
+#### L9. Additive & Non-Destructive (NON-NEGOTIABLE)
+
+Day 8.2 adds a PUBLIC landing experience WITHOUT removing, hiding, or
+repurposing any existing route (`/login`, `/register`, the protected Dashboard
+at `/`, and all prior-day routes; ST7/R3 additivity holds). The plan MUST state
+the exact `App.jsx` wiring for the landing page (e.g. a new public route, and
+how authenticated users are handled at `/`), and MUST confirm zero route
+removals.
+
+### Required Capabilities (non-negotiable)
+
+The Landing Page MUST support, and ship with:
+
+- A public landing page viewable WITHOUT login at the documented route
+- Sticky navbar (brand/logo → anchor links → primary CTA)
+- Hero section: headline, supporting copy, primary + secondary CTA buttons,
+  and an ANIMATED hero visual (lightweight — CSS/SVG/framer-motion, L6)
+- Features grid/section
+- "How it works" steps section
+- Fitness statistics band (honest, centrally-sourced figures, L7)
+- Benefits section
+- Testimonials section (clearly illustrative/mock, L7)
+- Final CTA section (closing headline + CTA buttons)
+- Footer (links, product info, Login / Sign up links)
+- Every CTA routed to the correct auth flow (primary → sign-up/register,
+  secondary/links → login)
+- Static-first rendering: the page renders from the content module with NO
+  authenticated /api dependency and never shows a broken state on absent data
+
+### Page Structure Rules
+
+Required sections in a coherent narrative order (the plan MAY refine ordering
+but MUST include all of them):
+
+1. **Navbar** — brand/logo, anchor links to on-page sections, and a primary
+   "Get Started" CTA. Sticky with backdrop blur (matching `TopNavbar`);
+   collapses to an accessible menu on mobile (L5).
+2. **Hero** — one headline stating the value proposition, one supporting line,
+   a primary CTA ("Get Started" → sign-up) + a secondary CTA ("Log in" →
+   `/login`), and an animated hero visual demonstrating the product (a mock
+   dashboard preview or abstract activity rings/chart — lightweight only, L6).
+3. **Features** — the core capabilities (workouts, nutrition, goals, analytics,
+   reports) presented as benefit-first cards reusing the `dash-card` language.
+4. **How It Works** — 3-4 numbered steps (e.g. Create account → Log workouts →
+   Track nutrition → See progress & reports).
+5. **Fitness Statistics** — a stats band (e.g. workouts logged, meals tracked,
+   streaks, reports generated) with HONEST, centrally-sourced figures (L7)
+   formatted `dash-num` style.
+6. **Benefits** — outcome-focused benefits section ("Why FitTrack").
+7. **Testimonials** — 1-3 cards; MUST be visibly mock/illustrative with an
+   on-page disclaimer (L7).
+8. **Final CTA** — closing headline + the primary sign-up CTA (repeated).
+9. **Footer** — brand, anchor/section links, and Login / Sign up links; social
+   or legal links only if real (no dead placeholders).
+
+Sections MAY be composed as separate `components/landing/*.jsx` files, all
+rendering from `data/landingContent.js` (L8).
+
+### CTA Routing Rules
+
+- Primary conversion CTAs ("Get Started", "Start Tracking", "Sign up") MUST
+  route to the auth sign-up flow (`/register`).
+- Secondary CTAs and footer/nav "Log in" links MUST route to `/login`.
+- NO dead buttons or empty `href`s: every anchor/button MUST have a real,
+  centralized target (L8).
+- The plan MUST state exactly how same-page anchor links and auth routes
+  coexist in `App.jsx` (L9).
+
+### Content & Data Rules
+
+- Everything user-facing that may change — hero copy, section titles,
+  descriptions, stats, testimonials, nav links, CTA labels + targets — lives in
+  `frontend/src/data/landingContent.js` (ONE source of truth, L8).
+- The content module MUST export plain data (arrays/objects/strings), not JSX
+  and not components.
+- Stats entries MAY carry a maintainer `note` clarifying provenance (e.g.
+  "mock seed — replace with real usage figures"); testimonials MUST carry a
+  visible `illustrative: true` marker that drives the on-page disclaimer (L7).
+- Content updates MUST NOT require component or build changes beyond editing
+  the module.
+
+### Performance & Animation Rules
+
+- ONE lightweight animation approach (framer-motion, already bundled, for
+  reveals/counters; CSS transitions/keyframes for hover/micro-interactions).
+- Only transform + opacity animation; never layout-thrashing properties
+  (L6).
+- The hero animation MUST be lightweight (SVG/CSS primitives or a mock product
+  UI shot) — no videos, no WebGL, no heavy image strips.
+- `prefers-reduced-motion`: all animations MUST collapse to static/fade only.
+- LCP on average hardware MUST be < 2.5s for the landing route (record target
+  + measurement method in the plan); the route MUST NOT add significant bytes
+  to the shared bundle (zero new runtime dependencies).
+- `useInView`-driven reveals MAY be used but MUST NOT block first paint
+  (below-the-fold only).
+
+### Folder & Component Structure (Day 8.2)
+
+```text
+frontend/src/
+├── App.jsx                     # + public Landing route (exact wiring in plan, L9)
+├── pages/
+│   └── Landing.jsx             # landing page — composes the section components
+├── components/landing/         # (new; one file per section, mirrors ui/ conventions)
+│   ├── LandingNav.jsx          # sticky navbar: brand + anchors + CTA
+│   ├── Hero.jsx                # headline, subcopy, CTA buttons, animated visual
+│   ├── Features.jsx            # features grid
+│   ├── HowItWorks.jsx          # numbered steps
+│   ├── StatsBand.jsx           # fitness statistics (dash-num figures)
+│   ├── Benefits.jsx            # benefits section
+│   ├── Testimonials.jsx        # illustrative testimonial cards (L7)
+│   ├── FinalCta.jsx            # closing headline + CTA buttons
+│   └── LandingFooter.jsx       # footer: brand, links, auth links
+└── data/
+    └── landingContent.js       # ALL copy/stats/nav links/CTA targets (L8)
+```
+
+Rules: components are `.jsx`, content/data are `.js` (V override). One logical
+unit per file. `data/` is the ONLY place landing copy lives (L8). `services/`
+is NOT used — the landing page MUST NOT fetch authenticated data (public page).
+
+### UI/UX Rules
+
+- Same dark shell and tokens as the Dashboard: `--color-bg` (#0B0F14),
+  `--color-panel` / `dash-card`, lime accent, 4px spacing scale, existing type
+  scale, `dash-num` for all figures (Day 1.1 D2/D3, Day 7.1 ST3).
+- Primary CTAs use the app's accent-button treatment (accent surface + dark
+  text, rounded, hover glow via `--color-accent-glow`); secondary CTAs are
+  outline/ghost.
+- Clear visual hierarchy: one obvious primary CTA per viewport; generous but
+  4px-scaled spacing; section padding scales consistently (no excessive gaps).
+- Sticky nav with backdrop blur (matching `TopNavbar`); the mobile menu is
+  keyboard-accessible and closes on selection.
+- Real `<button>`/`<a>` controls only; `aria-label` for icon-only controls;
+  focus-visible rings in accent; reduced-motion respected (L6).
+- Public page MUST be screen-reader friendly: semantic landmarks
+  (`<header>`, `<nav>`, `<main>`, `<footer>`), ONE `<h1>` (hero), correct
+  heading hierarchy, meaningful link text, alt text on any imagery, descriptive
+  `<title>` and meta description.
+- No horizontal scroll at any breakpoint (D8/A9); all sections correct at 3
+  breakpoints (L5).
+
+### Coding Standards
+
+- **Language**: JavaScript only (`.js`/`.jsx`); no TypeScript (V override, as
+  applied by every prior day).
+- **Dependencies**: ZERO new npm dependencies (`framer-motion` is already
+  bundled and reusable; everything else is CSS/Tailwind). No new env vars
+  (D6/A7 budget unchanged). No backend, API, model, or route changes (L9).
+- Naming, imports, comments, dead-code, and purity rules identical to the Day
+  4.1/5.1/6.1/7.1/8.1 coding standards; the content module is data-only (no
+  logic, no DOM, no timers).
+
+### Definition of Done (Day 8.2 Success Criteria)
+
+Day 8.2 is DONE only when ALL of the following hold, in addition to Day 1.1
+through Day 8.1 still passing:
+
+1. A public landing page renders WITHOUT login at the documented route(s); all
+   existing routes (`/login`, `/register`, protected Dashboard, prior-day
+   routes) remain unchanged (L9).
+2. All nine required sections are present and coherent (navbar, hero with
+   headline + CTA buttons + animated visual, features, how-it-works, fitness
+   statistics, benefits, testimonials, final CTA, footer).
+3. Every CTA routes to the correct auth flow — primary CTAs to the
+   sign-up/register flow, Login links to `/login`; zero dead links (L9 CTA
+   routing rules).
+4. The page matches the design system exactly: dark theme, tokens, lime accent,
+   4px scale, type scale, `dash-num` figures — unmistakably FitTrack (L3).
+5. Fully responsive and mobile-first at 3 breakpoints; no horizontal scroll;
+   the nav collapses to an accessible menu (L5).
+6. Animations are lightweight (transform/opacity, framer-motion or CSS),
+   GPU-friendly, and fully collapse under `prefers-reduced-motion` (L6).
+7. Performance: landing route LCP < 2.5s (measured & recorded); zero new npm
+   dependencies; no meaningful bundle bloat (L6).
+8. All copy, stats, testimonial items, nav + CTA targets are sourced from the
+   single `data/landingContent.js` module; content edits require zero component
+   changes (L8).
+9. Stats are honest/clearly-labelled; testimonials are visibly marked
+   illustrative and render an on-page disclaimer (L7).
+10. All new files are `.js`/`.jsx`; zero new env vars; no backend/API/model
+    changes.
+11. `npm run build` (vite build) succeeds cleanly.
+12. Manual browser verification is recorded (all sections, all CTAs, anchor
+    links, mobile menu, 3 breakpoints, reduced-motion, sign-up flow reachable
+    from every primary CTA, prior-day regression check incl. `/login`,
+    `/register`, Dashboard).
+13. Accessibility + SEO pass: semantic landmarks, single `h1`, labelled links,
+    alt text, descriptive title + meta description, focus-visible rings,
+    contrast readable on dark.
+
+### Out of Scope (Day 8.2 — Deferred)
+
+Explicitly NOT part of Day 8.2; do not expand Day 8.2 work to include:
+
+- Blog / content-marketing sections or pages.
+- Pricing tables / pricing plans page.
+- Live chat or chatbot widgets.
+- Complex 3D / WebGL scenes and hero video backgrounds.
+- Multi-language / i18n of the landing page.
+- SEO tooling, SSR/prerendering, or marketing analytics/tracking.
+- A CMS or admin UI to edit content — content stays in the single data module
+  (L8).
+- Password-less / OAuth "continue with" logins on the landing page itself.
+- Lead-gen forms (email subscription) — sign-up is the only conversion action.
+- Landing-page A/B testing / experiment frameworks.
+- Any data fetching from authenticated endpoints (public page only).
+
+These MUST NOT be silently added to Day 8.2; open a new spec if one is required.
+
+---
+
 ## Environment Variables & Secrets
 
 `.env` is git-ignored; `.env.example` is committed with placeholder values only.
@@ -2597,6 +3377,14 @@ constitution amendment first.
 > **Day 6.1 amendment:** The Notifications & Reminders phase is frontend-only
 > with in-app alerts and a single localStorage key; it adds NO environment
 > variables or new required config.
+
+> **Day 8.1 amendment:** The Reports & Export phase is an additive MERN phase
+> reusing the existing `MONGO_URI`, `JWT_SECRET`, `CLIENT_ORIGIN`, and cookie
+> config. It adds NO environment variables or new required config.
+
+> **Day 8.2 amendment:** The Landing Page phase is a public, frontend-only
+> phase rendering from a single content data module (`data/landingContent.js`);
+> it needs no auth and adds NO environment variables or new required config.
 
 `.env.example` (client): no secrets on the client.
 
@@ -2977,6 +3765,20 @@ requests. Reuse exactly what Day 1 built — do not re-architect.
 > The plan MUST state the exact `App.jsx` wiring and confirm no route removals
 > (ST7).
 
+> **Day 8.1 amendment:** Day 8.1 adds `/reports` as a standalone route that
+> renders inside the existing `DashboardLayout`, mirroring the Day 7.1
+> `/settings` pattern, PLUS a `Reports` nav entry (R3). This does NOT collide
+> with or replace any existing route. The plan MUST state the exact `App.jsx`
+> wiring and confirm no route removals (R3).
+
+> **Day 8.2 amendment:** Day 8.2 adds a PUBLIC landing page as a new
+> non-auth route (e.g. `/landing`, or a public splash that coexists with the
+> protected Dashboard at `/`). Because `/` is the protected Dashboard and
+> `/login`/`/register` are the public auth routes, the plan MUST state the exact
+> `App.jsx` wiring — including how authenticated users are handled at the
+> landing route — and confirm no existing route is removed, hidden, or
+> repurposed (L9).
+
 ### Profile page (`client/src/pages/Profile.tsx`)
 
 - **View mode** by default: shows `name`, `email`, `bio`, `age`, `heightCm`,
@@ -3175,6 +3977,22 @@ change any rule above:
   7.1 added the Settings system phase (adds ST1-ST8 + Required Capabilities +
   domain sections covering preferences, theme, password change, logout, and the
   confirmation-gated Danger Zone delete-account flow) → **3.6.0** (MINOR).
+  Day 8.1 added the Reports & Export phase (adds R1-R6 + Required Capabilities +
+  domain sections covering date-range selection, server-side pre-aggregation,
+  CSV + PDF export, and empty/sparse handling) → **3.7.0** (MINOR).
+  Day 8.1 spec amendment expanded the Reports & Export phase (adds the Fitness
+  Report Overview page, fixed date-range presets + URL-param persistence across
+  tabs, performance targets, PDF static-chart + app-name/timestamp header rules,
+  skeleton/error-retry states, and explicit "not tracked" dispositions for
+  duration/muscle-group/photo/macro-goal/weight-history data the model does not
+  persist) → **3.8.0** (MINOR).
+  Day 8.1 constitution amendment added R7 (Accessibility & Internationalization),
+  R8 (Testing & Reliability), and R9 (Evolution & Governance) non-negotiable
+  principles for the Reports & Export module → **3.9.0** (MINOR).
+  Day 8.2 added the Public Landing Page phase (adds L1-L9 + Required
+  Capabilities + domain sections covering the nine required page sections, CTA
+  routing into the auth flow, single-sourced content maintainability, and
+  performance/lightweight-animation rules) → **3.10.0** (MINOR).
 - **Compliance review**: All plans, specs, and task lists MUST pass the
   "Constitution Check" gate before implementation. Pull requests/reviews MUST
   confirm no violation of the security, ownership, and coding standards. Any
@@ -3187,9 +4005,11 @@ change any rule above:
   is   complete; Day 1.1 (dark dashboard) is complete; Day 2.1 (Progress & Goals)
   is complete; Day 3.1 (Activities & Workout History) is complete; Day 4.1
   (Analytics Module) is complete; Day 5.1 (Search & Filtering) is complete;
-  Day 6.1 (Notifications & Reminders) is complete; Day 7.1 (Settings) is the
+  Day 6.1 (Notifications & Reminders) is complete; Day 7.1 (Settings) is
+  complete; Day 8.1 (Reports & Export) is
+  complete; Day 8.2 (Public Landing Page) is the
   current governed day. Later days
   append here via amendment, never by rewriting prior
   rules without a MAJOR bump and migration note.
 
-**Version**: 3.6.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-09
+**Version**: 3.10.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-10

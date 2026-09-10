@@ -42,7 +42,7 @@ async function request(path, options = {}) {
 function apiPost(path, body) {
     return request(path, { method: 'POST', body: JSON.stringify(body) });
 }
-function apiGet(path) {
+export function apiGet(path) {
     return request(path, { method: 'GET' });
 }
 export function register(name, email, password) {

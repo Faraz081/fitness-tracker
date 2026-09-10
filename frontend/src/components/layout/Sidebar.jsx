@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { BarChart3, Bell, Dumbbell, History, LogOut, Salad, Settings, Target, TrendingUp, X } from 'lucide-react';
+import { BarChart3, Bell, Dumbbell, FileText, History, LogOut, Salad, Settings, Target, TrendingUp, X } from 'lucide-react';
 import { SIDEBAR_MENU } from '../../data/constants';
 import { useAuth } from '../../hooks/useAuth';
 import { useNotifications } from '../../context/NotificationsContext';
@@ -12,6 +12,7 @@ const menuIcons = {
     goals: Target,
     history: History,
     analytics: BarChart3,
+    reports: FileText,
     notifications: Bell,
     settings: Settings,
 };

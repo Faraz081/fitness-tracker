@@ -140,3 +140,13 @@ const goalSchema = z.object({
 export const notificationSyncSchema = z.object({
     goals: z.array(goalSchema).max(50).optional(),
 });
+export const reportQuerySchema = z
+    .object({
+    from: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'from must be YYYY-MM-DD' }),
+    to: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'to must be YYYY-MM-DD' }),
+})
+    .strict()
+    .refine((data) => data.from <= data.to, {
+    message: 'from date must be before or equal to to date',
+});
+export const reportTypeSchema = z.enum(['overview', 'workout', 'nutrition', 'progress']);

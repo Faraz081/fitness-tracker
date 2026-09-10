@@ -7,8 +7,10 @@ import Analytics from './pages/Analytics';
 import Goals from './pages/Goals';
 import Notifications from './pages/Notifications';
 import Settings from './pages/Settings';
+import Reports from './pages/Reports';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Landing from './pages/Landing';
 import Profile from './pages/Profile';
 import WorkoutList from './pages/WorkoutList';
 import WorkoutForm from './pages/WorkoutForm';
@@ -27,9 +29,17 @@ function PublicOnly({ children }) {
     }
     return <>{children}</>;
 }
+function HomeRouter() {
+    const { user, loading } = useAuth();
+    if (loading) {
+        return null;
+    }
+    return user ? (<Dashboard />) : (<Landing />);
+}
 export default function App() {
     return (<Routes>
-  <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>
+  <Route path="/landing" element={<Landing />}/>
+  <Route path="/" element={<HomeRouter />}/>
       <Route path="/progress" element={<ProtectedRoute>
             <Progress />
           </ProtectedRoute>}/>
@@ -44,6 +54,9 @@ export default function App() {
           </ProtectedRoute>}/>
       <Route path="/settings" element={<ProtectedRoute>
             <Settings />
+          </ProtectedRoute>}/>
+      <Route path="/reports" element={<ProtectedRoute>
+            <Reports />
           </ProtectedRoute>}/>
       <Route element={<Layout />}>
         <Route path="/login" element={<PublicOnly>

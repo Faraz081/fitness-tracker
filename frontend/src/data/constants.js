@@ -15,6 +15,7 @@ export const SIDEBAR_MENU = [
     { key: 'goals', label: 'Goals', path: '/goals' },
     { key: 'history', label: 'History', path: '/workouts-history' },
     { key: 'analytics', label: 'Analytics', path: '/analytics' },
+    { key: 'reports', label: 'Reports', path: '/reports' },
     { key: 'notifications', label: 'Notifications', path: '/notifications' },
     { key: 'profile', label: 'Profile', path: '/profile' },
     { key: 'settings', label: 'Settings', path: '/settings' },
