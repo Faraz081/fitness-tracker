@@ -53,7 +53,7 @@ export const NAV_TABS = [
     { key: 'bmi', label: 'BMI', path: '/bmi' },
 ];
 
-export const MACRO_COLORS = ['#A3E635', '#60A5FA', '#F472B6'];
+export const MACRO_COLORS = ['#F97316', '#60A5FA', '#F472B6'];
 
 export const WEEK_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -115,7 +115,7 @@ export const CHART_COLORS = {
 };
 
 export const MACRO_TYPES = [
-    { key: 'protein', label: 'Protein', color: '#A3E635' },
+    { key: 'protein', label: 'Protein', color: '#F97316' },
     { key: 'carbs', label: 'Carbs', color: '#60A5FA' },
     { key: 'fat', label: 'Fat', color: '#F472B6' },
 ];

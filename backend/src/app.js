@@ -7,6 +7,7 @@ import { workoutRouter } from './routes/workout.js';
 import { nutritionRouter } from './routes/nutrition.js';
 import { notificationRouter } from './routes/notification.js';
 import { reportsRouter } from './routes/reports.js';
+import { dashboardRouter } from './routes/dashboard.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { CLIENT_ORIGIN } from './config/index.js';
 export function createApp() {
@@ -20,6 +21,7 @@ export function createApp() {
     app.use('/api/nutrition', nutritionRouter);
     app.use('/api/notifications', notificationRouter);
     app.use('/api/reports', reportsRouter);
+    app.use('/api/dashboard', dashboardRouter);
     app.use((_req, res) => {
         res.status(404).json({ success: false, error: { message: 'Not found', code: 'NOT_FOUND' } });
     });

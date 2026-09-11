@@ -3,7 +3,7 @@ import { CheckCheck, Settings, Trash2 } from 'lucide-react';
 import { useNotifications } from '../../context/NotificationsContext';
 import { NotificationList } from './NotificationList';
 import { NotificationSettings } from './NotificationSettings';
-import { Spinner, EmptyState } from '../ui';
+import { EmptyState, ListSkeleton } from '../ui';
 import { sortNewestFirst } from '../../utils/notificationsUtils';
 
 const activeTabClass = 'bg-[var(--color-accent)] text-[var(--color-bg)]';
@@ -104,8 +104,8 @@ export function NotificationsPage() {
             </div>
 
             {loading ? (
-                <div className="glass-elevated rounded-2xl p-10">
-                    <Spinner />
+                <div className="glass-elevated rounded-2xl">
+                    <ListSkeleton count={4} />
                 </div>
             ) : error ? (
                 <div className="glass-elevated rounded-2xl">

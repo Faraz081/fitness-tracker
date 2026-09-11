@@ -10,6 +10,7 @@ import { FilterBar } from '../components/search/FilterBar';
 import { ActiveFilters } from '../components/search/ActiveFilters';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import { applyFilters, filtersToSearchParams, parseSearchParams } from '../utils/filterUtils';
+import { useDashboardRefresh } from '../context/DashboardContext';
 const MEAL_ORDER = ['breakfast', 'lunch', 'dinner', 'snack'];
 const MEAL_META = {
     breakfast: { label: 'Breakfast', icon: Apple },
@@ -35,6 +36,7 @@ function mealTextFor(entry) {
         .join(' ');
 }
 export default function Nutrition() {
+    const { refreshDashboard } = useDashboardRefresh();
     const [date, setDate] = useState(today());
     const [entries, setEntries] = useState([]);
     const [summary, setSummary] = useState(null);
@@ -119,6 +121,7 @@ export default function Nutrition() {
             setFormOpen(false);
             setEditing(null);
             setDate(payload.date);
+            refreshDashboard();
             await load();
         }
         catch (err) {
@@ -137,6 +140,7 @@ export default function Nutrition() {
             await api.deleteNutritionEntry(id);
             setConfirmId(null);
             showSuccess('Entry deleted');
+            refreshDashboard();
             await load();
         }
         catch (err) {

@@ -1,4 +1,6 @@
-const COLORS = ['var(--color-success)', 'var(--color-primary)', 'var(--color-warning)'];
+import { MACRO_TYPES } from '../../data/constants';
+
+const COLORS = MACRO_TYPES.map((m) => m.color);
 
 export function MacroDonut({ slices, total }) {
     const radius = 40;

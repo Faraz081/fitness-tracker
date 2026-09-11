@@ -1,71 +1,56 @@
 <!--
   ============================================================================
-  SYNC IMPACT REPORT (Day 8.2 Public Landing Page constitution amendment)
+  SYNC IMPACT REPORT (Day 9 Final Testing & Requirements Check amendment)
   ============================================================================
-  Version change      : (minor) 3.9.0  ->  3.10.0 (Day 8.2: added L1-L9
-                        non-negotiable principles for the Public Landing Page)
+  Version change      : (minor) 4.0.0  ->  4.1.0 (Day 9: Final Testing &
+                        Requirements Check — T1-T6 non-negotiable principles +
+                        Required Testing Areas + domain sections)
   Modified principles : No Core Principle (I-VIII) removed or redefined.
-                        All prior-day principles (D1-D2, P1-P9, H1-H10, A1-A10,
-                        S1-S10, N1-N10, ST1-ST8, R1-R9) unchanged and binding.
-                        L1-L9 ADDED as new non-negotiable principles for Day 8.2.
-                        Day 8.1 heading marker -> (COMPLETE); Day 8.2 becomes
-                        (CURRENT ACTIVE PHASE).
-  Added sections      : Day 8.2 - L1. Conversion-Focused
-                        Day 8.2 - L2. Clarity & Immediate Impact
-                        Day 8.2 - L3. Visual Consistency
-                        Day 8.2 - L4. Modern & Premium
-                        Day 8.2 - L5. Mobile-First Responsive
-                        Day 8.2 - L6. Performance & Lightweight Animation
-                        Day 8.2 - L7. Authentic Content
-                        Day 8.2 - L8. Content Maintainability
-                        Day 8.2 - L9. Additive & Non-Destructive
-  Removed sections    : (none). Prior-day sections retained as governed
-                        history.
+                        Prior-day principle sets (D1-D2, P1-P9, H1-H10, A1-A10,
+                        S1-S10, N1-N10, ST1-ST8, R1-R9, L1-L9, PU1-PU6)
+                        UNCHANGED in substance. Day 8.3 heading marker ->
+                        (COMPLETE); Day 9 becomes (ACTIVE).
+  Added sections      : Day 9 - T1. Requirements Traceability (NON-NEGOTIABLE)
+                        Day 9 - T2. End-to-End Coverage (NON-NEGOTIABLE)
+                        Day 9 - T3. No Silent Failures (NON-NEGOTIABLE)
+                        Day 9 - T4. Cross-Device Quality
+                        Day 9 - T5. Fix Before Finish
+                        Day 9 - T6. Evidence-Based Sign-off
+                        Day 9 Required Testing Areas (9 non-negotiable areas:
+                          CRUD, auth, dashboard, charts, search, notifications,
+                          settings, reports, responsive)
+                        Day 9 Out of Scope
+                        Day 9 Process Rules (5 rules)
+                        Day 9 Definition of Done (7 criteria)
+  Removed sections    : (none). All prior-day sections retained.
   Templates           : ✅ plan-template.md   - Constitution Check gate stays
-                                                    generic; no new gate type
-                         ✅ spec-template.md   - user-story grouping + acceptance
-                                                    scenarios align with the
-                                                    expanded DoD; reused as-is
-                         ✅ tasks-template.md  - [P] parallel labelling and
-                                                    [US#] user-story grouping
-                                                    remain valid
+                                                     generic; no new gate type
+                         ✅ spec-template.md   - DoD / success criteria align
+                                                     with T6 evidence-based
+                                                     sign-off; reused as-is
+                         ✅ tasks-template.md  - parallel labelling and
+                                                     user-story grouping
+                                                     remain valid
                          ⚠ commands/           - NO commands/*.md directory exists
-                                                    in this repo (PowerShell
-                                                    setup); plan-template.md
-                                                    references it as a note only
-                                                    - non-blocking, left as-is
-                         ⚠ AGENTS.md           - generated from feature plans;
-                                                    refresh via
-                                                    update-agent-context.ps1
-                                                    when THE Day 8.2 plan lands
+                                                     in this repo (PowerShell
+                                                     setup); non-blocking
+                         ✅ AGENTS.md           - already up to date (013 plan
+                                                     landed); Day 9 testing
+                                                     is verification-only, no
+                                                     new technologies added
   Deferred TODOs      : (none). Ratification date (2026-08-27) and amendment
                         date (2026-09-10) confirmed from footer + prior PHRs.
-  NOTE                : This is the first Day 8.2 constitution pass (3.9.0 ->
-                        3.10.0): adds nine non-negotiable principles from the
-                        /sp.constitution spec — L1 (Conversion-Focused: every
-                        element serves the headline -> value -> proof -> action
-                        funnel, CTAs above the fold and repeated, no dead ends),
-                        L2 (Clarity & Immediate Impact: value prop within
-                        seconds, benefit-driven copy, deliberate hierarchy),
-                        L3 (Visual Consistency: dark shell + lime accent
-                        tokens, unmistakably FitTrack), L4 (Modern & Premium:
-                        token-built gradients/glows, refined craft, not
-                        template-made), L5 (Mobile-First Responsive: no
-                        horizontal scroll, accessible nav, 3 breakpoints), L6
-                        (Performance & Lightweight Animation: transform/opacity
-                        only, bundled framer-motion, reduced-motion, LCP
-                        budget, zero new deps), L7 (Authentic Content: honest
-                        centrally-sourced stats, visibly illustrative
-                        testimonials, no fabricated claims), L8 (Content
-                        Maintainability: ONE data/landingContent.js module for
-                        all copy/stats/nav/CTA targets), and L9 (Additive &
-                        Non-Destructive: public route added without removing
-                        /login, /register, or the protected Dashboard; exact
-                        App.jsx wiring stated in the plan). Required page
-                        sections: navbar, animated hero + CTAs, features,
-                        how-it-works, fitness statistics, benefits,
-                        testimonials, final CTA, footer. All earlier governance
-                        (D1-D2 through R1-R9) is unchanged and binding.
+  NOTE                : MINOR bump (per semver Governance policy, MINOR = added
+                        principles or materially expanded guidance): Day 9 adds
+                        6 new non-negotiable QA principles (T1-T6) that govern
+                        how the project is verified, not how it is built. This
+                        is the first "process governance" phase — all prior days
+                        governed BUILD rules (what to build, how to build it);
+                        Day 9 governs VERIFICATION rules (how to prove it works).
+                        The testing phase touches no source code except bug fixes;
+                        it is pure audit + evidence + targeted fixes. All
+                        Day 1-8.3 build rules remain binding; Day 9 rules apply
+                        ON TOP of them during the final QA gate.
   ============================================================================
 -->
 
@@ -474,9 +459,17 @@ Rules:
 
 - **Colors (dark theme)**: page background deep charcoal/near-black (e.g.
   `#0b0f14`); card surface slightly lighter (e.g. `#161b22`); borders subtle
-  muted (`#232a33`); primary accent one hue (e.g. lime/green `#a3e635` or
-  indigo — MUST match the reference); text primary near-white, secondary muted
-  gray; danger/red and neutral states reserved for errors.
+  muted (`#232a33`); primary accent ONE hue — vibrant orange from v4.0.0
+  onward (see the v4.0.0 redefinition below); text primary near-white,
+  secondary muted gray; danger/red and neutral states reserved for errors.
+- > **v4.0.0 amendment (Day 8.3):** The brand accent is REDEFINED from lime
+  > (`--color-accent: #A3E635`) to **vibrant orange** (canonical target
+  > `--color-accent: #F97316`, Tailwind orange-500; exact hex finalized in the
+  > Day 8.3 plan within the vibrant-orange family). This SUPERSEDES every
+  > earlier lime/green accent reference in this constitution (Day 1.1 Design
+  > System Decisions, Day 2.1/3.1/4.1/6.1/7.1/8.1 UI/UX rules, Day 8.2 L3).
+  > Semantic status colors (success/warning/error) remain ONLY for their
+  > semantic meaning, never as decorative brand accents (PU2).
 - **Spacing**: use a consistent 4px scale driven by Tailwind utilities
   (`space-y-*`, `gap-*`, `p-*`); cards share one padding standard (e.g. `p-4`/`p-5`).
 - **Typography**: one primary font family (system or a single Google font already
@@ -607,7 +600,7 @@ Tailwind setup plus the Day 1.1 layout shell (`DashboardLayout` = `Sidebar` +
 dashboard behaviour (the dark shell, tokens, `ui/` primitives, existing routes).
 
 The phase delivers TWO new pages plus the features they surface, matching the
-existing visual language (deep charcoal background, `dash-card` surfaces, lime
+existing visual language (deep charcoal background, `dash-card` surfaces, orange
 accent, consistent type scale):
 
 1. **Progress page** (`/progress`): weight tracking (log + list + graph), body
@@ -822,7 +815,7 @@ measurement), `GOAL_CATEGORIES` (e.g. `strength`, `weight`, `habit`,
    Milestones display within their goal card, never as a separate top-level
    section without a goal.
 4. **Status display** — a `StatusBadge` pill uses semantic colors from the
-   theme: `on-track` = success green, `completed` = accent (lime),
+   theme: `on-track` = success green, `completed` = accent (orange),
    `missed` = warning amber, `no-goal` = muted gray.
 
 ### Streak System Rules (Day 2.1)
@@ -864,7 +857,7 @@ measurement), `GOAL_CATEGORIES` (e.g. `strength`, `weight`, `habit`,
 ### UI/UX Rules (Day 2.1)
 
 - Same dark theme, tokens, `dash-card` sections, `dash-num` headline numbers,
-  lime accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1.
+  orange accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1.
 - Progress bars reuse `ui/ProgressBar` with the same `ring-track`/status color
   conventions established in Day 1.1.
 - Status indicators are the `StatusBadge` pill only; never invent new color
@@ -958,7 +951,7 @@ tokens. It MUST NOT break, modify, or regress any Day 1.1 dashboard or Day 2.1
 Progress & Goals behaviour.
 
 The phase delivers the training-history pages and their features, matching the
-existing visual language (deep charcoal background, `dash-card` surfaces, lime
+existing visual language (deep charcoal background, `dash-card` surfaces, orange
 accent, consistent type scale):
 
 1. **Workout History page** (`/workouts-history`): complete, filterable workout
@@ -1258,7 +1251,7 @@ Pure functions in `historyUtils.js` aggregate over exercise history:
 ### UI/UX Rules (Day 3.1)
 
 - Same dark theme, tokens, `dash-card` sections, `dash-num` headline numbers,
-  lime accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1/2.1.
+  orange accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1/2.1.
 - Category indicators are a `CategoryBadge` pill using semantic colors; never
   invent new color meanings beyond success/accent/warning/muted.
 - Numeric formatting: weights/volume with one decimal or whole numbers as
@@ -1356,7 +1349,7 @@ behaviour.
 
 The phase delivers a dedicated **Analytics page** and all related analytics
 features, matching the existing visual language (deep charcoal background,
-`dash-card` surfaces, lime accent, consistent type scale):
+`dash-card` surfaces, orange accent, consistent type scale):
 
 1. **Analytics page** (`/analytics`): a dedicated, comprehensive fitness
    analytics dashboard accessible from the main navigation.
@@ -1757,7 +1750,7 @@ months, year), `CHART_COLORS` (accent, secondary, muted for multi-series),
 ### UI/UX Rules (Day 4.1)
 
 - Same dark theme, tokens, `dash-card` sections, `dash-num` headline numbers,
-  lime accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1/2.1/3.1.
+  orange accent (`var(--color-accent)`), and 4px spacing scale as Day 1.1/2.1/3.1.
 - Analytics chart cards use the same `dash-card` surface with `ChartCard`
   wrapper for consistent padding and border treatment.
 - Trend indicators use semantic colors: up = green (positive for strength,
@@ -2040,7 +2033,7 @@ badge, page). A simple global "Mute all" toggle is allowed; granular per-type
 on/off is required.
 
 **N3. Design Consistency** — Notifications MUST use the same dark shell, tokens,
-`dash-card` surfaces, lime accent (`var(--color-accent)`), 4px spacing scale,
+`dash-card` surfaces, orange accent (`var(--color-accent)`), 4px spacing scale,
 and typography as the Dashboard (Day 1.1). Unread items are visually distinct
 (accent-tinted left border/fill), but stay on-theme — no new color system.
 
@@ -2206,7 +2199,7 @@ logic live.
 
 ### UI/UX Rules
 
-- Same dark theme: `--color-accent` lime, `dash-card`, 4px scale, existing type
+- Same dark theme: `--color-accent` orange, `dash-card`, 4px scale, existing type
   scale (Day 1.1 D6 / Day 3.1 H3 apply).
 - Unread distinction: accent-tinted left border + slightly brighter surface.
   NEVER rely on color alone — unread rows also show a dot and a bold title.
@@ -2343,7 +2336,7 @@ type-to-confirm + final confirm), and MUST NEVER be a single click.
 
 **ST3. Consistency** — The Settings page MUST use the exact same design system
 as the Dashboard: fixed left sidebar, dark theme, `--color-*` tokens, 4px
-spacing scale, type scale, and lime accent (Day 1.1 D2/D3). Content MUST keep
+spacing scale, type scale, and orange accent (Day 1.1 D2/D3). Content MUST keep
 tight side spacing (no large empty gaps). Related settings MUST be grouped
 clearly (Account, Preferences, Notifications, Danger Zone, etc.).
 
@@ -2571,7 +2564,7 @@ Reliability (no drift between view and export), and Performance
 
 The phase delivers a dedicated **Reports page** (`/reports`) with report tabs,
 matching the existing visual language (deep charcoal background, `dash-card`
-surfaces, lime accent, consistent type scale):
+surfaces, orange accent, consistent type scale):
 
 1. **Fitness Report (Overview)** — a summary dashboard combining key KPIs from
    Workout, Nutrition, and Progress: Total Workouts, Total Volume, Calories
@@ -2631,7 +2624,7 @@ report that cannot be traced to the data behind it.
 
 The Reports page MUST use the exact same design system as the Dashboard: the
 fixed left sidebar, dark theme, `--color-*` tokens, `dash-card` surfaces,
-`dash-num` headline numbers, lime accent, 4px spacing scale, and tight side
+`dash-num` headline numbers, orange accent, 4px spacing scale, and tight side
 spacing (no large empty black areas). Day 8.1 MAY add a `Reports` nav entry and a
 `/reports` route inside `DashboardLayout`, but MUST NOT remove, hide, or
 repurpose any existing nav entry or route (additive/non-destructive, mirroring
@@ -3024,7 +3017,7 @@ These MUST NOT be silently added to Day 8.1; open a new spec if one is required.
 
 ---
 
-## Day 8.2 — Public Landing Page (CURRENT ACTIVE PHASE)
+## Day 8.2 — Public Landing Page (COMPLETE)
 
 ### Project Goal & Definition
 
@@ -3040,7 +3033,7 @@ component code.
 The page is **JavaScript-only (`.js`/`.jsx`, no TypeScript)**, reuses the
 committed React + Vite + Tailwind + framer-motion stack (framer-motion is
 already bundled; **zero new runtime dependencies**), MUST use the exact same
-design system as the Dashboard (dark theme, `--color-*` tokens, lime accent,
+design system as the Dashboard (dark theme, `--color-*` tokens, orange accent,
 4px spacing scale, existing type scale), is **mobile-first**, and MUST NOT
 break, modify, or regress any prior-day behaviour or route. Because it is
 public-facing, accessibility + basic SEO (semantic landmarks, one `<h1>`, meta
@@ -3068,7 +3061,8 @@ statistics, no walls of text.
 #### L3. Visual Consistency (NON-NEGOTIABLE)
 
 The landing page MUST be unmistakably FitTrack: the same dark theme as the
-Dashboard, `--color-*` tokens, lime accent (`--color-accent: #A3E635`), 4px
+Dashboard, `--color-*` tokens, vibrant orange accent (v4.0.0:
+`--color-accent: #F97316`, see Day 8.3 PU2), 4px
 spacing scale, existing type scale, and the same card/surface language
 (`dash-card` / `dash-num` where used). No new color system, no off-brand
 styling, no third-party theme. Glow/gradient effects MUST be built from the
@@ -3241,7 +3235,7 @@ is NOT used — the landing page MUST NOT fetch authenticated data (public page)
 ### UI/UX Rules
 
 - Same dark shell and tokens as the Dashboard: `--color-bg` (#0B0F14),
-  `--color-panel` / `dash-card`, lime accent, 4px spacing scale, existing type
+  `--color-panel` / `dash-card`, orange accent, 4px spacing scale, existing type
   scale, `dash-num` for all figures (Day 1.1 D2/D3, Day 7.1 ST3).
 - Primary CTAs use the app's accent-button treatment (accent surface + dark
   text, rounded, hover glow via `--color-accent-glow`); secondary CTAs are
@@ -3284,7 +3278,8 @@ through Day 8.1 still passing:
 3. Every CTA routes to the correct auth flow — primary CTAs to the
    sign-up/register flow, Login links to `/login`; zero dead links (L9 CTA
    routing rules).
-4. The page matches the design system exactly: dark theme, tokens, lime accent,
+4. The page matches the design system exactly: dark theme, tokens, orange
+   accent,
    4px scale, type scale, `dash-num` figures — unmistakably FitTrack (L3).
 5. Fully responsive and mobile-first at 3 breakpoints; no horizontal scroll;
    the nav collapses to an accessible menu (L5).
@@ -3326,6 +3321,363 @@ Explicitly NOT part of Day 8.2; do not expand Day 8.2 work to include:
 - Any data fetching from authenticated endpoints (public page only).
 
 These MUST NOT be silently added to Day 8.2; open a new spec if one is required.
+
+---
+
+## Day 8.3 - Premium UI/UX Upgrade (COMPLETE)
+
+### Project Goal & Definition
+
+Day 8.3 is a **cross-cutting visual and interaction upgrade** of the entire
+FitTrack application, elevating the product to a premium, modern, polished
+experience. It replaces the current lime-accent visual language with a **full
+black + vibrant orange design system** and modernizes every surface — layout,
+sidebar/navigation, cards, buttons, icons, typography, spacing, hover effects,
+page/loading animations, skeleton loaders, toasts, and modals — while
+**improving consistency, usability, and perceived quality on every page**:
+Dashboard, Progress, Goals, Workout History, Analytics, Notifications,
+Settings, Reports, the functional auth/nutrition/workout pages, AND the public
+Landing Page (theme alignment only). It is an **additive/non-destructive**
+phase to behaviour and routes: it REDEFINES the design system while changing
+**no product functionality and no routes**.
+
+It is **frontend-only, JavaScript-only (`.js`/`.jsx`, no TypeScript)**, reuses
+the committed React + Vite + React Router + Tailwind stack with the
+already-bundled **lucide-react** (icon system) and **framer-motion**
+(animation), and adds **zero new runtime dependencies** (Day 4.1 A7 / Day 7.1
+D6) and **zero new env vars**.
+
+> **Governance note (v4.0.0 MAJOR):** This phase redefines the brand accent
+> from lime (`--color-accent: #A3E635`) to **vibrant orange** (canonical
+> target `--color-accent: #F97316`), SUPERSEDING every earlier "lime accent"
+> reference in prior-day sections (see the v4.0.0 amendment note in the Day
+> 1.1 Design System Decisions). All prior-day functionality, ownership,
+> security, and coding rules remain binding and unchanged.
+
+### Core Principles (PU1-PU6)
+
+#### PU1. Premium Feel (NON-NEGOTIABLE)
+
+Every screen MUST feel modern, intentional, and high-quality. Generic or
+outdated UI patterns — flat grey boxes, default browser styling, stock-template
+buttons, absent/weak hover states — MUST NOT remain anywhere in the app. Each
+viewport MUST look deliberately crafted: refined surface separation, subtle
+elevation, generous-but-4px-scaled spacing, crisp focus states, and purposeful
+motion. Perceived quality is a first-class, enforceable acceptance criterion.
+
+Rationale: "Premium" is the user's headline requirement; without a rule it is
+unverifiable. PU1 makes taste a testable acceptance criterion and the visual
+baseline for every task in the phase.
+
+#### PU2. Complete Theme Consistency (NON-NEGOTIABLE)
+
+The ENTIRE application MUST adopt the **full black + vibrant orange theme**.
+**Zero leftover green/lime accents and zero mixed color systems are allowed.**
+The brand accent is REDEFINED to vibrant orange (canonical target
+`--color-accent: #F97316`, Tailwind orange-500; the plan MAY finalize the exact
+hex within the vibrant-orange hue family). Every `--color-primary*` /
+`--color-accent*` token and every raw lime literal (`#A3E635`, `#BEF264`,
+`#84CC16`) MUST be replaced or tokenized; any component using a raw color
+literal MUST be tokenized before the upgrade lands (no scattered hex codes
+anywhere). Semantic status colors (success/warning/error) remain ONLY for
+their semantic meaning (`on-track`, deficit/surplus, errors) — never as
+decorative brand accents.
+
+Rationale: "No leftover green accents" is an explicit user requirement; a
+single, verifiable token system is the only way to guarantee it and prevent
+regression.
+
+#### PU3. Design System Discipline (NON-NEGOTIABLE)
+
+Cards, buttons, inputs, icons, spacing, radius, shadows, and typography MUST
+follow ONE unified system driven by tokens. Spacing MUST follow one consistent
+scale (4px-based, as established Day 1.1); radius, shadow, border, and type
+values MUST be standardized and defined once (CSS variables / Tailwind theme)
+and referenced everywhere — never per-component hex, shadow, or font decisions.
+Shared primitives (`Card`, `Button`, `Badge`, `Input`, `Modal`, `Skeleton`,
+toast container) MUST be reused, never forked per page (D4). Any upgrade to a
+shared primitive MUST propagate to every consumer page.
+
+Rationale: Consistency across dozens of screens is impossible without a single
+source of truth; discipline keeps the upgrade a cohesive system rather than a
+patchwork of restyles.
+
+#### PU4. Delight with Purpose (NON-NEGOTIABLE)
+
+Animations, hover effects, transitions, and loaders MUST enhance the experience
+— they MUST NOT distract, add latency, or confuse. Every motion MUST serve
+orientation (what changed), feedback (what is interactive), or progress (what
+is loading). Motion MUST be performant (transform + opacity only; CSS
+transitions/keyframes or the already-bundled framer-motion), GPU-friendly,
+collapsed under `prefers-reduced-motion`, and MUST NOT block first paint or
+interaction. Micro-interactions (hover, active, focus, press) MUST be
+consistent site-wide. No excessive motion (see Out of Scope).
+
+Rationale: Performance and accessibility constrain "premium"; motion that
+slow-downs or annoys reads as cheap, not premium.
+
+#### PU5. Clarity & Hierarchy (NON-NEGOTIABLE)
+
+Strong visual hierarchy, consistent spacing, and readable typography are
+mandatory on every page: one clear visual priority per screen, an obvious
+primary action per viewport, scannable section headings, legible body copy,
+and consistent numeric display. The type scale is improved and tokenized
+(display / heading / subheading / body / caption); text contrast MUST be
+readable on the deep black background; information MUST be grouped
+purposefully with tighter, consistent gaps — no large empty black areas, no
+cramped crowds.
+
+Rationale: Hierarchy is the difference between premium and cluttered, and it is
+an accessibility requirement at the same time.
+
+#### PU6. Responsive by Default (NON-NEGOTIABLE)
+
+The upgraded UI MUST work excellently on mobile, tablet, and desktop. The
+modernized navigation MUST collapse appropriately (icon rail on tablet, drawer
+on mobile, per Day 1.1 D8), grids reflow, modals/overlays fit small viewports,
+controls remain thumb-friendly, and the app MUST have **no horizontal scroll
+at any breakpoint** (D8/A9).
+
+Rationale: Responsiveness has been binding since Day 1.1 (D8); the upgrade must
+not regress it while restyling every component.
+
+### Required Capabilities (non-negotiable)
+
+The Premium UI/UX Upgrade MUST deliver, and ship with, ALL of the following:
+
+- Complete **black + orange** theme across the entire app (all pages, all
+  surfaces, dashboard, auth flows, and the public Landing Page theme alignment)
+- **Modern sidebar / navigation** (refined brand block, clean active states,
+  preserved badge affordances, responsive rail/drawer)
+- **Improved cards** (clear hierarchy, refined borders/shadows, consistent
+  padding, hover lift where interactive)
+- **Improved buttons** with full states — **default, hover, active, disabled**
+  (accent-filled primary + outline/ghost secondary, consistent radius/height)
+- **Consistent icon system** (lucide-react across all icon usage, one
+  size/weight convention, `aria-label` on icon-only controls)
+- **Hover effects** (consistent, token-based, transform/opacity only)
+- **Smooth transitions** (standardized duration/easing, reduced-motion
+  respected)
+- **Page animations** (lightweight enter/reveal, transform/opacity only,
+  framer-motion or CSS)
+- **Loading animations / skeleton loaders** for major data-loading states
+  (Skeleton upgrade; charts use shimmer)
+- **Toast messages** in the new visual language (accent-bordered, consistent
+  placement + timing, dismissible, `aria-live`)
+- **Modal improvements** (refined overlay/panel, consistent padding, focus
+  trap, scroll-lock, keyboard-accessible, styled per the new system)
+- **Consistent spacing system** (one 4px-based scale, applied app-wide)
+- **Better typography** (tokenized display/heading/body/caption scale, improved
+  readability and hierarchy)
+- **Fully responsive design** on mobile + tablet + desktop (no horizontal
+  scroll)
+
+### Theme & Design System Rules
+
+- **Canonical palette (v4.0.0)**: page background deep black / near-black
+  (`--color-bg` dark family, narrowed toward true black as the plan decides);
+  panels/cards on a slightly raised surface with refined subtle borders and
+  shadow; and a SINGLE vibrant orange accent family replacing every
+  green/lime value:
+  ```
+  --color-accent: #F97316        (primary accent — vibrant orange)
+  --color-accent-light/hover: (lighter orange, e.g. #FB923C)
+  --color-accent-dark/pressed:  (darker orange, e.g. #EA580C)
+  --color-accent-glow:          translucent orange (e.g. rgba(249, 115, 22, 0.25))
+  ```
+  The exact light/dark variant hexes are finalized in the plan; ALL MUST be in
+  the vibrant-orange family and MUST derive from the accent token.
+- **Tokens are the ONLY color source**: every component MUST use `--color-*`
+  CSS variables / Tailwind theme values. A repo-wide scan MUST confirm zero raw
+  green/lime literals remain (PU2). Success green stays ONLY as the semantic
+  `--color-success` status color (e.g. on-track badges), never as a decorative
+  accent.
+- **Spacing**: one 4px-based scale (Tailwind `p-*`, `gap-*`, `space-*`); cards
+  share one padding standard; section padding scales consistently (no excessive
+  gaps, no cramped layouts).
+- **Radius/shadows**: one radius scale and one shadow set (tokenized); cards use
+  a consistent refined border + elevation; interactive elements get one
+  consistent hover shadow/lift.
+- **Typography**: one type scale (display / heading / subheading / body /
+  caption) with defined weights and sizes; `dash-num`-style headline numbers
+  kept for all stat figures; base text contrast readable on black (PU5).
+
+### Navigation & Sidebar Rules
+
+- The fixed left sidebar / top navbar shell is modernized but **not
+  restructured functionally**: all existing entries, badges (e.g. unread
+  notification count), and active-route states stay; styling, hover/active
+  states, elevation, and the brand block are upgraded in place.
+- Active nav state MUST be obvious — orange accent fill/indicator, never
+  ambiguous. Brand block: FitTrack mark + name in the refined style.
+- Responsive behaviour of the existing shell is preserved (icon rail on tablet,
+  drawer on mobile, D8) — no new nav pattern that breaks prior-day behaviour.
+- **No nav entry or route is removed, hidden, or repurposed** (ST7/R3/L9
+  additivity holds); the upgrade only restyles existing surfaces.
+
+### Component Upgrade Rules
+
+- **Buttons**: one `Button` primitive with variants (primary accent-filled,
+  secondary outline/ghost, danger, ghost) and full states (default, hover,
+  active, disabled). Height, radius, padding, and focus ring standardized;
+  icon buttons standardized with `aria-label`.
+- **Cards**: `Card` / `dash-card` upgraded as THE single card surface —
+  refined border (subtle `--color-line`), one consistent radius + shadow,
+  consistent padding, optional hover lift ONLY when the card is interactive
+  (with a clear interactive affordance such as a chevron or hover border).
+- **Icons**: lucide-react (already bundled) is THE icon set; no other icon
+  library, no emoji-as-icons. One stroke style/size convention; icon-only
+  controls carry `aria-label`.
+- **Inputs/selects/date**: upgraded orange focus ring, consistent heights and
+  padding, dark-surface styling, readable on black.
+- **Modals**: one `Modal` primitive — dimmed overlay, refined panel with
+  standard radius/border/shadow and padding, `role="dialog"` +
+  `aria-modal`, focus trap, Escape to close, body scroll-lock, animated via
+  opacity/transform only, `prefers-reduced-motion` respected. Confirmation
+  flows (delete account, clear all) reuse the upgraded modal consistently.
+- **Toasts**: the existing toast/banner pattern (reused since Day 6.1/7.1) is
+  restyled — orange accent border/icon, consistent placement and timing,
+  dismissible, auto-dismiss with pause-on-hover, `aria-live="polite"`; status
+  variants (success/info/error) use the semantic colors, never new hues.
+- **Skeleton loaders**: the existing `Skeleton` primitive is upgraded
+  (accent-neutral shimmer) and MUST be used for every major data-loading state
+  across Dashboard, Nutrition, History, Analytics, Notifications, Settings,
+  and Reports; charts use skeleton/shimmer placeholders.
+
+### Animation & Interaction Rules
+
+- Prefer CSS transforms/opacity; use bundled framer-motion only for
+  page/reveal polish. No new animation library (A7).
+- Standardized motion tokens (e.g. durations 150/200/300ms, ease-out) defined
+  once; hover/focus/active micro-interactions consistent on all interactive
+  elements.
+- Page transitions: lightweight enter animations (fade + subtle translate),
+  never layout-thrashing, never blocking above-the-fold content.
+- `prefers-reduced-motion`: all animation MUST collapse to static/fade.
+- Loading skeletons appear immediately (never blank regions) with smooth
+  shimmer; loading MUST NOT push layout around (reserved space or stable
+  placeholders).
+
+### Folder & Component Structure (Day 8.3)
+
+Frontend only; all under the existing `frontend/src/` workspace, additive and
+non-destructive. The upgrade is delivered primarily through **token/CSS
+redefinition in `index.css`** plus **upgraded shared primitives** in
+`components/ui/`; only genuinely new primitives are added to `components/ui/`
+(never mirrored copies of existing ones):
+
+```text
+frontend/src/
+├── index.css                  # v4.0.0 token redefinition (orange accent family,
+│                              #   spacing/radius/shadow/type scales) + parity for
+│                              #   the existing [data-theme="light"] scheme
+├── components/
+│   └── ui/                    # upgraded shared primitives (single source, D4/PU3):
+│       ├── Button.jsx         #   variants + full states (default/hover/active/disabled)
+│       ├── Card.jsx           #   refined unified card surface
+│       ├── Input.jsx          #   upgraded field primitive (select/textarea share styling)
+│       ├── Modal.jsx          #   upgraded overlay/panel primitive (a11y + motion)
+│       ├── ToastContainer.jsx #   restyled toast container (existing pattern)
+│       ├── Skeleton.jsx       #   upgraded shimmer loader
+│       └── Badge.jsx          #   tokenized badge/pill
+├── (optional) tokens/         # MAY consolidate motion/radius/shadow/type tokens
+└── (all prior feature folders)# consume the upgraded primitives/tokens; no route,
+                               #   functionality, or data changes
+```
+
+Rules: components are `.jsx`, logic/data are `.js` (V override). One logical
+unit per file. `components/ui/` is the ONLY place new/upgraded shared
+primitives live; consumer pages import them (never fork local copies). No mock
+data changes; no backend, API, model, env, or route changes.
+
+### UI/UX Rules
+
+- Reuse the upgraded `Card`/`dash-card`, `Button`, `Input`, `Modal`,
+  `Skeleton`, and toast primitives on every page; NO page-specific style forks.
+- Same deep-black shell and v4.0.0 orange tokens across every route —
+  including auth flows (`/login`, `/register`) and the public Landing Page
+  (theme alignment only; a Landing redesign itself stays out of scope).
+- Accessibility is NOT regressed by restyling: focus-visible rings in the new
+  orange accent everywhere, labelled controls (real `<label>` / `aria-label`),
+  semantic landmarks preserved, contrast on black verified, keyboard nav
+  intact, modals/toasts accessible per the component rules.
+- No horizontal scroll at any breakpoint; layouts stay responsive per PU6 and
+  prior-day D8/A9/L5.
+- Numeric formatting conventions (weights with decimals, volume with thousands
+  separators, kcal whole numbers, percentages whole) remain unchanged and
+  consistent.
+
+### Coding Standards
+
+- **Language**: JavaScript only (`.js`/`.jsx`); no TypeScript (V override, as
+  applied by every prior day).
+- **Dependencies**: ZERO new npm dependencies (lucide-react and framer-motion
+  are already bundled). No new env vars. No backend, API, model, or route
+  changes.
+- Naming, imports, comments, dead-code, and purity rules identical to prior-day
+  standards.
+- Design token changes MUST live in `index.css` (and any token module), never
+  scattered per component; a token-usage audit is part of the phase deliverable.
+
+### Definition of Done (Day 8.3 Success Criteria)
+
+Day 8.3 is DONE only when ALL of the following hold, in addition to Day 1.1
+through Day 8.2 still passing:
+
+1. The ENTIRE app uses one consistent **black + orange** theme — a token scan
+   confirms zero leftover green/lime accents (`#A3E635`, `#BEF264`, `#84CC16`
+   and any other green accent values are gone); semantic status colors remain
+   only for their semantic meaning (PU2).
+2. Cards, buttons, navigation, typography, and spacing are clearly upgraded and
+   token-consistent on every page; no page feels visually inconsistent (PU3).
+3. The sidebar/navigation is modernized with obvious active states, an upgraded
+   brand block, and responsive rail/drawer behaviour; no nav entry or route is
+   removed (PU2/PU6/ST7).
+4. Hover effects, transitions, page animations, and loaders are smooth and
+   purposeful, GPU-friendly, transform/opacity-only, and fully collapse under
+   `prefers-reduced-motion` (PU4).
+5. Skeleton loaders are used for all major data-loading states; toasts and
+   modals follow the new visual language with full a11y (focus trap,
+   `aria-live`, labels, Escape/close).
+6. Spacing follows one 4px-based scale and visual hierarchy is unified and
+   readable on the deep-black background (PU3/PU5).
+7. Fully responsive on mobile, tablet, and desktop with no horizontal scroll at
+   any breakpoint (PU6/D8/A9).
+8. The public Landing Page and all auth flows match the black + orange tokens
+   (theme alignment only) — no mixed color systems anywhere.
+9. All new files are `.js`/`.jsx`; zero new npm dependencies; zero new env
+   vars; no backend/API/model/route/functionality changes.
+10. `npm run build` (vite build) succeeds cleanly; no lint errors under the
+    project's lint script.
+11. Manual browser verification is recorded (every page + auth flows + landing,
+    hover/active/disabled states, page transitions, reduced-motion, skeleton
+    loaders, toasts, modals, responsive at 3 breakpoints, prior-day regression
+    check).
+12. A token/design-vars audit is part of the phase deliverable and passes: all
+    colors flow through `--color-*` tokens, and the v4.0.0 orange family is the
+    only accent.
+
+### Out of Scope (Day 8.3 — Deferred)
+
+Explicitly NOT part of Day 8.3; do not expand Day 8.3 work to include:
+
+- Changing core product functionality, behaviour, or workflows.
+- Adding completely NEW features, pages, or routes.
+- Redesigning the public Landing Page from scratch (only black + orange theme
+  alignment is in scope).
+- Removing, hiding, or repurposing any existing nav entry or route.
+- Heavy 3D, parallax, video, or excessive motion design.
+- New npm dependencies, new env vars, or any backend/API/model changes.
+- Introducing a THIRD theme scheme beyond the existing dark + optional light
+  token system (Day 7.1); the upgrade restyles both schemes to the orange
+  accent family only.
+- Full visual/UI redesign of individual feature logic, new chart types, or new
+  interaction flows.
+- Automated visual-regression test suite or CI (manual verification suffices,
+  as prior days).
+- Deployment or production hosting.
+
+These MUST NOT be silently added to Day 8.3; open a new spec if one is required.
 
 ---
 
@@ -3385,6 +3737,10 @@ constitution amendment first.
 > **Day 8.2 amendment:** The Landing Page phase is a public, frontend-only
 > phase rendering from a single content data module (`data/landingContent.js`);
 > it needs no auth and adds NO environment variables or new required config.
+
+> **Day 8.3 amendment:** The Premium UI/UX Upgrade phase is a frontend-only,
+> design-system phase redefining the existing `--color-*` tokens in
+> `index.css`; it adds NO environment variables or new required config.
 
 `.env.example` (client): no secrets on the client.
 
@@ -3779,6 +4135,12 @@ requests. Reuse exactly what Day 1 built — do not re-architect.
 > landing route — and confirm no existing route is removed, hidden, or
 > repurposed (L9).
 
+> **Day 8.3 amendment:** The Premium UI/UX Upgrade adds NO new routes and
+> changes NO route wiring. It restyles the existing shell and every existing
+> surface in place (including `/login`, `/register`, the protected Dashboard,
+> and all prior-day routes). Any nav change is visual only — no entry or route
+> is removed, hidden, or repurposed (PU2, Day 8.3 navigation rules).
+
 ### Profile page (`client/src/pages/Profile.tsx`)
 
 - **View mode** by default: shows `name`, `email`, `bio`, `age`, `heightCm`,
@@ -3948,6 +4310,184 @@ These MUST NOT be silently added to Day 3; open a new spec if one is required.
 > section), which is separate from this one. Where an item appears in neither
 > list, open a new spec rather than silently expanding either phase.
 
+---
+
+## Day 9 — Final Testing & Requirements Check (ACTIVE)
+
+### Project Goal & Definition
+
+Day 9 is a **comprehensive QA and verification phase** that validates every
+feature built across all prior days (Day 1 through Day 8.3) against the original
+requirements. It is NOT a new feature build — it is a structured, evidence-based
+audit that identifies gaps, confirms correctness, and fixes any bugs found
+before the project is marked complete.
+
+The phase covers: manual end-to-end testing of every feature, one-by-one
+verification of every original requirement from every spec, cross-device
+responsive testing, bug identification and fixes, and a final sign-off gate
+backed by recorded evidence.
+
+### Core Principles (Day 9)
+
+#### T1. Requirements Traceability (NON-NEGOTIABLE)
+
+Every requirement from every spec (`specs/001-*` through `specs/013-*`) MUST be
+individually verified and checked off with a pass/fail result and evidence (screenshot,
+console output, or description of manual test). No requirement may be marked as
+"assumed pass" or skipped. If a requirement cannot be verified, it MUST be marked
+as BLOCKED with a reason.
+
+Rationale: The project has 13 spec files with hundreds of requirements accumulated
+over many days. Without explicit traceability, gaps silently accumulate. This
+principle ensures nothing is lost.
+
+#### T2. End-to-End Coverage (NON-NEGOTIABLE)
+
+Every user-facing flow MUST be tested end-to-end from the browser: signup → login
+→ navigate → use feature → see correct result → logout. Backend unit tests or
+build-passing alone are NOT sufficient — the test is whether a real user can
+complete the flow in a real browser against a live server.
+
+Rationale: Build passing means the code compiles. It does not mean the feature
+works for a user. End-to-end testing is the only test that matches how users
+actually experience the app.
+
+#### T3. No Silent Failures (NON-NEGOTIABLE)
+
+Every error path, empty state, loading state, and edge case MUST be explicitly
+tested and confirmed to behave correctly: friendly error messages (never stack
+traces), proper empty states, spinners/skeletons during loading, and graceful
+handling of invalid input. Console errors, warnings, or uncaught exceptions
+during testing MUST be logged and fixed.
+
+Rationale: Silent failures erode user trust incrementally. A feature that
+"usually works" but breaks under specific conditions is worse than a feature
+that does not exist, because users cannot predict when it will fail.
+
+#### T4. Cross-Device Quality
+
+Every page and component MUST be verified at three responsive breakpoints:
+desktop (≥1280px), tablet (~768px), and mobile (~375px). No horizontal scroll,
+no overlapping elements, no unreadable text, and no inaccessible interactive
+elements at any breakpoint.
+
+Rationale: Responsive breakage is the most common quality issue in CSS-heavy
+frontends. Explicit cross-device verification catches layout regressions that
+single-viewport testing misses.
+
+#### T5. Fix Before Finish
+
+No feature or page may be signed off as "done" if it has known unfixed bugs
+that affect usability. All bugs found during Day 9 MUST be fixed before the
+final sign-off. Cosmetic issues that do not affect usability (e.g. minor
+spacing differences) MAY be logged as known-issues for future polish but MUST
+not block sign-off if they were present before Day 9.
+
+Rationale: Signing off with known bugs creates technical debt that compounds.
+Fixing now is cheaper than fixing after launch. Cosmetic issues from prior
+phases are grandfathered — only bugs introduced or revealed during Day 9
+testing block sign-off.
+
+#### T6. Evidence-Based Sign-off
+
+The final sign-off MUST be backed by a written record of every test performed,
+its result (pass/fail/blocked), and the evidence captured. Verbal "it looks
+good" is insufficient. Every pass must have a description of what was verified;
+every fail must have a bug report with reproduction steps.
+
+Rationale: Evidence creates accountability and enables future testers to
+reproduce results. Without evidence, sign-off is opinion, not verification.
+
+### Required Testing Areas (Non-Negotiable)
+
+The following testing areas MUST all be covered during Day 9. This list is
+mandatory and cannot be reduced. Each area must have at least one documented
+test scenario with a recorded result.
+
+1. **CRUD Operations** — Workout create, read, update, delete; Nutrition create,
+   read, update, delete; Profile view and edit. Verify data persists after
+   page refresh and across sessions.
+
+2. **Authentication Flow** — Signup (new user), login (existing user), logout,
+   session persistence (close and reopen browser → still logged in), protected
+   route access (attempt access while logged out → redirected to login).
+
+3. **Dashboard Calculations & Metrics** — Verify all dashboard summary numbers
+   (workout count, calorie totals, macro totals, streak, weight) are calculated
+   correctly from the underlying data. Verify numbers update after adding or
+   editing entries.
+
+4. **Charts & Analytics** — Verify all analytics charts render with correct data,
+   interactive hover works, date range filtering works, and period comparison
+   shows accurate results.
+
+5. **Search & Filtering** — Verify search across workouts, nutrition, and
+   exercises returns correct results. Verify category and date filters compose
+   correctly. Verify empty-filter-results state shows properly.
+
+6. **Notifications & Reminders** — Verify notification list loads, mark-as-read
+   works, settings toggle persists, and reminder scheduling fires correctly
+   (or is gracefully disabled when not configured).
+
+7. **Settings** — Verify preferences (units: kg/lb, theme: dark/light) persist
+   and apply immediately across all pages. Verify password change flow works.
+   Verify account deletion flow works (confirmation prompt → delete → redirect).
+   Verify notification settings persist.
+
+8. **Reports & Export** — Verify each report tab (Workouts, Nutrition, Fitness
+   Overview) renders correct data. Verify CSV export downloads correct data.
+   Verify PDF export generates a valid, readable document. Verify date range
+   presets and URL-param persistence work.
+
+9. **Mobile & Tablet Responsiveness** — Test all major pages at 375px and 768px
+   widths. Verify no horizontal scroll, all interactive elements are
+   touch-tappable, text is readable, and layout stacks correctly.
+
+### Out of Scope (Day 9)
+
+Day 9 is a testing and fixing phase ONLY. It MUST NOT include:
+
+- New features, new pages, new components, or new API endpoints.
+- Major visual redesigns or layout overhauls beyond fixing broken layouts.
+- Performance/load testing, accessibility audits (WCAG), or security audits
+  beyond confirming existing auth flows work.
+- Automated test suite creation (unit tests, integration tests, e2e tests).
+- Infrastructure changes, deployment, or production hosting setup.
+- Backend architecture changes, database migrations, or model restructuring.
+
+These MUST NOT be silently added to Day 9; open a new spec if one is required.
+
+### Process Rules (Day 9)
+
+1. **One feature at a time**: Test one feature area completely before moving to
+   the next. Do not partially test multiple areas and return later.
+2. **Record as you go**: Every test result MUST be recorded immediately after
+   performing the test — not from memory at the end of the day.
+3. **Fix, then re-test**: When a bug is found, fix it immediately, then re-run
+   the same test to confirm the fix. Do not batch all fixes at the end.
+4. **Regression after fix**: After fixing any bug, re-test the feature area
+   surrounding the fix to confirm no regression was introduced.
+5. **No sign-off under uncertainty**: If a test result is "I'm not sure if this
+   is correct", it is a FAIL until confirmed otherwise. Ambiguity is not a pass.
+
+### Definition of Done (Day 9 Success Criteria)
+
+Day 9 is DONE only when ALL of the following hold:
+
+1. Every testing area (CRUD, auth, dashboard, charts, search, notifications,
+   settings, reports, responsive) has at least one documented test with a
+   recorded PASS result.
+2. Every requirement from every spec has been individually verified and checked
+   off as PASS or BLOCKED (with reason).
+3. All bugs found during Day 9 have been fixed and re-tested to confirm the fix.
+4. No console errors, uncaught exceptions, or stack traces appear during any
+   tested flow.
+5. A written test report exists recording every test performed, its result, and
+   evidence.
+6. `npm run build` (vite build) succeeds cleanly after all fixes.
+7. Both frontend and backend (`node --check`) pass syntax validation after all
+   fixes.
+
 ## Governance
 
 This constitution supersedes all other practices. Amendments are required to
@@ -3993,6 +4533,19 @@ change any rule above:
   Capabilities + domain sections covering the nine required page sections, CTA
   routing into the auth flow, single-sourced content maintainability, and
   performance/lightweight-animation rules) → **3.10.0** (MINOR).
+  Day 8.3 added the Premium UI/UX Upgrade phase and REDEFINED the brand accent
+  from lime (`--color-accent: #A3E635`) to vibrant orange (canonical target
+  `--color-accent: #F97316`), SUPERSEDING every earlier lime accent reference
+  across all prior-day sections, and adds PU1-PU6 + Required Capabilities +
+  domain sections covering the black + orange theme, navigation/sidebar and
+  component upgrade rules, animation/interaction rules, skeleton/toast/modal
+  modernization, and spacing/typography standardization →
+  **4.0.0** (MAJOR, backward-incompatible design-identity change; all Core
+  Principles I-VIII and prior-day functionality rules remain binding).
+  Day 9 added the Final Testing & Requirements Check phase (adds T1-T6 +
+  Required Testing Areas + domain sections covering requirements traceability,
+  end-to-end coverage, no silent failures, cross-device quality, fix-before-
+  finish, and evidence-based sign-off) → **4.1.0** (MINOR).
 - **Compliance review**: All plans, specs, and task lists MUST pass the
   "Constitution Check" gate before implementation. Pull requests/reviews MUST
   confirm no violation of the security, ownership, and coding standards. Any
@@ -4002,14 +4555,16 @@ change any rule above:
   truth; append amendments here and propagate changes to dependent templates.
 - **Day ownership**: This document governs the whole project. Day 1 scope is
   complete; Day 2 (profile + workouts) is complete; Day 3 (nutrition tracking)
-  is   complete; Day 1.1 (dark dashboard) is complete; Day 2.1 (Progress & Goals)
+  is complete; Day 1.1 (dark dashboard) is complete; Day 2.1 (Progress & Goals)
   is complete; Day 3.1 (Activities & Workout History) is complete; Day 4.1
   (Analytics Module) is complete; Day 5.1 (Search & Filtering) is complete;
   Day 6.1 (Notifications & Reminders) is complete; Day 7.1 (Settings) is
   complete; Day 8.1 (Reports & Export) is
-  complete; Day 8.2 (Public Landing Page) is the
-  current governed day. Later days
+  complete; Day 8.2 (Public Landing Page) is complete;
+  Day 8.3 (Premium UI/UX Upgrade) is
+  complete; Day 9 (Final Testing & Requirements
+  Check) is the current governed day. Later days
   append here via amendment, never by rewriting prior
   rules without a MAJOR bump and migration note.
 
-**Version**: 3.10.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-10
+**Version**: 4.1.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-10

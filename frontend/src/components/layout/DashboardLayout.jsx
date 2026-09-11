@@ -12,7 +12,7 @@ export function DashboardLayout({ children }) {
                 <button
                     type="button"
                     onClick={() => setSidebarOpen(true)}
-                    className="fixed left-4 top-4 z-20 rounded-lg bg-[var(--color-panel)] p-2 text-[var(--color-ink-soft)] shadow-lg hover:bg-[var(--color-line)] lg:hidden"
+                    className="fixed left-4 top-4 z-20 rounded-lg bg-[var(--color-panel)] p-2 text-[var(--color-ink-soft)] shadow-lg hover:bg-[var(--color-line)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:hidden"
                     aria-label="Open menu"
                 >
                     <Menu className="h-5 w-5" />

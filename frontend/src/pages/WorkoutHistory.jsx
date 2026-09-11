@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { DashboardLayout } from '../components/layout/DashboardLayout';
 import { WorkoutHistoryList } from '../components/history/WorkoutHistoryList';
 import { HistoryFilters } from '../components/history/HistoryFilters';
-import { Spinner, EmptyState } from '../components/ui';
+import { EmptyState, ListSkeleton } from '../components/ui';
 import { SearchInput } from '../components/search/SearchInput';
 import { ActiveFilters } from '../components/search/ActiveFilters';
 import { workouts } from '../data/workoutHistoryData';
@@ -162,9 +162,7 @@ export default function WorkoutHistory() {
     return (
         <DashboardLayout>
             {loading ? (
-                <div className="flex justify-center py-24">
-                    <Spinner />
-                </div>
+                <ListSkeleton count={3} />
             ) : error ? (
                 <EmptyState title="Something went wrong" message="Your workout history could not be loaded. Try again." />
             ) : (

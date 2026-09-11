@@ -10,7 +10,7 @@ export default function HeroSection() {
         <section className="landing-section relative overflow-hidden">
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 bg-[radial-gradient(at_70%_20%,rgba(163,230,53,0.12)_0px,transparent_50%),radial-gradient(at_20%_70%,rgba(132,204,22,0.06)_0px,transparent_50%)]"
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(at_70%_20%,rgba(249,115,22,0.12)_0px,transparent_50%),radial-gradient(at_20%_70%,rgba(234,88,12,0.06)_0px,transparent_50%)]"
             />
             <div className="landing-container relative grid items-center gap-12 lg:grid-cols-2">
                 <div>

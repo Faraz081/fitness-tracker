@@ -25,7 +25,7 @@ export function TrendIndicator({ direction = 'auto', delta, context = 'neutral',
             : context === 'calories' || context === 'surplus'
                 ? isPositiveMove
                     ? 'text-[var(--color-accent)]'
-                    : 'text-[#F87171]'
+                    : 'text-[var(--color-trend-negative)]'
                 : isPositiveMove
                     ? 'text-[var(--color-accent)]'
                     : 'text-[var(--color-ink-muted)]';

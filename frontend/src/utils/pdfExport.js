@@ -12,10 +12,11 @@ function round1(n) {
     return n != null ? +n.toFixed(1) : null;
 }
 
-const ACCENT = [163, 230, 53];
+const ACCENT = [249, 115, 22];
 const INK = [244, 246, 248];
 const MUTED = [107, 114, 128];
-const SUCCESS = [34, 197, 94];
+const SECONDARY = [96, 165, 250];
+const PINK = [244, 114, 182];
 const WARNING = [245, 158, 11];
 
 function filename(reportType, from, to) {
@@ -102,7 +103,7 @@ function drawLineChart(doc, items, x, y, w, h, color = ACCENT) {
 
 function drawMacroStack(doc, slices, x, y, w) {
     const total = slices.reduce((s, k) => s + k.value, 0) || 1;
-    const colors = [SUCCESS, ACCENT, WARNING];
+    const colors = [ACCENT, SECONDARY, PINK];
     let cx = x;
     doc.setFontSize(7);
     slices.forEach((s, i) => {
@@ -138,7 +139,7 @@ function drawProgressionBars(doc, progression, x, y, w, h) {
     });
     doc.setFontSize(7);
     doc.setTextColor(MUTED[0], MUTED[1], MUTED[2]);
-    doc.text('Grey: prior best · Lime: best in range', x, y + h + 12);
+    doc.text('Grey: prior best · Orange: best in range', x, y + h + 12);
     doc.setTextColor(INK[0], INK[1], INK[2]);
 }
 

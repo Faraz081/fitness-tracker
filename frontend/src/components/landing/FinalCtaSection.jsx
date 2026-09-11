@@ -12,7 +12,7 @@ export default function FinalCtaSection() {
                     <div className="relative overflow-hidden rounded-3xl border border-line bg-panel p-8 text-center sm:p-14">
                         <div
                             aria-hidden="true"
-                            className="pointer-events-none absolute inset-0 bg-[radial-gradient(at_50%_0%,rgba(163,230,53,0.14)_0px,transparent_55%)]"
+                            className="pointer-events-none absolute inset-0 bg-[radial-gradient(at_50%_0%,rgba(249,115,22,0.14)_0px,transparent_55%)]"
                         />
                         <p className="landing-eyebrow mb-4">{finalCta.eyebrow}</p>
                         <h2 id="final-cta-heading" className="mx-auto max-w-3xl text-3xl font-bold sm:text-5xl">

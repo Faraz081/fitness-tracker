@@ -145,3 +145,6 @@ export function updateNotificationSettings(patch) {
 export function syncNotifications(goals) {
     return apiPost('/api/notifications/sync', { goals });
 }
+export function getDashboard() {
+    return apiGet('/api/dashboard');
+}

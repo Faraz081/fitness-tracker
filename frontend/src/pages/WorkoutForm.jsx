@@ -6,6 +6,7 @@ import * as api from '../services/api';
 import { Button, Input, Select } from '../components/ui';
 import { useNotifications } from '../context/NotificationsContext';
 import { useSettings } from '../context/SettingsContext';
+import { useDashboardRefresh } from '../context/DashboardContext';
 import { displayWeight, toKg, weightUnitLabel } from '../utils/units';
 const CATEGORIES = [
     { value: 'strength', label: 'Strength', icon: Dumbbell },
@@ -44,6 +45,7 @@ export default function WorkoutForm() {
     const isEdit = Boolean(id);
     const navigate = useNavigate();
     const notifications = useNotifications();
+    const { refreshDashboard } = useDashboardRefresh();
     const { preferences } = useSettings();
     const units = preferences.units;
     const [title, setTitle] = useState('');
@@ -160,6 +162,7 @@ export default function WorkoutForm() {
                 await api.createWorkout(payload);
             }
             navigate('/workouts');
+            refreshDashboard();
             try {
                 notifications.refresh();
             }

@@ -8,6 +8,7 @@ import { SearchInput } from '../components/search/SearchInput';
 import { FilterBar } from '../components/search/FilterBar';
 import { ActiveFilters } from '../components/search/ActiveFilters';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import { useDashboardRefresh } from '../context/DashboardContext';
 import { DATE_FILTER_OPTIONS, WORKOUT_CATEGORIES } from '../data/constants';
 import { activeFilterCount, applyFilters, filtersToSearchParams, parseSearchParams, resolveDateRange, toLocalDateKey } from '../utils/filterUtils';
 
@@ -33,6 +34,7 @@ function workoutTextFor(w) {
         .join(' ');
 }
 export default function WorkoutList() {
+    const { refreshDashboard } = useDashboardRefresh();
     const [workouts, setWorkouts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -103,6 +105,7 @@ export default function WorkoutList() {
             await api.deleteWorkout(id);
             setWorkouts((prev) => prev.filter((w) => w.id !== id));
             setConfirmId(null);
+            refreshDashboard();
         }
         catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to delete workout');

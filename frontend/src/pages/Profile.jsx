@@ -4,12 +4,14 @@ import { Activity, Cake, Dumbbell, Edit3, Flag, Globe, Ruler, Scale, User as Use
 import * as api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 import { useSettings } from '../context/SettingsContext';
+import { useDashboardRefresh } from '../context/DashboardContext';
 import { Badge, Button, Card } from '../components/ui';
 import { ProfileForm, PROFILE_GOAL_LABELS, PROFILE_LEVEL_LABELS } from '../components/profile/ProfileForm';
 import { formatWeight, weightUnitLabel } from '../utils/units';
 
 export default function ProfilePage() {
     const { refreshUser } = useAuth();
+    const { refreshDashboard } = useDashboardRefresh();
     const { preferences } = useSettings();
     const units = preferences.units;
     const [profile, setProfile] = useState(null);
@@ -64,6 +66,7 @@ export default function ProfilePage() {
         setProfile(updated);
         setSaved(true);
         setEditing(false);
+        refreshDashboard();
         void refreshUser();
     }
     const displayValue = (v) => {
