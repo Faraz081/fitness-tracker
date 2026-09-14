@@ -3,7 +3,6 @@ import * as api from '../services/api';
 import { useToast } from '../hooks/useToast';
 import { useAuth } from '../hooks/useAuth';
 import { ToastContainer } from '../components/ui';
-import { goalsData } from '../data/goalsData';
 import { unreadCount, badgeLabel } from '../utils/notificationsUtils';
 
 const NotificationsContext = createContext(null);
@@ -16,10 +15,6 @@ const TOAST_KIND = {
     'meal-reminder': 'info',
     'goal-reminder': 'info',
 };
-
-function syncGoals() {
-    return Array.isArray(goalsData.goals) ? goalsData.goals : [];
-}
 
 export function NotificationsProvider({ children }) {
     const { user } = useAuth();
@@ -89,7 +84,9 @@ export function NotificationsProvider({ children }) {
             })
             .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load notifications'))
             .finally(() => setLoading(false));
-        api.syncNotifications(syncGoals()).catch(() => {});
+        api.getGoals()
+            .then(({ goals }) => api.syncNotifications(goals ?? []))
+            .catch(() => {});
         api.getNotificationSettings().then(setSettings).catch(() => {});
     }, [user]);
 

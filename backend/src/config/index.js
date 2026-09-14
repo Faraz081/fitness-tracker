@@ -1,4 +1,8 @@
-import 'dotenv/config';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import dotenv from 'dotenv';
+const envPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.env');
+dotenv.config({ path: envPath });
 const asNumber = (value, fallback, name) => {
     if (value === undefined || value === '')
         return fallback;
@@ -26,6 +30,7 @@ export const JWT_EXPIRES = process.env.JWT_EXPIRES ?? '1h';
 export const CLIENT_ORIGIN = requireEnv('CLIENT_ORIGIN', process.env.CLIENT_ORIGIN);
 export const BCRYPT_ROUNDS = asNumber(process.env.BCRYPT_ROUNDS, 10, 'BCRYPT_ROUNDS');
 export const COOKIE_NAME = process.env.COOKIE_NAME ?? 'access_token';
+export const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? '';
 if (JWT_SECRET.length < 32) {
     throw new Error('JWT_SECRET must be at least 32 characters long');
 }

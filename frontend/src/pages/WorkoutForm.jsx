@@ -32,6 +32,13 @@ const toDateInput = (iso) => {
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
 };
+const todayDateKey = () => {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+};
 const toRows = (exercises, units) => exercises.map((ex) => ({
     name: ex.name,
     sets: String(ex.sets),
@@ -127,8 +134,11 @@ export default function WorkoutForm() {
                 break;
             }
         }
-        if (date && Number.isNaN(new Date(`${date}T00:00:00`).getTime())) {
+        if (date && !isEdit && Number.isNaN(new Date(`${date}T00:00:00`).getTime())) {
             next.form = 'Invalid date';
+        }
+        if (date && !isEdit && !next.form && date < todayDateKey()) {
+            next.date = 'Workout date cannot be in the past. Choose today or a future date.';
         }
         return next;
     }
@@ -149,7 +159,7 @@ export default function WorkoutForm() {
         const payload = {
             title: title.trim(),
             category: category,
-            date: date === '' ? undefined : `${date}T00:00:00.000Z`,
+            ...(isEdit ? {} : { date: date === '' ? undefined : `${date}T00:00:00.000Z` }),
             notes: notes.trim() === '' ? undefined : notes.trim(),
             exercises: exercisePayload,
         };
@@ -243,7 +253,8 @@ export default function WorkoutForm() {
                   {c.label}
                 </option>))}
             </Select>
-            <Input id="date" label="Date" type="date" icon={<Calendar className="h-4 w-4"/>} value={date} onChange={(e) => setDate(e.target.value)}/>
+            <Input id="date" label="Date" type="date" icon={<Calendar className="h-4 w-4"/>} value={date} onChange={(e) => { setDate(e.target.value); if (errors.date) setErrors((prev) => ({ ...prev, date: undefined })); }} min={todayDateKey()} disabled={isEdit} error={errors.date} className="disabled:cursor-not-allowed disabled:opacity-60"/>
+            {isEdit && <p className="text-xs text-text-muted -mt-3">The workout date is locked and cannot be changed.</p>}
             <div className="sm:col-span-2">
               <Input id="notes" label="Notes (optional)" placeholder="How did it feel? Any observations?" value={notes} onChange={(e) => setNotes(e.target.value)} maxLength={2000}/>
             </div>

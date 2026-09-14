@@ -13,6 +13,11 @@ const nutritionSchema = new Schema({
         required: true,
         enum: ['breakfast', 'lunch', 'dinner', 'snack'],
     },
+    source: {
+        type: String,
+        enum: ['ai', 'manual'],
+        default: 'manual',
+    },
     date: { type: Date, required: true, default: Date.now },
 }, { timestamps: true });
 nutritionSchema.index({ owner: 1, date: 1, mealType: 1 });

@@ -13,7 +13,6 @@ export const SIDEBAR_MENU = [
     { key: 'nutrition', label: 'Nutrition', path: '/nutrition' },
     { key: 'progress', label: 'Progress', path: '/progress' },
     { key: 'goals', label: 'Goals', path: '/goals' },
-    { key: 'history', label: 'History', path: '/workouts-history' },
     { key: 'analytics', label: 'Analytics', path: '/analytics' },
     { key: 'reports', label: 'Reports', path: '/reports' },
     { key: 'notifications', label: 'Notifications', path: '/notifications' },
@@ -48,7 +47,6 @@ export const NAV_TABS = [
     { key: 'nutrition', label: 'Nutrition', path: '/nutrition' },
     { key: 'progress', label: 'Progress', path: '/progress' },
     { key: 'goals', label: 'Goals', path: '/goals' },
-    { key: 'history', label: 'History', path: '/workouts-history' },
     { key: 'analytics', label: 'Analytics', path: '/analytics' },
     { key: 'bmi', label: 'BMI', path: '/bmi' },
 ];

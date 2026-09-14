@@ -15,7 +15,6 @@ import Profile from './pages/Profile';
 import WorkoutList from './pages/WorkoutList';
 import WorkoutForm from './pages/WorkoutForm';
 import Nutrition from './pages/Nutrition';
-import WorkoutHistory from './pages/WorkoutHistory';
 import WorkoutDetail from './pages/WorkoutDetail';
 import ExerciseHistory from './pages/ExerciseHistory';
 import { useAuth } from './hooks/useAuth';
@@ -76,9 +75,6 @@ export default function App() {
             </ProtectedRoute>}/>
         <Route path="/workouts/:id/edit" element={<ProtectedRoute>
               <WorkoutForm />
-            </ProtectedRoute>}/>
-        <Route path="/workouts-history" element={<ProtectedRoute>
-              <WorkoutHistory />
             </ProtectedRoute>}/>
         <Route path="/workouts/:id" element={<ProtectedRoute>
               <WorkoutDetail />

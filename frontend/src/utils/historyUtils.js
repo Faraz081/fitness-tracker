@@ -16,45 +16,6 @@ export function formatVolume(value, units = 'kg') {
     return `${n.toLocaleString()} ${weightUnitLabel(units)}`;
 }
 
-export function filterWorkouts(workouts, { category = 'all', from, to, query = '' } = {}) {
-    return workouts
-        .filter((w) => {
-            if (query && !searchableWorkoutText(w).includes(query.toLocaleLowerCase())) {
-                return false;
-            }
-            const categoryMatch = !category || category === 'all' || w.category === category;
-            const fromMatch = !from || w.date >= from;
-            const toMatch = !to || w.date <= to;
-            return categoryMatch && fromMatch && toMatch;
-        })
-        .slice()
-        .sort((a, b) => b.date.localeCompare(a.date));
-}
-
-function searchableWorkoutText(workout) {
-    return [workout.name, workout.notes, workout.category, ...(workout.exercises || []).map((ex) => ex.name)]
-        .filter(Boolean)
-        .join(' ')
-        .toLocaleLowerCase();
-}
-
-export function groupByDate(workouts) {
-    const groups = [];
-    for (const w of workouts) {
-        const last = groups[groups.length - 1];
-        if (last && last.date === w.date) {
-            last.workouts.push(w);
-        } else {
-            groups.push({ date: w.date, workouts: [w] });
-        }
-    }
-    return groups;
-}
-
-export function findWorkout(workouts, id) {
-    return workouts.find((w) => w.id === id);
-}
-
 export function exercisesFor(workout, name) {
     return (workout?.exercises || []).filter((ex) => ex.name === name);
 }
@@ -101,8 +62,4 @@ export function bestSet(exerciseName, workouts) {
         }
     }
     return best;
-}
-
-export function bestVolume(workouts) {
-    return workouts.reduce((max, w) => Math.max(max, workoutVolume(w)), 0);
 }

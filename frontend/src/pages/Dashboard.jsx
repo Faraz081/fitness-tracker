@@ -15,6 +15,7 @@ import { EmptyState, ListSkeleton } from '../components/ui';
 import { useSettings } from '../context/SettingsContext';
 import { useDashboardRefresh } from '../context/DashboardContext';
 import { formatWeight, weightUnitLabel } from '../utils/units';
+import { todayISO } from '../utils/filterUtils';
 import { getDashboard } from '../services/api';
 
 export default function Dashboard() {
@@ -29,7 +30,7 @@ export default function Dashboard() {
         let cancelled = false;
         setLoading(true);
         setError(false);
-        getDashboard()
+        getDashboard({ today: todayISO() })
             .then((result) => {
                 if (!cancelled) setData(result);
             })

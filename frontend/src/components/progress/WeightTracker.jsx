@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Scale } from 'lucide-react';
+import { Scale, Trash2 } from 'lucide-react';
 import { EmptyState } from '../ui';
 import { useSettings } from '../../context/SettingsContext';
 import { formatWeight, lbToKg, weightUnitLabel } from '../../utils/units';
@@ -11,7 +11,7 @@ function latestEntry(entries) {
     return entries.reduce((a, b) => (a.date > b.date ? a : b));
 }
 
-export function WeightTracker({ entries, onAdd }) {
+export function WeightTracker({ entries, onAdd, onDelete, busy = false }) {
     const { preferences } = useSettings();
     const units = preferences.units;
     const [value, setValue] = useState('');
@@ -22,7 +22,7 @@ export function WeightTracker({ entries, onAdd }) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        if (!valid) {
+        if (!valid || busy) {
             return;
         }
         onAdd({ weightKg: units === 'lb' ? lbToKg(parsed) : parsed });
@@ -60,7 +60,7 @@ export function WeightTracker({ entries, onAdd }) {
                 />
                 <button
                     type="submit"
-                    disabled={!valid}
+                    disabled={!valid || busy}
                     className="shrink-0 rounded-xl bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-bg)] transition-colors hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
                 >
                     Log weight
@@ -72,9 +72,20 @@ export function WeightTracker({ entries, onAdd }) {
             ) : (
                 <ul className="mt-4 divide-y divide-[var(--color-line)]">
                     {sorted.map((entry) => (
-                        <li key={entry.id} className="flex items-center justify-between py-2.5 text-sm">
+                        <li key={entry.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
                             <span className="text-[var(--color-ink-muted)]">{entry.date}</span>
-                            <span className="dash-num text-[var(--color-ink)]">{formatWeight(entry.weightKg, units)} {weightUnitLabel(units)}</span>
+                            <div className="flex items-center gap-3">
+                                <span className="dash-num text-[var(--color-ink)]">{formatWeight(entry.weightKg, units)} {weightUnitLabel(units)}</span>
+                                <button
+                                    type="button"
+                                    onClick={() => onDelete(entry.id)}
+                                    disabled={busy}
+                                    aria-label={`Delete weight entry from ${entry.date}`}
+                                    className="rounded-lg p-1 text-[var(--color-ink-muted)] transition-colors hover:bg-[var(--color-line)] hover:text-[var(--color-error, #F87171)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

@@ -1,3 +1,4 @@
+import { Pencil, Trash2 } from 'lucide-react';
 import { ProgressBar } from '../ui';
 import { StatusBadge } from './StatusBadge';
 import { Milestones } from './Milestones';
@@ -10,7 +11,7 @@ function formatValue(value) {
     return Number.isInteger(value) ? value.toLocaleString() : value.toFixed(1);
 }
 
-export function GoalCard({ goal }) {
+export function GoalCard({ goal, onEdit, onDelete, busy = false }) {
     const pct = progressPct(goal.currentValue, goal.targetValue);
     const status = goalStatus(goal);
     const hasGoal = pct != null;
@@ -21,7 +22,35 @@ export function GoalCard({ goal }) {
                 <span className="text-xs font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
                     {goal.category}
                 </span>
-                <StatusBadge status={hasGoal ? status : 'no-goal'} />
+                <div className="flex items-center gap-1">
+                    <StatusBadge status={hasGoal ? status : 'no-goal'} />
+                    {(onEdit || onDelete) && (
+                        <div className="ml-1 flex items-center gap-0.5">
+                            {onEdit && (
+                                <button
+                                    type="button"
+                                    onClick={() => onEdit(goal)}
+                                    disabled={busy}
+                                    aria-label={`Edit ${goal.title}`}
+                                    className="rounded-lg p-1.5 text-[var(--color-ink-muted)] transition-colors hover:bg-[var(--color-line)] hover:text-[var(--color-ink)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
+                                >
+                                    <Pencil className="h-3.5 w-3.5" />
+                                </button>
+                            )}
+                            {onDelete && (
+                                <button
+                                    type="button"
+                                    onClick={() => onDelete(goal)}
+                                    disabled={busy}
+                                    aria-label={`Delete ${goal.title}`}
+                                    className="rounded-lg p-1.5 text-[var(--color-ink-muted)] transition-colors hover:bg-[var(--color-line)] hover:text-[var(--color-error, #F87171)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
+                                >
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
 
             <h3 className="truncate text-base font-semibold text-[var(--color-ink)]">{goal.title}</h3>

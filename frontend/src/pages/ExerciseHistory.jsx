@@ -1,15 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { DashboardLayout } from '../components/layout/DashboardLayout';
 import { PersonalRecords } from '../components/history/PersonalRecords';
 import { ExerciseHistory } from '../components/history/ExerciseHistory';
 import { SearchInput } from '../components/search/SearchInput';
 import { Spinner, EmptyState } from '../components/ui';
-import { workouts } from '../data/workoutHistoryData';
 import { uniqueExerciseNames } from '../utils/historyUtils';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
-import { filterBySearch, parseSearchParams } from '../utils/filterUtils';
+import { filterBySearch, parseSearchParams, toLocalDateKey } from '../utils/filterUtils';
+import { useDashboardRefresh } from '../context/DashboardContext';
 import { SearchX } from 'lucide-react';
+import * as api from '../services/api';
+
+function normalizeWorkouts(raw) {
+    return (raw ?? []).map((w) => ({
+        ...w,
+        name: w.title ?? w.name,
+        date: toLocalDateKey(w.date),
+    }));
+}
 
 function PageHeading() {
     const dateLabel = new Date().toLocaleDateString(undefined, {
@@ -32,6 +40,8 @@ function PageHeading() {
 }
 
 export default function ExerciseHistoryPage() {
+    const { refreshKey } = useDashboardRefresh();
+    const [workouts, setWorkouts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +49,34 @@ export default function ExerciseHistoryPage() {
     const [searchDraft, setSearchDraft] = useState(initial.search ?? '');
     const search = useDebouncedValue(searchDraft, 250);
     const skipUrlWrite = useRef(true);
+
+    const load = useCallback(() => {
+        let cancelled = false;
+        setLoading(true);
+        setError(false);
+        api.listWorkouts()
+            .then((result) => {
+                if (!cancelled) {
+                    setWorkouts(normalizeWorkouts(result));
+                }
+            })
+            .catch(() => {
+                if (!cancelled) {
+                    setError(true);
+                }
+            })
+            .finally(() => {
+                if (!cancelled) {
+                    setLoading(false);
+                }
+            });
+        return () => { cancelled = true; };
+    }, []);
+
+    useEffect(() => {
+        const cancel = load();
+        return cancel;
+    }, [load, refreshKey]);
 
     useEffect(() => {
         if (skipUrlWrite.current) {
@@ -57,24 +95,11 @@ export default function ExerciseHistoryPage() {
         setSearchParams(new URLSearchParams(), { replace: false });
     }
 
-    useEffect(() => {
-        let cancelled = false;
-        const timer = setTimeout(() => {
-            if (!cancelled) {
-                setLoading(false);
-            }
-        }, 400);
-        return () => {
-            cancelled = true;
-            clearTimeout(timer);
-        };
-    }, []);
-
-    const names = uniqueExerciseNames(workouts);
+    const names = useMemo(() => uniqueExerciseNames(workouts), [workouts]);
     const visibleNames = filterBySearch(names, search, (n) => n);
 
     return (
-        <DashboardLayout>
+        <div className="space-y-6">
             {loading ? (
                 <div className="flex justify-center py-24">
                     <Spinner />
@@ -82,12 +107,12 @@ export default function ExerciseHistoryPage() {
             ) : error ? (
                 <EmptyState title="Something went wrong" message="Your exercise history could not be loaded. Try again." />
             ) : workouts.length === 0 ? (
-                <div className="space-y-6">
+                <>
                     <PageHeading />
                     <EmptyState title="No exercise history yet" message="Once you log workouts, each exercise will show its progression and records here." />
-                </div>
+                </>
             ) : (
-                <div className="space-y-6">
+                <>
                     <PageHeading />
                     <div className="max-w-md">
                         <SearchInput
@@ -125,8 +150,8 @@ export default function ExerciseHistoryPage() {
                             ))}
                         </div>
                     )}
-                </div>
+                </>
             )}
-        </DashboardLayout>
+        </div>
     );
 }

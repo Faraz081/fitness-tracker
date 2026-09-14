@@ -112,6 +112,9 @@ export function getNutritionEntry(id) {
 export function createNutritionEntry(payload) {
     return apiPost('/api/nutrition', payload);
 }
+export function analyzeNutrition({ query, quantity, unit }) {
+    return apiPost('/api/nutrition/analyze', { query, quantity, unit });
+}
 export function updateNutritionEntry(id, patch) {
     return apiPatch(`/api/nutrition/${id}`, patch);
 }
@@ -145,6 +148,45 @@ export function updateNotificationSettings(patch) {
 export function syncNotifications(goals) {
     return apiPost('/api/notifications/sync', { goals });
 }
-export function getDashboard() {
-    return apiGet('/api/dashboard');
+export function getDashboard({ today } = {}) {
+    return apiGet(`/api/dashboard${today ? `?today=${encodeURIComponent(today)}` : ''}`);
+}
+export function getProgress() {
+    return apiGet('/api/progress');
+}
+export function addWeight(payload) {
+    return apiPost('/api/progress/weight', payload);
+}
+export function updateWeight(id, patch) {
+    return apiPatch(`/api/progress/weight/${id}`, patch);
+}
+export function deleteWeight(id) {
+    return apiDelete(`/api/progress/weight/${id}`);
+}
+export function addMeasurement(payload) {
+    return apiPost('/api/progress/measurements', payload);
+}
+export function updateMeasurement(id, patch) {
+    return apiPatch(`/api/progress/measurements/${id}`, patch);
+}
+export function deleteMeasurement(id) {
+    return apiDelete(`/api/progress/measurements/${id}`);
+}
+export function getGoals({ today } = {}) {
+    return apiGet(`/api/goals${today ? `?today=${encodeURIComponent(today)}` : ''}`);
+}
+export function createGoal(payload) {
+    return apiPost('/api/goals', payload);
+}
+export function updateGoal(id, patch) {
+    return apiPatch(`/api/goals/${id}`, patch);
+}
+export function deleteGoal(id) {
+    return apiDelete(`/api/goals/${id}`);
+}
+export function addHydration(payload) {
+    return apiPost('/api/goals/hydration', payload);
+}
+export function deleteHydration(id) {
+    return apiDelete(`/api/goals/hydration/${id}`);
 }

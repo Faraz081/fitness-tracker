@@ -3,7 +3,7 @@ import { success } from '../utils/response.js';
 
 export async function getDashboardHandler(req, res, next) {
     try {
-        const data = await getDashboardData(req.userId ?? '');
+        const data = await getDashboardData(req.userId ?? '', req.query.today);
         success(res, data);
     } catch (err) {
         next(err);

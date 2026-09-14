@@ -1,4 +1,5 @@
 import * as nutritionService from '../services/nutritionService.js';
+import * as aiFoodService from '../services/aiFoodService.js';
 import { success } from '../utils/response.js';
 const getParam = (value) => {
     const id = Array.isArray(value) ? value[0] : value;
@@ -13,6 +14,10 @@ const getQueryString = (value) => {
 export async function createNutritionHandler(req, res) {
     const entry = await nutritionService.createNutritionEntry(req.userId ?? '', req.body);
     success(res, entry, 201);
+}
+export async function analyzeNutritionHandler(req, res) {
+    const estimate = await aiFoodService.analyzeFood(req.body);
+    success(res, estimate);
 }
 export async function listNutritionHandler(req, res) {
     const query = req.validatedQuery;

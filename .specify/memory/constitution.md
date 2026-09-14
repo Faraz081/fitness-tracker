@@ -1,56 +1,93 @@
 <!--
   ============================================================================
-  SYNC IMPACT REPORT (Day 9 Final Testing & Requirements Check amendment)
+  SYNC IMPACT REPORT (Day 13 AI Food Search Page Rebuild amendment)
   ============================================================================
-  Version change      : (minor) 4.0.0  ->  4.1.0 (Day 9: Final Testing &
-                        Requirements Check — T1-T6 non-negotiable principles +
-                        Required Testing Areas + domain sections)
-  Modified principles : No Core Principle (I-VIII) removed or redefined.
-                        Prior-day principle sets (D1-D2, P1-P9, H1-H10, A1-A10,
-                        S1-S10, N1-N10, ST1-ST8, R1-R9, L1-L9, PU1-PU6)
-                        UNCHANGED in substance. Day 8.3 heading marker ->
-                        (COMPLETE); Day 9 becomes (ACTIVE).
-  Added sections      : Day 9 - T1. Requirements Traceability (NON-NEGOTIABLE)
-                        Day 9 - T2. End-to-End Coverage (NON-NEGOTIABLE)
-                        Day 9 - T3. No Silent Failures (NON-NEGOTIABLE)
-                        Day 9 - T4. Cross-Device Quality
-                        Day 9 - T5. Fix Before Finish
-                        Day 9 - T6. Evidence-Based Sign-off
-                        Day 9 Required Testing Areas (9 non-negotiable areas:
-                          CRUD, auth, dashboard, charts, search, notifications,
-                          settings, reports, responsive)
-                        Day 9 Out of Scope
-                        Day 9 Process Rules (5 rules)
-                        Day 9 Definition of Done (7 criteria)
-  Removed sections    : (none). All prior-day sections retained.
+  Version change      : (major) 4.2.0  ->  5.0.0 (Day 13: AI Food Search Page
+                        Rebuild — AF1-AF7 non-negotiable rebuild principles +
+                        Required Page Structure + domain sections; Day 12's
+                        Nutrition-page governance redefined)
+  Modified principles : No Core Principle (I-VIII) removed or redefined. All
+                        other prior-day principle sets (D1-D8, P1-P9, H1-H10,
+                        A1-A10, S1-S10, N1-N10, ST1-ST8, R1-R9, L1-L9, PU1-PU6,
+                        T1-T6) UNCHANGED in substance. Day 12 (AI-Powered
+                        Nutrition Search) heading marker -> (SUPERSEDED) for
+                        the Nutrition page; Day 13 becomes (ACTIVE). Day 12
+                        P24 (Existing UI Preservation) is REDEFINED for the
+                        Nutrition page into AF1 (Delete First); Day 12 P25's
+                        editable-before-save modal flow is REPLACED by AF2/AF3
+                        (exact minimal structure — "+" adds to the active meal
+                        tab). P26-P30 remain binding in substance and are
+                        re-encoded as AF4-AF7.
+  Added sections      : Day 13 - AF1. Delete First (NON-NEGOTIABLE)
+                        Day 13 - AF2. Exact Structure Only (NON-NEGOTIABLE)
+                        Day 13 - AF3. Minimal by Design (NON-NEGOTIABLE)
+                        Day 13 - AF4. Live AI Only (NON-NEGOTIABLE)
+                        Day 13 - AF5. Real Persistence (NON-NEGOTIABLE)
+                        Day 13 - AF6. No Scope Creep (NON-NEGOTIABLE)
+                        Day 13 - AF7. Secure AI Integration (NON-NEGOTIABLE)
+                        Day 13 Required Page Structure (5 non-negotiable parts:
+                          Header, Search Bar, Search Result, Meal Tabs,
+                          Meal Section)
+                        Day 13 Search & Result Rules
+                        Day 13 Meal Tabs & Meal Section Rules
+                        Day 13 Backend Surface & Persistence
+                        Day 13 Folder & Component Structure
+                        Day 13 UX Rules
+                        Day 13 Coding Standards
+                        Day 13 Definition of Done (9 criteria)
+                        Day 13 Out of Scope
+  Removed sections    : (none). The Day 12 section is retained intact as
+                        historical record and re-marked (SUPERSEDED by Day 13)
+                        at its heading.
   Templates           : ✅ plan-template.md   - Constitution Check gate stays
-                                                     generic; no new gate type
-                         ✅ spec-template.md   - DoD / success criteria align
-                                                     with T6 evidence-based
-                                                     sign-off; reused as-is
+                                                      generic; no new gate type
+                         ✅ spec-template.md   - user-story / FR / SC alignment
+                                                      valid; the Delete-First
+                                                      constraint flows from AF1;
+                                                      reused as-is
                          ✅ tasks-template.md  - parallel labelling and
-                                                     user-story grouping
-                                                     remain valid
+                                                      user-story grouping
+                                                      remain valid
                          ⚠ commands/           - NO commands/*.md directory exists
-                                                     in this repo (PowerShell
-                                                     setup); non-blocking
-                         ✅ AGENTS.md           - already up to date (013 plan
-                                                     landed); Day 9 testing
-                                                     is verification-only, no
-                                                     new technologies added
-  Deferred TODOs      : (none). Ratification date (2026-08-27) and amendment
-                        date (2026-09-10) confirmed from footer + prior PHRs.
-  NOTE                : MINOR bump (per semver Governance policy, MINOR = added
-                        principles or materially expanded guidance): Day 9 adds
-                        6 new non-negotiable QA principles (T1-T6) that govern
-                        how the project is verified, not how it is built. This
-                        is the first "process governance" phase — all prior days
-                        governed BUILD rules (what to build, how to build it);
-                        Day 9 governs VERIFICATION rules (how to prove it works).
-                        The testing phase touches no source code except bug fixes;
-                        it is pure audit + evidence + targeted fixes. All
-                        Day 1-8.3 build rules remain binding; Day 9 rules apply
-                        ON TOP of them during the final QA gate.
+                                                      in this repo (PowerShell
+                                                      setup); non-blocking
+                         ⚠ specs/017-ai-nutrition/* and specs/018-ai-nutrition-
+                           search/* - these documents cite "Day 12", P24-P30,
+                                                      and constitution v4.2.0/
+                                                      v4.4.0 as the active
+                                                      Nutrition-search governance;
+                                                      Day 13 supersedes P24/P25
+                                                      for the Nutrition page.
+                                                      Reconcile on their next
+                                                      edit (see Deferred TODOs).
+                         ⚠ AGENTS.md           - manual Day 13 technology line
+                                                      added under the MANUAL
+                                                      ADDITIONS block (survives
+                                                      regeneration); run
+                                                      update-agent-context.ps1
+                                                      after the Day 13 plan lands
+  Deferred TODOs      : (1) specs/017-ai-nutrition + specs/018-ai-nutrition-search
+                        still describe the Day 12 additive model (P24 preserve-
+                        in-place, P25 modal flow) as the active Nutrition-search
+                        governance. Day 13 supersedes those rules for the
+                        Nutrition page; reconcile the version strings and P24/P25
+                        references when the Day 13 spec/plan lands. Non-blocking.
+                        (2) No other placeholders deferred; ratification date
+                        (2026-08-27) and amendment date (2026-09-13) confirmed
+                        from the footer.
+  NOTE                : MAJOR bump (per semver Governance policy, MAJOR =
+                        removed or redefined principles): Day 13 redefines Day
+                        12's P24 for the Nutrition page (Existing UI
+                        Preservation -> Delete First) and replaces P25's
+                        editable-before-save modal flow with the exact minimal
+                        five-part structure (AF2/AF3). This reverses the
+                        additive "preserve the existing page" stance for
+                        Nutrition — a backward-incompatible governance change,
+                        hence MAJOR 4.2.0 -> 5.0.0 (first MAJOR since Day 8.3's
+                        4.0.0). P26-P30 substance (live-AI-only, backend-only
+                        key, user isolation, real persistence, single source of
+                        truth) carries forward into AF4-AF7; all Core Principles
+                        I-VIII and every other day rule remain binding.
   ============================================================================
 -->
 
@@ -4312,7 +4349,7 @@ These MUST NOT be silently added to Day 3; open a new spec if one is required.
 
 ---
 
-## Day 9 — Final Testing & Requirements Check (ACTIVE)
+## Day 9 — Final Testing & Requirements Check (COMPLETE)
 
 ### Project Goal & Definition
 
@@ -4488,6 +4525,591 @@ Day 9 is DONE only when ALL of the following hold:
 7. Both frontend and backend (`node --check`) pass syntax validation after all
    fixes.
 
+---
+
+## Day 12 — AI-Powered Nutrition Search (SUPERSEDED — replaced by Day 13 for the Nutrition page)
+
+### Project Goal & Definition
+
+Day 12 builds the **AI-Powered Nutrition Search** experience on the shipped
+MERN app, following the additive pattern established by Day 7.1, Day 8.1, and
+the 2026-09-09 Amendment. It upgrades the real Nutrition page so an
+authenticated user can type **only a food name in natural language**, receive
+**live Gemini nutrition data** in real time, review a result card, adjust the
+quantity in an add-to-log modal (values recalculate dynamically), and save the
+food into the correct meal section in the real database. It is
+**JavaScript-only** (`.js`/`.jsx`, no TypeScript — the Day 6.1 override),
+reuses the committed React + Vite + Express + Mongoose + Tailwind stack, and
+adds **zero new frontend dependencies** (A7/D6) and **zero new required backend
+dependencies** (only Node native `fetch` calls Gemini). The Gemini API key
+stays strictly backend-only (P27). The existing Nutrition CRUD, meal sections,
+daily totals, meal filters, and the Dashboard MUST keep working unchanged —
+this phase is additive and non-destructive (P24).
+
+The governed flow is: **search → result card → add-to-log modal → save →
+real-time appearance under the selected meal**. No other entry point may
+bypass the review modal (P25).
+
+### Core Principles (P24-P30)
+
+> The eight core principles of the feature constitution map to P24-P30 as
+> follows: Live AI Only → P26; Natural Language Input Only → P25; Editable
+> Before Save → P25; Real Persistence → P29; Immediate Reflection → P29; Honest
+> Empty States → P26; Secure AI Integration → P27; User Isolation → P28.
+
+#### P24. Existing UI Preservation (NON-NEGOTIABLE)
+
+The Nutrition Search feature MUST NOT re-design, restructure, or regress the
+existing Nutrition page or any other surface. The AI search panel, result card,
+and add-to-log modal attach to the existing page and add-entry modal; all
+existing sections, the black + orange theme, summary cards, meal sections,
+filters, and CRUD remain in place and functional. New UI MUST reuse the existing
+ui primitives (`Button`, `Input`, `Badge`, `Card`, `EmptyState`, modal/toast
+patterns). Day 12 MUST NOT remove, hide, or repurpose any existing route, nav
+entry, or element (ST7/R3 additivity holds).
+
+Rationale: prior-day pages are shipped product; the AI feature layers on without
+fracturing existing layout or behaviour, consistent with every additive phase
+before it.
+
+#### P25. AI as Assistant, Not Authority (NON-NEGOTIABLE)
+
+- The user MUST type ONLY a food name/description (e.g. "2 eggs", "200g
+  grilled chicken with rice") to start a search. They MUST NOT be forced to
+  manually enter calories, protein, carbs, or fat to get results
+  (Natural-Language-Input-Only).
+- AI results are ESTIMATES and MUST be editable before save (Editable-Before-
+  Save): the user MUST be able to adjust the quantity (and any nutrition
+  field), and displayed values MUST recalculate dynamically FROM the real AI
+  result — never from hardcoded ratios disconnected from the API response.
+- Nothing MAY persist until the user explicitly confirms Save; Cancel MUST
+  discard the preview without writing anything.
+- The review UI MUST always show the verification note ("AI-generated
+  nutrition values — please verify before saving.") whenever AI values are
+  shown pre-save.
+
+Rationale: the user stays in control; AI proposes, the user disposes. Live
+quantity recalculation must be traceable to the AI response, not invented math.
+
+#### P26. Real Data Only & Live AI (NON-NEGOTIABLE)
+
+- EVERY search MUST call the Gemini API live. No static nutrition database,
+  dummy JSON, cached permanent food catalog, or hardcoded nutrition values MAY
+  serve as the source of truth (Live-AI-Only).
+- The feature MUST NOT pre-fill the page or any meal with fake foods or
+  permanent placeholder nutrition data. Meal sections, filters, and daily
+  totals reflect ONLY real saved records.
+- Honest empty states are REQUIRED: a meal with no logged food MUST render a
+  clear empty state ("No food logged for [Meal]") with a hint to use the AI
+  search — never placeholder entries (Honest-Empty-States).
+
+Rationale: mirrors R1 (Accuracy First) — invented nutrition data is the exact
+failure this phase exists to prevent.
+
+#### P27. Secure AI Integration (NON-NEGOTIABLE)
+
+- The Gemini API key MUST remain backend-only (server env var, git-ignored
+  `.env`, `.env.example` placeholder only) and MUST NEVER be exposed to the
+  frontend: not in client code, client env vars, API responses, network
+  traffic, or localStorage.
+- The frontend MUST call a single auth-scoped backend proxy endpoint (e.g.
+  `POST /api/nutrition/analyze`), never Gemini directly.
+- The backend MUST validate the AI's structured JSON response (zod) before any
+  value reaches the client; malformed / non-JSON / out-of-range model output
+  MUST be rejected, never forwarded.
+- The key MUST be optional at boot — the app and manual logging keep working
+  without it, and the AI path fails gracefully (503 `AI_UNCONFIGURED`).
+
+Rationale: a client-exposed credential is catastrophic and direct-to-Gemini
+calls would bypass every isolation/validation rule; the server-side proxy is
+the non-negotiable security boundary.
+
+#### P28. User Isolation (NON-NEGOTIABLE)
+
+All saved nutrition logs MUST be scoped to the authenticated user (Principle
+VII, exactly as Day 3). Every entry stores `owner` from `req.userId` on create;
+every query (list, single, summary, update, delete) MUST filter by
+`{ owner: req.userId }`; a not-owned or missing entry id MUST return
+**404 NOT_FOUND** (never 403, never another user's data). The analyze proxy
+endpoint MUST be `authenticate`-gated, statistical requests MUST be owner-
+scoped, and the AI path MUST NOT leak, cache, or serve another user's data.
+
+#### P29. Immediate Consistency & Real Persistence (NON-NEGOTIABLE)
+
+- Saving a food with a chosen quantity MUST write to the actual backend/
+  database — the existing `Nutrition` collection via the existing owner-scoped
+  create endpoint. Real persistence only; NO local-only or session-only fake
+  persistence (Real-Persistence).
+- After save, the main log MUST update in real time under the selected meal
+  with NO manual browser refresh (reuse the existing mutation → refetch /
+  refresh patterns); meal sections, daily totals, filters, and the Dashboard
+  MUST reflect the change immediately (Immediate-Reflection).
+- Local-only state is permitted ONLY as the transient pre-save preview; once
+  saved, the database is the single source of truth (P30).
+
+#### P30. Single Source of Truth (NON-NEGOTIABLE)
+
+All meal sections, daily totals, filters, and Dashboard nutrition values MUST
+derive from the same real `Nutrition` records via server computation
+(Principle VIII). The AI path adds ONE additive, optional `source` field
+(`'ai' | 'manual'`, default `'manual'`, unindexed) for provenance/traceability
+only — it MUST NOT change any math, query, or aggregate, and MUST NOT create a
+second nutrition dataset.
+
+Rationale: the Day 3 / Principle VIII rule extended; the "AI" marker must never
+fork totals or enable drift between pages.
+
+### Required Capabilities (non-negotiable)
+
+The Nutrition Search feature MUST support, and ship with:
+
+- A single search bar for natural-language food names
+- Real-time Gemini nutrition lookup on every search (live API, no cached
+  catalog)
+- A result card showing: food name + "AI" badge; per standard serving —
+  Calories, Protein, Carbs, Fat; and a second row: Fiber, Sugar, Sodium
+- A "+" action on the result card that opens the add-to-log modal
+- An add-to-log modal with: food name + AI badge; Close (X); nutrition
+  breakdown; editable Quantity (g); live recalculation for the entered
+  quantity; an "Add To" dropdown (Breakfast / Lunch / Dinner / Snacks); Cancel
+  and "+ Add Food" actions
+- Real database persistence of the saved entry (existing `Nutrition`
+  collection, owner-scoped)
+- Real-time appearance under the correct meal section after save
+- Honest meal empty states: "No food logged for [Meal]" with a hint to use the
+  AI search
+
+### Search & Result Flow Rules
+
+- Search → result card → modal → save is the only governed path; no other
+  entry point may bypass the review modal (P25).
+- The result card MUST always identify AI provenance with an "AI" badge — never
+  present estimates as authoritative database facts (P25/P26).
+- Fiber, Sugar, and Sodium are transient display fields forwarded from the AI
+  response; when the response provides them they render, otherwise an explicit
+  "not available" placeholder is shown — never fabricated zeros (P26).
+- A search MUST be a real Gemini call (P26); the Analyze action MUST be blocked
+  while one is in flight (duplicate-request guard).
+
+### Add-to-Log Modal Rules
+
+- The modal MUST open from the "+" action on a result card.
+- Mandatory elements: Close (X), food name + "AI" badge, nutrition breakdown,
+  editable Quantity (g), live recalculation, "Add To" dropdown
+  (Breakfast / Lunch / Dinner / Snacks), Cancel and "+ Add Food" buttons.
+- Quantity changes MUST immediately update the displayed
+  "For [X]g: [Y] kcal | P | C | F" line, recalculated from the real AI
+  per-serving data (P25).
+- Cancel discards the preview without writing (P25). "+ Add Food" saves only
+  after a meal is chosen; the save MUST flow through the existing owner-scoped
+  create path with the `source: 'ai'` marker (P28/P29/P30).
+
+### Empty State & Failure Rules
+
+- Empty meal: render the designed "No food logged for [Meal]" empty state with
+  a hint to try the AI search (P26) — never a placeholder row.
+- Missing key: clear, retryable guidance (e.g. 503 `AI_UNCONFIGURED`); manual
+  logging unaffected.
+- Unrecognized food: "Food could not be identified. Please try another
+  search." with no values generated (422 `AI_NOT_FOOD`).
+- Gemini failure: clear, retryable error; no fabricated values
+  (502 `AI_UNAVAILABLE`).
+- None of the failure paths MAY write data or pre-fill fake nutrition.
+
+### Backend Surface & Persistence
+
+- ONE new auth-scoped, `authenticate`-gated proxy endpoint
+  (`POST /api/nutrition/analyze`) mirroring the existing route/controller/
+  service shape: validates the request (zod), calls Gemini via Node native
+  `fetch` with a fixed server timeout, zod-validates the structured JSON
+  response, and returns the estimate in the standard
+  `{ success, data?, error? }` envelope (IV).
+- Persistence reuses the existing owner-scoped create endpoint on the
+  `Nutrition` collection with the additive `source` marker (P30). The analyze
+  endpoint MUST NOT persist anything itself — the estimate is transient.
+- Optional env var: `GEMINI_API_KEY` (backend-only, optional at boot,
+  `.env.example` placeholder). No other new env vars.
+- No new Mongoose models; no changes to existing endpoints' semantics.
+
+### Folder & Component Structure (Day 12)
+
+Additive under the existing workspaces (final paths per the plan):
+
+```text
+backend/src/
+├── services/aiFoodService.js   # NEW stateless Gemini proxy (native fetch,
+│                               #   strict prompt, zod-validate, errors)
+├── controllers/nutrition.js    # MODIFIED: + analyze proxy handler
+├── routes/nutrition.js         # MODIFIED: + POST /analyze (before /:id)
+├── utils/validators.js         # MODIFIED: + analyze schemas; optional source
+├── models/Nutrition.js         # MODIFIED: + optional source enum (no index)
+└── config/index.js             # MODIFIED: optional GEMINI_API_KEY read
+
+frontend/src/
+├── components/nutrition/AiAnalyzer.jsx # NEW search panel (description + qty/
+│                                       #   unit + Analyze button + verification note)
+├── components/nutrition/       # NEW result card + add-to-log modal (final
+│   #                           #   names per plan; reusable primitives)
+├── pages/Nutrition.jsx         # MODIFIED: modal gains analyze/preview + save
+└── services/api.js             # MODIFIED: + analyzeNutrition()
+```
+
+Rules: components are `.jsx`, logic/data are `.js` (V override). One logical
+unit per file. `services/` is the only place `fetch` is called on the client
+(IV); the Gemini proxy is a backend service.
+
+### UX Rules (Day 12)
+
+- Same dark shell, `--color-*` black + orange tokens, `dash-card` surfaces,
+  4px scale, and existing type scale (Day 8.3 PU2/PU3 apply).
+- Flow is one focused path — search → result card → modal → save — with no
+  dead-ends and no extra screens.
+- Quantity edits update the calorie/protein/carbs/fat display immediately
+  (live recalculation); the "AI" badge stays visible on the result card and in
+  the modal.
+- Controls are real `<input>`/`<select>`/`<button>`; Esc closes the modal;
+  focus-visible rings use the accent color; analyze/save feedback is announced
+  via `aria-live`; contrast is readable on the dark theme; the result card is
+  keyboard-operable.
+- Fully responsive at 3 breakpoints with no horizontal scroll (D8/A9).
+
+### Coding Standards (Day 12)
+
+- **Language**: JavaScript only (`.js`/`.jsx`); no TypeScript (Day 6.1
+  override).
+- **Dependencies**: zero new frontend dependencies; native `fetch` for Gemini
+  on the backend (no SDK). No new required env vars.
+- Naming, imports, comments, dead-code, and purity rules identical to prior
+  days; the AI proxy service and quantity-recalculation helpers are
+  pure/stateless and unit-testable (mockable Gemini client).
+
+### Definition of Done (Day 12 Success Criteria)
+
+Day 12 is DONE only when ALL of the following hold, in addition to all prior
+days still passing:
+
+1. A logged-in user can type ONLY a food description in natural language and
+   receive live Gemini nutrition data — every search is a real API call, never
+   a cached/static lookup (P26).
+2. The result card shows the food name + "AI" badge, per-serving Calories /
+   Protein / Carbs / Fat, and a Fiber / Sugar / Sodium row (transient display).
+3. "+" opens the add-to-log modal with Close (X), the nutrition breakdown, an
+   editable Quantity (g), live recalculation, "Add To"
+   (Breakfast / Lunch / Dinner / Snacks), and Cancel / "+ Add Food".
+4. Changing the quantity immediately updates "For [X]g: [Y] kcal | P | C | F"
+   from the real AI data, never hardcoded ratios (P25).
+5. Save persists the entry to the real `Nutrition` collection, owner-scoped,
+   and it appears immediately under the selected meal with no manual refresh;
+   totals, filters, and Dashboard stay consistent (P29/P30).
+6. Empty meals show "No food logged for [Meal]" with an AI-search hint — no
+   placeholder entries (P26).
+7. Missing-key, unidentifiable-food, and Gemini-failure paths are graceful,
+   retryable, and never fabricate values (P27).
+8. The Gemini key appears in zero client-facing surfaces and zero committed
+   files; a scan confirms it (P27).
+9. Second-user isolation holds: cross-user ids → 404; the analyze endpoint is
+   `authenticate`-gated (P28).
+10. All new files are `.js`/`.jsx`; zero new frontend dependencies; only the
+    optional `GEMINI_API_KEY` env var; no routes/nav/elements removed (P24).
+11. `npm run build` (vite build) succeeds cleanly; backend `node --check`
+    passes for new/changed modules.
+12. Manual browser verification is recorded: search, result card, modal, live
+    recalculation, save → meals/totals/Dashboard, empty/error states, two-user
+    check, responsive at 3 breakpoints, and prior-day regression.
+
+### Out of Scope (Day 12 — Deferred)
+
+Explicitly NOT part of Day 12; do not expand Day 12 work to include:
+
+- A local offline nutrition database as the primary source (Live-AI-Only).
+- Requiring manual macro entry just to search.
+- Session-only food logs that disappear on refresh.
+- Exposing Gemini credentials to the client in any form.
+- Photo / barcode food logging; a curated food database, favorites, or meal
+  templates.
+- AI chat beyond a single natural-language description; auto-save or direct
+  persistence of estimates without user review.
+- New meal types beyond Breakfast / Lunch / Dinner / Snacks.
+- Redesigning unrelated parts of the application; removing or repurposing
+  routes or nav entries.
+- Changes to authentication, offline mode, or cross-device sync.
+
+These MUST NOT be silently added to Day 12; open a new spec if one is
+required.
+
+---
+
+## Day 13 — AI Food Search Page Rebuild (ACTIVE)
+
+### Project Goal & Definition
+
+Day 13 is a **clean-slate rebuild of the Nutrition page** into a minimal,
+exact-structure **AI Food Search** page. The current Nutrition implementation
+is treated as **broken and overcomplicated**; it MUST be fully removed —
+page, components, state, and files created specifically for it — before any
+new work begins (AF1). The page is then rebuilt strictly to a fixed, five-part
+structure (AF2): a Header, a Search Bar, a Search Result, Meal Tabs, and a
+Meal Section — nothing more and nothing less.
+
+It is **JavaScript-only** (`.js`/`.jsx`, no TypeScript — the Day 6.1
+override), reuses the committed React + Vite + Express + Mongoose + Tailwind
+stack, adds **zero new frontend and zero new backend dependencies**, and keeps
+the Gemini API key **backend-only** (AF7). Every search MUST hit Gemini live,
+in real time, through the existing auth-scoped analyze proxy — never a cached
+or hardcoded source (AF4). Added foods MUST persist to the real, owner-scoped
+`Nutrition` collection and appear immediately under the selected meal (AF5).
+
+> **Governance note (v5.0.0 MAJOR):** Day 13 SUPERSEDES Day 12's governance
+> for the Nutrition page (the Day 12 heading is re-marked SUPERSEDED).
+> Specifically: Day 12 P24 (Existing UI Preservation) is REDEFINED into AF1
+> (Delete First — the page MUST be removed before any rebuild); Day 12 P25's
+> editable-before-save, add-to-log modal flow is REPLACED by AF2/AF3 (exact
+> minimal structure; the "+" icon adds the food directly to the active meal
+> tab, no modal). P26-P30 remain binding in substance and are re-encoded as
+> AF4-AF7 below. All other principles (I-VIII and every day principle set)
+> are unchanged in substance.
+
+### Core Principles (AF1-AF7)
+
+> The user's seven core principles map to AF1-AF7 as follows: Delete First →
+> AF1; Exact Structure Only → AF2; Minimal by Design → AF3; Live AI Only →
+> AF4; Real Persistence → AF5; No Scope Creep → AF6; Secure AI Integration →
+> AF7.
+
+#### AF1. Delete First (NON-NEGOTIABLE)
+
+Before ANY new build begins, the existing Nutrition page and all components,
+state, and files created specifically for it MUST be completely removed. No
+patching, no partial reuse, no leftover shared state from the broken page is
+permitted. Only after the deletion is confirmed may the new build begin.
+
+Rationale: The page is declared broken and overcomplicated; building on it
+would import that complexity. A clean slate is the precondition for the
+minimal rebuild.
+
+#### AF2. Exact Structure Only (NON-NEGOTIABLE)
+
+The rebuilt page MUST contain exactly the five required parts listed in
+Required Page Structure below, with no additions and no omissions. The
+structure is a closed list: the header, search bar, search result, meal tabs,
+and meal section are mandatory; anything not named there is out of scope for
+this page.
+
+Rationale: "Rebuild only the specified structure" is an explicit user
+requirement; a closed list is the only verifiable form of it.
+
+#### AF3. Minimal by Design (NON-NEGOTIABLE)
+
+Simplicity and clarity MUST win over feature richness. Each part does ONE
+thing: the search bar searches, the result row shows one live result, the meal
+tabs select a meal, and the meal section lists that meal's persisted foods. If
+a behaviour is not in the required structure, it is not built.
+
+#### AF4. Live AI Only (NON-NEGOTIABLE)
+
+Every search MUST call the Gemini API live, in real time, through the backend.
+No static nutrition database, dummy JSON, cached permanent food catalog, or
+hardcoded nutrition values may serve as the source of truth. Meal sections
+reflect ONLY real saved records — never placeholder or fake foods.
+
+Rationale: mirrors R1 (Accuracy First) and Day 12 P26; invented nutrition data
+is the exact failure this phase exists to prevent.
+
+#### AF5. Real Persistence (NON-NEGOTIABLE)
+
+Added foods MUST be saved to the actual backend/database — the existing
+owner-scoped `Nutrition` collection via the existing create path, with the
+additive `source: 'ai'` marker — and MUST appear under the selected meal
+immediately, with no browser refresh and no local-only/session-only fake
+persistence. Once saved, the database is the single source of truth (Day 12
+P30 carries forward).
+
+#### AF6. No Scope Creep (NON-NEGOTIABLE)
+
+Date pickers, separate macro summary bars, extra filters, duplicate search
+bars, sidebar widgets specific to this page, and any feature not explicitly
+listed in the required structure are FORBIDDEN on this page. The plan and spec
+MUST state the exact structure and MUST NOT exceed it. If a new capability is
+wanted later, open a new spec instead of silently extending this page.
+
+#### AF7. Secure AI Integration (NON-NEGOTIABLE)
+
+The Gemini API key MUST remain backend-only (server env var, git-ignored
+`.env`, `.env.example` placeholder only) and MUST NEVER be exposed to the
+frontend: not in client code, client env vars, API responses, network traffic,
+or localStorage. The frontend MUST call the auth-scoped backend analyze proxy
+endpoint, never Gemini directly. The backend MUST zod-validate the AI's
+structured JSON response before any value reaches the client, and the key MUST
+remain optional at boot (app + manual logging keep working; the AI path fails
+gracefully with 503 `AI_UNCONFIGURED`).
+
+Rationale: a client-exposed credential is catastrophic; the backend proxy is
+the non-negotiable security boundary (Day 12 P27 carries forward).
+
+### Required Page Structure (non-negotiable)
+
+The rebuilt Nutrition page MUST contain exactly these five parts:
+
+1. **Header** — a fork/utensil icon and the title "AI Food Search".
+2. **Search Bar** — ONE search input (placeholder e.g. "banana") + a "Search"
+   button + the helper text: "Supports natural language — try 'large chicken
+   breast' or '100g of oats with milk'".
+3. **Search Result** — a section label "1 RESULT — CLICK TO ADD" with a
+   "Clear" link on the right; one result row showing:
+   - the food name,
+   - the serving size (e.g. "per 118g"),
+   - four badges — CAL, P, C, F — in distinct colors,
+   - a "+" icon to add the food.
+   The result data MUST come from a live Gemini API call (AF4). Clicking the
+   row (or its "+" icon) adds the food to the currently active meal tab.
+4. **Meal Tabs** — Breakfast, Lunch, Dinner, Snacks, each with its own icon
+   (coffee cup, sun, moon, clock).
+5. **Meal Section** — for the active meal tab:
+   - **Empty state**: a plate/utensils icon + "No food logged for [Meal
+     Name]" + the hint "Use AI search above to find and add foods."
+   - **With foods**: the persisted foods for that meal (AF5), each displaying
+     its logged macros.
+
+### Search & Result Rules
+
+- Each search MUST be a real Gemini call (AF4); the Search action MUST be
+  blocked while one is in flight (duplicate-request guard).
+- On success the result area shows exactly ONE live result row; the "Clear"
+  link removes it from the page (page state only — nothing is written).
+- The four badges are fixed CAL / P / C / F in four distinct colors drawn from
+  the token system; no additional micronutrient row is required (AF3).
+- Adding a food saves it via the existing owner-scoped create endpoint with
+  `mealType` = the currently active tab, and the meal section reflects it
+  immediately (AF5). Saved entries carry the additive `source: 'ai'` marker.
+- AI failure paths — missing key (503 `AI_UNCONFIGURED`), unrecognized food
+  (422 `AI_NOT_FOOD`), Gemini failure (502 `AI_UNAVAILABLE`) — MUST render
+  clear, retryable messages and MUST NOT fabricate values or write any data.
+
+### Meal Tabs & Meal Section Rules
+
+- Exactly four tabs — Breakfast, Lunch, Dinner, Snacks — in fixed order, each
+  with its mandated icon. The active tab drives which meal the Meal Section
+  shows and where the "+" adds.
+- Every added food persists (AF5), is owner-scoped (Principle VII), and shows
+  its food name, serving size, and CAL / P / C / F macros in the Meal Section.
+- A meal with no saved foods MUST render the designed empty state exactly as
+  specified — never a placeholder row (Day 12 P26 honest-empty-states
+  carries forward).
+
+### Backend Surface & Persistence
+
+- The existing auth-scoped, `authenticate`-gated analyze proxy
+  (`POST /api/nutrition/analyze`, shipped under Day 12/017) is the ONLY Gemini
+  path: zod-validate the request, call Gemini via Node native `fetch` with a
+  fixed server timeout, zod-validate the structured JSON response, and return
+  the standard `{ success, data?, error? }` envelope (IV). The analyze
+  endpoint persists nothing — estimates are transient.
+- Persistence reuses the existing owner-scoped Nutrition create endpoint on
+  the `Nutrition` collection; `owner` is always set from `req.userId` (never
+  client input), and saved AI entries carry the additive `source: 'ai'`
+  marker (provenance only — no math/query change, Day 12 P30).
+- No new Mongoose models; no new endpoints; no new env vars beyond the
+  existing optional `GEMINI_API_KEY`.
+
+### Folder & Component Structure (Day 13)
+
+Final paths per the plan; minimal and additive to the existing workspaces,
+with any obsoleted Nutrition-specific files from the old page deleted first
+(AF1):
+
+```text
+frontend/src/
+├── pages/Nutrition.jsx          # REBUILT page — composes the five structure
+│                                #   parts (or a dedicated page per the plan)
+├── components/                  # small, page-specific components for the
+│   #  structure parts (search bar, result row, meal tabs, meal section)
+│   #  reusing ui primitives (Button, Input, Badge, EmptyState) ONLY
+└── services/api.js              # unchanged API layer (fetch boundary)
+
+backend/src/
+├── services/aiFoodService.js    # ALREADY SHIPPED (Day 12/017) — reused
+└── (routes/controllers/nutrition)# existing analyze + owner-scoped CRUD; no
+                                   #   new backend work beyond deletion cleanup
+```
+
+Rules: components are `.jsx`, logic/data are `.js` (V override). One logical
+unit per file. `services/` is the only client-side `fetch` boundary (IV).
+
+### UX Rules (Day 13)
+
+- Same dark shell, `--color-*` black + orange tokens, `dash-card` surfaces,
+  4px scale, and existing type scale (Day 8.3 PU2/PU3 apply).
+- Flow is one focused line: search → one live result → add to active meal →
+  persisted row in the Meal Section. No extra screens, no dead ends.
+- CAL / P / C / F badges are distinct and semantic (token-based hues); the
+  fork/utensil, coffee-cup, sun, moon, and clock icons are lucide-react with
+  `aria-label` where icon-only; controls are real `<input>`/`<button>`.
+- Fully responsive at 3 breakpoints with no horizontal scroll (D8/A9).
+
+### Coding Standards (Day 13)
+
+- **Language**: JavaScript only (`.js`/`.jsx`); no TypeScript (Day 6.1
+  override).
+- **Dependencies**: ZERO new frontend dependencies and ZERO new backend
+  dependencies (Gemini via the existing backend proxy using Node native
+  `fetch`). No new env vars.
+- Naming, imports, comments, dead-code, and purity rules identical to prior
+  days; the analyze service and any format helpers are pure/stateless.
+
+### Definition of Done (Day 13 Success Criteria)
+
+Day 13 is DONE only when ALL of the following hold, in addition to all prior
+days still passing:
+
+1. The old Nutrition page implementation — all components, state, and files
+   created specifically for it — has been fully deleted BEFORE the new build
+   began, and that deletion is confirmed/recorded (AF1).
+2. The page matches the required structure exactly: Header (fork/utensil icon
+   + "AI Food Search"); Search Bar (single input + Search + helper text);
+   Search Result ("1 RESULT — CLICK TO ADD" + Clear + one live result row with
+   food name, serving size, CAL/P/C/F badges, "+"); Meal Tabs (Breakfast /
+   Lunch / Dinner / Snacks with coffee-cup / sun / moon / clock icons); Meal
+   Section (empty state vs persisted foods with macros) (AF2).
+3. Every search returns live Gemini nutrition data through the backend — no
+   static/hardcoded nutrition source of truth exists anywhere (AF4).
+4. Adding a food persists it to the real backend/database, owner-scoped, and
+   it appears immediately under the selected meal with no browser refresh
+   (AF5).
+5. Empty meal sections show "No food logged for [Meal Name]" with the
+   specified hint (P26 carries forward).
+6. Saved foods display their logged macros; meals and totals stay consistent
+   with the stored records (P30 carries forward).
+7. No unlisted extra features exist on the page: no date picker, no separate
+   macro summary bar, no extra filters, no duplicate search bars, no page-
+   specific sidebar widgets (AF6).
+8. The Gemini key appears in zero client-facing surfaces and zero committed
+   files (AF7); second-user isolation holds (cross-user ids → 404).
+9. `npm run build` (vite build) succeeds cleanly; backend `node --check`
+   passes for new/changed modules; manual browser verification is recorded
+   (search → result → add → persisted row per meal, empty states, AI failure
+   paths, two-user check, responsive at 3 breakpoints, prior-day regression).
+
+### Out of Scope (Day 13 — Deferred)
+
+Explicitly NOT part of Day 13; do not expand Day 13 work to include:
+
+- A date picker.
+- A separate macro summary bar / daily-totals widget on this page.
+- Extra filters (category, date-range, or additional search UI).
+- Duplicate search bars.
+- Sidebar widgets specific to this page.
+- An add-to-log modal, quantity editing, or editable nutrition fields (Day 12
+  P25's modal flow is REPLACED — the "+" adds directly to the active meal).
+- Fiber / Sugar / Sodium (or any micronutrient) display rows.
+- Any feature not explicitly listed in the required structure (AF2/AF6).
+- Exposing Gemini credentials to the client in any form (AF7).
+- Photo / barcode food logging, favorites, meal templates, or a curated food
+  database.
+- Changes to authentication, user isolation, or cross-device sync.
+
+These MUST NOT be silently added to Day 13; open a new spec if one is
+required.
+
 ## Governance
 
 This constitution supersedes all other practices. Amendments are required to
@@ -4546,6 +5168,24 @@ change any rule above:
   Required Testing Areas + domain sections covering requirements traceability,
   end-to-end coverage, no silent failures, cross-device quality, fix-before-
   finish, and evidence-based sign-off) → **4.1.0** (MINOR).
+  Day 12 added the AI-Powered Nutrition Search phase (adds P24-P30 +
+  Required Capabilities + domain sections covering the natural-language live
+  search, the result card with AI badge + Fiber/Sugar/Sodium row, the
+  add-to-log modal with editable quantity and live recalculation, real
+  database persistence, real-time meal-section reflection, honest empty
+  states, backend-only Gemini integration, and user isolation) →
+  **4.2.0** (MINOR).
+  Day 13 added the AI Food Search Page Rebuild phase and REDEFINED Day 12's
+  Nutrition-page governance: P24 (Existing UI Preservation) is replaced by AF1
+  (Delete First — the broken page MUST be fully removed before any rebuild),
+  and P25's editable-before-save modal flow is replaced by the exact minimal
+  five-part structure (AF2/AF3; the "+" icon adds directly to the active meal
+  tab). P26-P30 substance carries forward as AF4-AF7 (live-AI-only, real
+  persistence, backend-only Gemini key, user isolation, single source of
+  truth); Core Principles I-VIII and all other day principle sets remain
+  binding; Day 12 is re-marked SUPERSEDED for the Nutrition page →
+  **5.0.0** (MAJOR, backward-incompatible redefinition of the Nutrition-page
+  governance; the first MAJOR since Day 8.3's 4.0.0).
 - **Compliance review**: All plans, specs, and task lists MUST pass the
   "Constitution Check" gate before implementation. Pull requests/reviews MUST
   confirm no violation of the security, ownership, and coding standards. Any
@@ -4563,8 +5203,11 @@ change any rule above:
   complete; Day 8.2 (Public Landing Page) is complete;
   Day 8.3 (Premium UI/UX Upgrade) is
   complete; Day 9 (Final Testing & Requirements
-  Check) is the current governed day. Later days
+  Check) is complete; Day 12 (AI-Powered Nutrition
+  Search) is complete (SUPERSEDED for the Nutrition page by
+  Day 13); Day 13 (AI Food Search Page
+  Rebuild) is the current governed day. Later days
   append here via amendment, never by rewriting prior
   rules without a MAJOR bump and migration note.
 
-**Version**: 4.1.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-10
+**Version**: 5.0.0 | **Ratified**: 2026-08-27 | **Last Amended**: 2026-09-13

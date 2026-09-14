@@ -42,7 +42,7 @@ main().catch((err) => {
         console.error('MongoDB DNS/network access failed. Check DNS/VPN/firewall and the Atlas cluster hostname.');
     }
     else if (message.includes('authentication failed')) {
-        console.error('MongoDB authentication failed. Check the database username and password in server/.env.');
+        console.error('MongoDB authentication failed. Check the database username and password in backend/.env.');
     }
     else if (message.includes('Server selection timed out')) {
         console.error('MongoDB server selection timed out. Add this machine IP to MongoDB Atlas Network Access.');

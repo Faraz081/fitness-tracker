@@ -1,4 +1,4 @@
-import { Dumbbell, Activity, Flame, Utensils, Scale, TrendingUp } from 'lucide-react';
+import { Dumbbell, Activity, Flame, Utensils, Scale, TrendingUp, Gauge } from 'lucide-react';
 import { SummaryCard } from './SummaryCard';
 
 const summaryConfig = {
@@ -6,6 +6,7 @@ const summaryConfig = {
     exercises: { icon: Activity },
     caloriesBurned: { icon: Flame, accent: 'text-[var(--color-warning)]' },
     caloriesConsumed: { icon: Utensils },
+    volume: { icon: Gauge, accent: 'text-[var(--color-info,#60A5FA)]' },
     weight: { icon: Scale, accent: 'text-[var(--color-info,#60A5FA)]' },
     streak: { icon: TrendingUp, accent: 'text-[var(--color-success)]' },
 };

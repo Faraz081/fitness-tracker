@@ -1,5 +1,6 @@
 import { Workout } from '../models/Workout.js';
 import { AppError } from '../utils/apiError.js';
+import { isPastWorkoutDate } from '../utils/validators.js';
 const formatExercise = (ex) => ({
     name: ex.name,
     sets: ex.sets,
@@ -22,7 +23,18 @@ const toWorkout = (w) => ({
 const notFound = () => {
     throw new AppError(404, 'Workout not found', 'NOT_FOUND');
 };
+const rejectPastDate = (date) => {
+    if (date !== undefined && isPastWorkoutDate(date)) {
+        throw new AppError(400, 'Workout date cannot be in the past. Choose today or a future date.', 'PAST_DATE');
+    }
+};
+const rejectDateChange = (patch) => {
+    if (patch.date !== undefined) {
+        throw new AppError(400, 'Workout date cannot be changed after creation.', 'DATE_LOCKED');
+    }
+};
 export async function createWorkout(owner, input) {
+    rejectPastDate(input.date);
     const workout = await Workout.create({
         owner,
         title: input.title,
@@ -50,6 +62,7 @@ export async function getWorkout(owner, workoutId) {
     return toWorkout(workout);
 }
 export async function updateWorkout(owner, workoutId, patch) {
+    rejectDateChange(patch);
     const workout = await Workout.findOneAndUpdate({ owner, _id: workoutId }, { $set: patch }, { new: true, runValidators: true }).lean();
     if (!workout) {
         return notFound();

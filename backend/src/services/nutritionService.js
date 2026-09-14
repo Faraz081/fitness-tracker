@@ -11,6 +11,7 @@ const toNutrition = (n) => ({
     carbs: n.carbs,
     fat: n.fat,
     mealType: n.mealType,
+    source: n.source ?? 'manual',
     date: new Date(n.date).toISOString(),
     createdAt: n.createdAt.toISOString(),
     updatedAt: n.updatedAt.toISOString(),
@@ -34,6 +35,7 @@ export async function createNutritionEntry(owner, input) {
         carbs: input.carbs ?? 0,
         fat: input.fat ?? 0,
         mealType: input.mealType,
+        source: input.source === 'ai' ? 'ai' : 'manual',
         date: input.date ?? new Date(),
     });
     const created = doc;
