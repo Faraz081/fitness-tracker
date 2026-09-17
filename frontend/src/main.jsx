@@ -12,13 +12,13 @@ createRoot(document.getElementById('root')).render(<StrictMode>
     <BrowserRouter>
       <MotionConfig reducedMotion="user">
         <AuthProvider>
-          <NotificationsProvider>
+          <DashboardProvider>
             <SettingsProvider>
-              <DashboardProvider>
+              <NotificationsProvider>
                 <App />
-              </DashboardProvider>
+              </NotificationsProvider>
             </SettingsProvider>
-          </NotificationsProvider>
+          </DashboardProvider>
         </AuthProvider>
       </MotionConfig>
     </BrowserRouter>

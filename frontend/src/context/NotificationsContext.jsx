@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import * as api from '../services/api';
 import { useToast } from '../hooks/useToast';
 import { useAuth } from '../hooks/useAuth';
+import { useDashboardRefresh } from './DashboardContext';
 import { ToastContainer } from '../components/ui';
 import { unreadCount, badgeLabel } from '../utils/notificationsUtils';
 
@@ -18,6 +19,7 @@ const TOAST_KIND = {
 
 export function NotificationsProvider({ children }) {
     const { user } = useAuth();
+    const { refreshKey } = useDashboardRefresh();
     const { toasts, dismiss: dismissToast, show, success } = useToast();
     const [notifications, setNotifications] = useState([]);
     const [settings, setSettings] = useState({ muted: false, types: {} });
@@ -89,6 +91,13 @@ export function NotificationsProvider({ children }) {
             .catch(() => {});
         api.getNotificationSettings().then(setSettings).catch(() => {});
     }, [user]);
+
+    useEffect(() => {
+        if (!user || refreshKey === 0) {
+            return;
+        }
+        load({ silent: true });
+    }, [refreshKey, user, load]);
 
     async function markRead(id) {
         try {

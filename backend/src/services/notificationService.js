@@ -106,6 +106,19 @@ export async function createWorkoutCompletion(owner, workout) {
     });
 }
 
+export async function backfillWorkoutCompletionStatus() {
+    const completions = await Notification.find({ type: 'workout-completion' }).select('owner entityId createdAt').lean();
+    let updated = 0;
+    for (const notification of completions) {
+        const result = await Workout.updateOne(
+            { owner: notification.owner, _id: notification.entityId, completed: { $ne: true } },
+            { $set: { completed: true, completedAt: notification.createdAt } },
+        );
+        updated += result.modifiedCount;
+    }
+    return updated;
+}
+
 export async function listNotifications(owner, unreadOnly) {
     const filter = { owner };
     if (unreadOnly) {

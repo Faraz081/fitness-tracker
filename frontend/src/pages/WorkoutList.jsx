@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Activity, Calendar, Clock, Dumbbell, Edit3, Plus, SearchX, Trash2, TrendingUp } from 'lucide-react';
+import { Activity, Calendar, CheckCircle, CheckCircle2, Clock, Dumbbell, Edit3, Plus, SearchX, Trash2, TrendingUp } from 'lucide-react';
 import * as api from '../services/api';
 import { Badge, Button, EmptyState, ListSkeleton } from '../components/ui';
 import { SearchInput } from '../components/search/SearchInput';
@@ -39,6 +39,7 @@ export default function WorkoutList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [deletingId, setDeletingId] = useState(null);
+    const [completingId, setCompletingId] = useState(null);
     const [confirmId, setConfirmId] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
     const [initial] = useState(() => ({
@@ -112,6 +113,23 @@ export default function WorkoutList() {
         }
         finally {
             setDeletingId(null);
+        }
+    }
+    async function handleComplete(id) {
+        if (completingId)
+            return;
+        setCompletingId(id);
+        setError(null);
+        try {
+            const updated = await api.completeWorkout(id);
+            setWorkouts((prev) => prev.map((w) => (w.id === id ? updated : w)));
+            refreshDashboard();
+        }
+        catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to complete workout');
+        }
+        finally {
+            setCompletingId(null);
         }
     }
     const datedWorkouts = useMemo(() => workouts.map((w) => ({ ...w, dateKey: toLocalDateKey(w.date) })), [workouts]);
@@ -285,6 +303,10 @@ export default function WorkoutList() {
                         </Link>
                         <div className="flex items-center gap-2 flex-wrap mt-1.5">
                           <Badge color={meta.color}>{meta.label}</Badge>
+                          {w.completed && (<Badge color="success" className="gap-1">
+                              <CheckCircle className="h-3 w-3"/>
+                              Completed
+                            </Badge>)}
                           <span className="flex items-center gap-1 text-xs text-text-muted">
                             <Calendar className="h-3 w-3"/>
                             {formatDate(w.date)}
@@ -301,6 +323,12 @@ export default function WorkoutList() {
                       </div>
 
                       <div className="flex items-center gap-2 shrink-0">
+                        {w.completed ? (<span className="p-2.5 rounded-lg text-success" title="Completed">
+                            <CheckCircle className="h-4 w-4"/>
+                          </span>) : (<button type="button" onClick={() => handleComplete(w.id)} disabled={completingId === w.id} className="p-2.5 rounded-lg text-text-muted hover:text-success hover:bg-success/10 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" title="Mark workout complete">
+                            {completingId === w.id ? (<span className="block h-4 w-4 animate-spin rounded-full border-2 border-success/30 border-t-success"/>) : (<CheckCircle2 className="h-4 w-4"/>)}
+                          </button>)}
+
                         <Link to={`/workouts/${w.id}/edit`} className="p-2.5 rounded-lg text-text-muted hover:text-primary hover:bg-dark-600 transition-colors cursor-pointer" title="Edit workout">
                           <Edit3 className="h-4 w-4"/>
                         </Link>

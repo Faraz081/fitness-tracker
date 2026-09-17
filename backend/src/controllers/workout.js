@@ -7,13 +7,17 @@ const getParam = (value) => {
 };
 export async function createWorkoutHandler(req, res) {
     const workout = await workoutService.createWorkout(req.userId ?? '', req.body);
+    success(res, workout, 201);
+}
+export async function completeWorkoutHandler(req, res) {
+    const workout = await workoutService.completeWorkout(req.userId ?? '', getParam(req.params.id));
     try {
         await notificationService.createWorkoutCompletion(req.userId ?? '', workout);
     }
     catch {
-        // Notification creation must never fail the workout itself.
+        // Notification creation must never fail the completion action.
     }
-    success(res, workout, 201);
+    success(res, workout);
 }
 export async function listWorkoutsHandler(req, res) {
     const rawCategory = req.query.category;

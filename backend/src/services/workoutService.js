@@ -17,6 +17,8 @@ const toWorkout = (w) => ({
     date: new Date(w.date).toISOString(),
     notes: w.notes ?? null,
     exercises: w.exercises.map(formatExercise),
+    completed: Boolean(w.completed),
+    completedAt: w.completedAt instanceof Date ? w.completedAt.toISOString() : w.completedAt ? new Date(w.completedAt).toISOString() : null,
     createdAt: w.createdAt.toISOString(),
     updatedAt: w.updatedAt.toISOString(),
 });
@@ -74,4 +76,19 @@ export async function deleteWorkout(owner, workoutId) {
     if (result.deletedCount === 0) {
         notFound();
     }
+}
+export async function completeWorkout(owner, workoutId) {
+    const workout = await Workout.findOne({ owner, _id: workoutId }).lean();
+    if (!workout) {
+        return notFound();
+    }
+    if (workout.completed) {
+        return toWorkout(workout);
+    }
+    const updated = await Workout.findOneAndUpdate(
+        { owner, _id: workoutId },
+        { $set: { completed: true, completedAt: new Date() } },
+        { new: true, runValidators: true },
+    ).lean();
+    return toWorkout(updated);
 }

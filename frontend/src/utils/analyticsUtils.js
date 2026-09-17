@@ -347,7 +347,43 @@ export function computeProgressScore(workouts = [], weightEntries = [], calorieD
     };
 }
 
-export function buildSummary(workouts = [], weightEntries = [], calorieDays = [], { from, to } = {}, goalWeightKg = null, insightPool = {}) {
+function buildTopInsight({ consistency, calories, weight, totalWorkouts, avgCalories, weightChange, goalWeightKg, spanDays }) {
+    const weeks = Math.max(1, spanDays / 7);
+    const rhythmTarget = Math.round(weeks * 3);
+    const trackedCalories = calories > 0 || avgCalories > 0;
+
+    if (weight >= consistency && weight >= calories && weight > 0) {
+        if (goalWeightKg != null) {
+            if (Math.abs(weightChange) >= 0.1) {
+                const direction = weightChange < 0 ? 'down' : 'up';
+                return `Weight moved ${direction} ${formatKg(Math.abs(weightChange))} this period, against your ${formatKg(goalWeightKg)} goal.`;
+            }
+            return `Weight is holding steady while you work toward your ${formatKg(goalWeightKg)} goal.`;
+        }
+        return 'Keep logging weigh-ins to reveal your body weight trend.';
+    }
+
+    if (calories >= consistency && calories > 0 && trackedCalories) {
+        if (calories > 0) {
+            const band = calories >= 15
+                ? 'a steady band this period'
+                : 'a little inconsistent this period';
+            return `Average intake of ${formatCalories(avgCalories)} — your energy balance is sitting in ${band}.`;
+        }
+        return 'Log your meals to unlock calorie trend insights.';
+    }
+
+    if (consistency > 0) {
+        if (totalWorkouts >= rhythmTarget) {
+            return `Solid consistency — ${totalWorkouts} workouts ${totalWorkouts === 1 ? 'this period' : `across this period (avg ${round1(totalWorkouts / weeks)}/week)`}.`;
+        }
+        return `You logged ${totalWorkouts} workouts ${totalWorkouts === 1 ? 'this period' : 'this period'}. Aim for around ${rhythmTarget} to build a steadier rhythm.`;
+    }
+
+    return 'Log a few workouts and meals to unlock personalised insights here.';
+}
+
+export function buildSummary(workouts = [], weightEntries = [], calorieDays = [], { from, to } = {}, goalWeightKg = null) {
     const progress = computeProgressScore(workouts, weightEntries, calorieDays, { from, to }, goalWeightKg);
     if (!progress) {
         return null;
@@ -356,12 +392,21 @@ export function buildSummary(workouts = [], weightEntries = [], calorieDays = []
     const streak = computeStreak(rangedWorkouts.map((w) => w.date));
     const calories = computeCalories(calorieDays, { from, to });
     const weight = computeWeightTrend(weightEntries, { from, to });
+    const spanDays = from && to ? diffDays(from, to) + 1 : 366;
 
     const { factors } = progress;
     const ranked = ['consistency', 'calories', 'weight'].sort((a, b) => factors[b] - factors[a]);
     const topFactor = ranked[0];
-    const pool = insightPool[topFactor] || insightPool.consistency || [];
-    const topInsight = (pool && pool[0]) || 'Keep logging to see personalised insights here.';
+    const topInsight = buildTopInsight({
+        consistency: factors.consistency,
+        calories: factors.calories,
+        weight: factors.weight,
+        totalWorkouts: rangedWorkouts.length,
+        avgCalories: calories.avgConsumed,
+        weightChange: weight.changeKg,
+        goalWeightKg,
+        spanDays,
+    });
 
     return {
         progressScore: progress.score,
@@ -371,6 +416,7 @@ export function buildSummary(workouts = [], weightEntries = [], calorieDays = []
         weightChange: weight.changeKg,
         topInsight,
         factors: progress.factors,
+        topFactor,
     };
 }
 

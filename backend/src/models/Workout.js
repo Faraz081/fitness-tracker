@@ -18,5 +18,7 @@ const workoutSchema = new Schema({
     date: { type: Date, required: true, default: Date.now },
     notes: { type: String, trim: true, maxlength: 2000 },
     exercises: { type: [exerciseSchema], default: [] },
+    completed: { type: Boolean, default: false },
+    completedAt: { type: Date, default: null },
 }, { timestamps: true });
 export const Workout = model('Workout', workoutSchema);

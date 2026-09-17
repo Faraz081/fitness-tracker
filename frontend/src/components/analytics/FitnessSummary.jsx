@@ -46,6 +46,13 @@ export function FitnessSummary({ summary, loading = false, error = false }) {
 
     const weightDirection = summary.weightChange > 0 ? 'up' : summary.weightChange < 0 ? 'down' : 'flat';
 
+    let badge = { label: 'Getting started', className: 'bg-[var(--color-line)]/60 text-[var(--color-ink-soft)]' };
+    if (summary.progressScore >= 70) {
+        badge = { label: 'On track', className: 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]' };
+    } else if (summary.progressScore >= 30) {
+        badge = { label: 'Building momentum', className: 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]' };
+    }
+
     return (
         <div className="dash-card p-5 sm:p-6">
             <div className="flex flex-wrap items-end justify-between gap-4">
@@ -58,8 +65,8 @@ export function FitnessSummary({ summary, loading = false, error = false }) {
                         <span className="text-sm text-[var(--color-ink-muted)]">/ 100</span>
                     </p>
                 </div>
-                <span className="rounded-full bg-[var(--color-accent)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-accent)]">
-                    On track
+                <span className={`rounded-full px-3 py-1 text-xs font-semibold ${badge.className}`}>
+                    {badge.label}
                 </span>
             </div>
 

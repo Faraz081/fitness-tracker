@@ -208,6 +208,16 @@ export const reportQuerySchema = z
 });
 export const reportTypeSchema = z.enum(['overview', 'workout', 'nutrition', 'progress']);
 const dateKeySchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be YYYY-MM-DD' });
+export const analyticsQuerySchema = z
+    .object({
+    from: dateKeySchema.optional(),
+    to: dateKeySchema.optional(),
+    category: z.enum(['strength', 'cardio', 'flexibility', 'hybrid', 'other']).optional(),
+})
+    .strict()
+    .refine((data) => !(data.from && data.to && data.from > data.to), {
+    message: 'from date must be before or equal to to date',
+});
 export const weightCreateSchema = z.object({
     weightKg: z.number().min(20).max(400),
     date: dateKeySchema.optional(),

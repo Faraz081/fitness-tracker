@@ -2,6 +2,7 @@ import dns from 'node:dns';
 import mongoose from 'mongoose';
 import { createApp } from './app.js';
 import { MONGO_DNS_SERVERS, MONGO_URI, PORT } from './config/index.js';
+import { backfillWorkoutCompletionStatus } from './services/notificationService.js';
 if (MONGO_DNS_SERVERS?.length) {
     dns.setServers(MONGO_DNS_SERVERS);
 }
@@ -27,6 +28,15 @@ const connectToMongo = async () => {
 async function main() {
     await connectToMongo();
     console.log('Connected to MongoDB');
+    try {
+        const backfilled = await backfillWorkoutCompletionStatus();
+        if (backfilled > 0) {
+            console.log(`Marked ${backfilled} legacy workout(s) as completed from existing notifications`);
+        }
+    }
+    catch (error) {
+        console.warn('Legacy workout completion backfill skipped:', error instanceof Error ? error.message : error);
+    }
     const app = createApp();
     app.listen(PORT, () => {
         console.log(`Server listening on http://localhost:${PORT}`);

@@ -97,6 +97,9 @@ export function updateWorkout(id, payload) {
 export function deleteWorkout(id) {
     return apiDelete(`/api/workouts/${id}`);
 }
+export function completeWorkout(id) {
+    return apiPost(`/api/workouts/${id}/complete`);
+}
 export function listNutrition(filters) {
     const params = new URLSearchParams();
     if (filters?.date)
@@ -150,6 +153,14 @@ export function syncNotifications(goals) {
 }
 export function getDashboard({ today } = {}) {
     return apiGet(`/api/dashboard${today ? `?today=${encodeURIComponent(today)}` : ''}`);
+}
+export function getAnalytics({ from, to, category } = {}) {
+    const params = new URLSearchParams();
+    if (from) params.set('from', from);
+    if (to) params.set('to', to);
+    if (category && category !== 'all') params.set('category', category);
+    const query = params.toString();
+    return apiGet(`/api/analytics${query ? `?${query}` : ''}`);
 }
 export function getProgress() {
     return apiGet('/api/progress');

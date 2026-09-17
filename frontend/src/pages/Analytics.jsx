@@ -1,21 +1,15 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DashboardLayout } from '../components/layout/DashboardLayout';
 import { AnalyticsPage } from '../components/analytics/AnalyticsPage';
-import { Spinner, EmptyState } from '../components/ui';
-import { analyticsData, emptyAnalyticsData } from '../data/analyticsData';
-import { resolveRange } from '../utils/analyticsUtils';
+import { EmptyState, Spinner } from '../components/ui';
+import { getAnalytics } from '../services/api';
+import { previousRange, resolveRange } from '../utils/analyticsUtils';
+import { useDashboardRefresh } from '../context/DashboardContext';
 
 const DEFAULT_PERIOD = 'last30';
 
-function drillSource() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('empty') === '1') {
-        return emptyAnalyticsData;
-    }
-    return analyticsData;
-}
-
 export default function Analytics() {
+    const { refreshKey } = useDashboardRefresh();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -25,21 +19,34 @@ export default function Analytics() {
     const [category, setCategory] = useState('all');
     const [exerciseName, setExerciseName] = useState(null);
 
-    useEffect(() => {
-        let cancelled = false;
-        const timer = setTimeout(() => {
-            if (!cancelled) {
-                setData(drillSource());
-                setLoading(false);
-            }
-        }, 500);
-        return () => {
-            cancelled = true;
-            clearTimeout(timer);
-        };
-    }, []);
+    const range = useMemo(() => resolveRange(period, { from, to }), [period, from, to]);
 
-    const range = useMemo(() => resolveRange(data || analyticsData, { period, from, to }), [data, period, from, to]);
+    const fetchParams = useMemo(() => {
+        const prev = previousRange(range);
+        return {
+            from: prev ? prev.from : range.from,
+            to: range.to,
+        };
+    }, [range]);
+
+    const load = useCallback(() => {
+        let cancelled = false;
+        setLoading(true);
+        setError(false);
+        getAnalytics({ from: fetchParams.from, to: fetchParams.to, category })
+            .then((result) => {
+                if (!cancelled) setData(result);
+            })
+            .catch(() => {
+                if (!cancelled) setError(true);
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+        return () => { cancelled = true; };
+    }, [fetchParams.from, fetchParams.to, category]);
+
+    useEffect(() => load(), [load, refreshKey]);
 
     const handlePeriod = (next) => {
         setPeriod(next);
@@ -57,12 +64,23 @@ export default function Analytics() {
 
     return (
         <DashboardLayout>
-            {loading ? (
+            {loading && !data ? (
                 <div className="flex justify-center py-24">
                     <Spinner />
                 </div>
-            ) : error ? (
+            ) : error && !data ? (
                 <EmptyState title="Something went wrong" message="Your analytics could not be loaded. Try again." />
+            ) : data && !data.hasData ? (
+                <div className="dash-card p-5">
+                    <EmptyState
+                        title="No analytics data"
+                        message={
+                            category !== 'all'
+                                ? 'No workouts match this category in the selected period. Adjust your filters.'
+                                : 'Log workouts, meals and weigh-ins to unlock personalised analytics here.'
+                        }
+                    />
+                </div>
             ) : (
                 <AnalyticsPage
                     dataSource={data}
@@ -78,6 +96,8 @@ export default function Analytics() {
                     exerciseName={exerciseName}
                     onExercise={setExerciseName}
                     onReset={handleReset}
+                    loading={loading}
+                    error={error}
                 />
             )}
         </DashboardLayout>
